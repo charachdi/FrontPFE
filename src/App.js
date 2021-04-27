@@ -94,7 +94,7 @@ useEffect(() => {
           <Adminonly path='/Service' component={Service} exact/>
           <Route path='/Client' component={Clients} exact/>
           <Comptecli path='/Compteclient' component={Compteclientequipe} exact/>
-          <Route path='/Chefscomptecli' component={Chefscomptecli} exact/>
+          {/* <Route path='/Chefscomptecli' component={Chefscomptecli} exact/> */}
 
 
           <Route path='/Equipe/:id' render={(props) => <EquipeView socket={socket} {...props} /> } exact/>

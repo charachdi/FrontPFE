@@ -216,12 +216,11 @@ body{
 
 
 .access {
-    position: absolute;
     bottom: 0px;
     right: 29%;
     width: 50px;
     height: 50px;
-    z-index: 10;
+
 }
 
 .link{
@@ -674,7 +673,7 @@ aside.ribbonchef:after {
 }
 .prog-value{
     position: absolute;
-    bottom: 35%;
+    bottom: 36%;
     left: 43%;
     font-size: x-small;
 }

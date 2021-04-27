@@ -14,12 +14,13 @@ import Box from '@material-ui/core/Box';
 
 
 
-function Progress(props) {
+function Archive(props) {
 
 
     const [Cloture, setCloture] = useState(0)
     const [Cours, setCours] = useState(0)
     const [prog, setprog] = useState(0)
+    const [isloding, setisloding] = useState(false)
 
     useEffect(() => {
             
@@ -34,10 +35,30 @@ function Progress(props) {
        })
 
 
+const toarchive = ()=>{
+   if((prog >= props.ar.Prog)&&(props.client.Requetes.length >= props.ar.requete) ){
+       return(
+
+         
+             isloding ? (
+                <i  className=" fas fa-spinner fa-spin fa-2x " style={{color:"#2DCD94"}}></i>
+             ) : (
+                <i class="far fa-folder-open fa-2x mt-2 cursor" style={{color:"#2dcd94"}} onClick={(e)=>{
+                    props.update(props.client.id)
+                   }}></i>
+             )
+       )
+   }
+   else{
+       return(
+           null
+       )
+   }
+}
 
     return (
-       <p>{Cloture}</p>
+        toarchive()
     )
 }
 
-export default Progress
+export default Archive

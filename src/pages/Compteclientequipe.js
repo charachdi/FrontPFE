@@ -8,8 +8,13 @@ import accesdenied from './../images/ad.png'
 import $ from 'jquery'
 import TextField from '@material-ui/core/TextField';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter , MDBCol, MDBFormInline , MDBIcon } from 'mdbreact';
-
+import ReactDatatable from '@ashvin27/react-datatable';
 import Badge from '@material-ui/core/Badge';
+import Progressuser from './../component/Table/Progressuser'
+import Colture from './../component/Table/Colture'
+import Visibility from '@material-ui/icons/Visibility';
+import IconButton from '@material-ui/core/IconButton';
+
 
 function Compteclientequipe() {
 
@@ -20,14 +25,20 @@ function Compteclientequipe() {
     const history = useHistory();
     
     useEffect(() => {
+
+
+        const loding = () =>{
+            
+        }
+
         const getequipe = async() =>{
           const res = await axios({
             headers: {'Authorization': `Bearer ${token}`},
             method: 'get',
-            url : `${Api_url}user/${user.id}`,  
+            url : `${Api_url}user/equipecli/${user.id}`,  
             });
-            setequipeclient(res.data.user.Equipe.CompteClients)  
-            setlength(res.data.user.Equipe.CompteClients.length)
+            setequipeclient(res.data.clients)  
+            setlength(res.data.clients.length)
         }
         getequipe()
         
@@ -53,51 +64,100 @@ function Compteclientequipe() {
 }
 
 
-    return (
-        <div className="row col-12 justify-content-center">
-                 <MDBFormInline className="md-form mb-2">
-                        <MDBIcon icon="search" className="mr-1" />
-                        <TextField id="client-search" onChange={filter}  label="search" variant="outlined" size='small' />
-                    </MDBFormInline><br />
+const [column, setcolumn] = useState([
+    {
+      key: "name",
+      text: "",
+      cell: (client, index) => {
+        return (
+          <>
+              <div className="d-flex flex-row"> <Avatar src={client.Clientimg.img_profile} style={{width: 40, height : 40}} /> 
+              <p className="mt-1 ml-4">{client.Nom_compteCli}</p> </div>
+           </>
+        );
+    }
+    },
+    {
+      key: "prog",
+      text: "Progress",
+      cell: (cli, index) => {
+        return (
+          <span className="text-center">
+          <Progressuser client={cli}/>
+           </span>
+        );
+    }
+     
+    },
 
-            {
-                length === 0 ? (
-                    
-                    <h1>mafamma chay</h1>
-                    
-                ) : (
-                    <div id="clientlist" className="row col-12 justify-content-start">
-                       { equipeclient.map((cl,index)=>(
-                           <div id="client">
-                                <div key={index} id={cl.id} className="carde d-flex mx-3 my-3 grow cursor equipe-cli" style={{filter: cl.Auths[0].Permission.Read === "false" ?`grayscale(90%)` : ""}}  onClick={()=> gotoclient(cl.id ,cl.Auths[0].Permission.Read )}>
-                            <span className="erro grow"><p> 252</p><span className="arrow-erro"></span></span>
-                            <span className="ok grow"><p> 220</p><span className="arrow-ok"></span></span>
-                            <span className="still grow"><p> 420</p><span className="arrow-still"></span></span>
-                        <div className="firstinfo text-center d-flex justify-content-center">
-                            <Avatar src={cl.Clientimg.img_profile} style={{width:60, height:60 , zIndex:10}} className="" />
-                            <div className="profileinfo mt-3">
-                                <h6 id="nom" style={{color :cl.Theme.Color}}> {cl.Nom_compteCli}</h6>
-                            </div>
-                            </div>
+    {
+        key: "Clôturé",
+        text: "Clôturé",
+        sortable: true,
+        cell: (cli, index) => {
+          return (
+            <p className="text-center mt-2">
+           <Colture client={cli}/>
+             </p>
+          );
+      }
+      },
+
+      {
+        key: "Requete",
+        text: "Requete",
+        sortable: true,
+        cell: (cli, index) => {
+          return (
+            <p className="text-center mt-2">
+           {cli.Requetes.length}
+             </p>
+          );
+      }
+      },
+
+    {
+        key: "Action",
+        text: "Action",
+        cell: (cl, index) => {
+          return (
+            <p className="text-center">
+
                             {
                                 cl.Auths[0].Permission.Read === "false" ? (
                                     <img src={accesdenied} className="access" style={{filter:"none"}}/>
                                 ) : (
-                                    null
+                                    <IconButton size="small" aria-label="eye" onClick={()=> gotoclient(cl.id ,cl.Auths[0].Permission.Read )} style={{color :"#388e3c"}} >
+                                    <Visibility />
+                                </IconButton> 
                                 )
                             }
-                           
-                         </div>
-                           </div>
-                        
-                      ))}
-                    </div>
-                    
-                      
-                )
-            }
-          
-    
+            
+             </p>
+          );
+      }
+       
+      },
+  ])
+  const config = {
+    page_size: 10,
+    length_menu: [10, 20, 50],
+    show_filter: true,
+    show_pagination: true,
+    pagination: 'advance',
+    button: {
+        excel: false,
+        print: false
+    }
+  }
+
+    return (
+        <div className="row col-12 justify-content-center">
+               
+     <ReactDatatable
+                config={config}
+                records={equipeclient}
+                columns={column}/>
     
         </div>
     )

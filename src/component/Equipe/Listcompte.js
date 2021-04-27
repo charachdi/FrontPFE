@@ -19,6 +19,7 @@ import ReactDatatable from '@ashvin27/react-datatable';
 
 import Progress from '../Table/Progress'
 import Colture from '../Table/Colture'
+import Archive from '../Table/Archive'
 import Cours from '../../images/Cours'
 
 function Listcompte(props) {
@@ -28,8 +29,9 @@ const [loading, setloading] = useState(true)
 const history = useHistory();
 
 
-
-
+const update = (id)=>{
+props.updatear(id)
+}
 
   useEffect(() => {
     const loading_screen = ()=>{
@@ -61,12 +63,23 @@ const history = useHistory();
     }
     },
     {
+      key: "archive",
+      text: "archive",
+      cell: (client, index) => {
+        return (
+          <>
+             <Archive client={client} ar={props.archive} update={update}/>
+           </>
+        );
+    }
+    },
+    {
       key: "prog",
       text: "Progress",
       cell: (cli, index) => {
         return (
           <>
-          <Progress client={cli}/>
+          <Progress client={cli} ar={props.archive}/>
            </>
         );
     }

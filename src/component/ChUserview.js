@@ -170,7 +170,7 @@ function ChUserview(props) {
                           </div>
                           <div class="list-details">
                             <span>{user ? user.tel:""}</span>
-                            <small>Numéro de télephone</small>
+                            <small>Numéro de télephonezzzzz</small>
                           </div>
                         </li>
                         <li class="list-group-item">

@@ -14,7 +14,7 @@ import Box from '@material-ui/core/Box';
 
 
 
-function Progress(props) {
+function Archiveprogress(props) {
 
 
     const [Cloture, setCloture] = useState(0)
@@ -22,7 +22,7 @@ function Progress(props) {
     const [prog, setprog] = useState(0)
 
     useEffect(() => {
-            
+
 
     const cou = props.client.Requetes.filter(item => item.Statut !== 'Clôturé')
     const col = props.client.Requetes.filter(item => item.Statut === 'Clôturé')
@@ -36,8 +36,22 @@ function Progress(props) {
 
 
     return (
-       <p>{Cloture}</p>
+        <Box position="relative" display="inline-flex">
+                                <CircularProgress variant="determinate" style={{color : '#2dcd94'}} value={parseInt(prog)} />
+                                <Box
+                                    top={0}
+                                    left={0}
+                                    bottom={0}
+                                    right={0}
+                                    position="absolute"
+                                    display="flex"
+                                    alignItems="center"
+                                    justifyContent="center"
+                                >
+                                    <Typography variant="caption" component="div" color="primary">{`${prog}%`}</Typography>
+                                </Box>
+                                </Box>
     )
 }
 
-export default Progress
+export default Archiveprogress

@@ -23,7 +23,10 @@ import { useHistory } from "react-router-dom";
 import { TwitterPicker } from 'react-color';
 import Slider from '@material-ui/core/Slider';
 import InputBase from '@material-ui/core/InputBase';
+import ReactDatatable from '@ashvin27/react-datatable';
 
+import Lottie from 'react-lottie';
+import Loading from './../images/loading.json'
 // import { mdbTableEditor } from 'mdb-table-editor'
 
 
@@ -33,6 +36,13 @@ function Clients() {
     const [suppopen, setsuppopen] = useState(false)
     const [editopen, seteditopen] = useState(false)
     const history = useHistory();
+    const [loding, setloding] = useState(false)
+
+    const defaultOptions = {
+      loop: true,
+      autoplay: true,
+      animationData: Loading,
+    };
     const [selectedrow, setselectedrow] = useState( {
       "id": 6,
       "Nom_compteCli": "amine",
@@ -71,6 +81,21 @@ function Clients() {
       }
   })
 
+  
+     const [userlvl, setuserlvl] = useState(false)
+  
+  const config = {
+    page_size: 10,
+    length_menu: [10, 20, 50],
+    show_filter: true,
+    show_pagination: true,
+    pagination: 'advance',
+    button: {
+        excel: false,
+        print: false
+    }
+  }
+
   const [shownrow, setshownrow] = useState([])
   const [rowselected, setrowselected] = useState(7)
   const [pageselected, setpageselected] = useState(1)
@@ -82,6 +107,21 @@ function Clients() {
     fontsSize : 25,
     color : "black"
   })
+
+  const [nomclient, setnomclient] = useState("")
+    const [ServiceId, setServiceId] = useState("")
+    const [EquipeId, setEquipeId] = useState("")
+
+    const [clients, setclients] = useState([])
+    const [equipe, setequipe] = useState([])
+    const [service, setservice] = useState([])
+    const [search, setsearch] = useState("")
+
+    const [service_eq, setservice_eq] = useState([])
+
+    const [profileimgprev, setprofileimgprev] = useState("")
+    const [bgprevimg, setbgprevimg] = useState("https://e7.pngegg.com/pngimages/310/447/png-clipart-white-romantic-starlight-s-white-starlight.png")
+    const [description, setdescription] = useState("")
 
   const [offsetup, setoffsetup] = useState(10)
 
@@ -98,7 +138,6 @@ function Clients() {
 
     const changeselected = (client) =>{
       setselectedrow(client)
-      console.log(selectedrow)
     }
 
     const toggleEdit = () =>{
@@ -109,6 +148,13 @@ function Clients() {
     } 
 
     useEffect(() => {
+
+      const loding = ()=>{
+        setloding(true)
+        setTimeout(() => {
+          setloding(false)
+        }, 3500);
+      }
    // fonction affiche table
     const getclientlist = async ()=>{
       const res = await axios({
@@ -127,6 +173,7 @@ function Clients() {
         url : `${Api_url}equipe/`,  
         });
         setequipe(res.data)
+        console.log(res.data)
         
       
        
@@ -149,19 +196,25 @@ function Clients() {
         method: 'get',
         url : `${Api_url}user/${user.id}`,  
         });
-
+       
       
     if(currentuser.data.user.user_level === "Chef Service"){
+      setuserlvl(true)
+      const equi = await axios({
+        headers: {'Authorization': `Bearer ${token}`},
+        method: 'get',
+        url : `${Api_url}service/dataservice/equipe/${currentuser.data.user.Chef.ServiceId}`,  
+        });
       const res = await axios({
         headers: {'Authorization': `Bearer ${token}`},
         method: 'get',
         url : `${Api_url}service/dataservice/${currentuser.data.user.Chef.ServiceId}`,  
         });
-        console.log(res)
+        setequipe(equi.data.equipes)
         setclients(res.data.clients)
-        setshownrow(res.data.clients.slice(0,rowselected))
-        setequipe(res.data.equipes)
         setservice([res.data.service])
+       
+        
     }
     else{
     getclientlist()
@@ -169,26 +222,70 @@ function Clients() {
     getservice()
     }
   }
+  loding()
   getdata()
-    
-    }, [])
   
-    const [nomclient, setnomclient] = useState("")
-    const [ServiceId, setServiceId] = useState("")
-    const [EquipeId, setEquipeId] = useState("")
-
-    const [clients, setclients] = useState([])
-    const [equipe, setequipe] = useState([])
-    const [service, setservice] = useState([])
-    const [search, setsearch] = useState("")
-
-    const [service_eq, setservice_eq] = useState([])
-
-    const [profileimgprev, setprofileimgprev] = useState("")
-    const [bgprevimg, setbgprevimg] = useState("https://e7.pngegg.com/pngimages/310/447/png-clipart-white-romantic-starlight-s-white-starlight.png")
-    const [description, setdescription] = useState("")
+    }, [])
+    
 
     const [num, setnum] = useState("")
+
+    const [column, setcolumn] = useState([
+      {
+        key: "name",
+        text: "name",
+        cell: (client, index) => {
+          return (
+                <div className="d-flex flex-row"> <Avatar src={client.Clientimg.img_profile} style={{width: 40, height : 40}} /> 
+                <p className="mt-1 ml-4">{client.Nom_compteCli}</p> </div>
+            
+          );
+      }
+      },
+      {
+        key: "Service",
+        text: "Service",
+        cell: (client, index) => {
+          return (
+            <>
+                <p className="mt-1 ml-4">{client.Service.Nom_service}</p> 
+             </>
+          );
+      }
+      },
+      {
+        key: "Equipe",
+        text: "Equipe",
+        cell: (client, index) => {
+          return (
+            <>
+                <span className="cursor" onClick={()=>{history.push(`/Equipe/${client.Equipe.id}`)}}>{client.Equipe ? client.Equipe.Nom_equipe : ""}</span>
+             </>
+          );
+      }
+      },
+      {
+        key: "action",
+        text: "Action",
+        cell: (client, index) => {
+          return (
+            <>
+                  <IconButton className="mr-3" size="small" aria-label="delete" color="secondary" onClick={()=> {changeselected(client);toggleSupp()}}>
+                          <DeleteIcon />
+                          </IconButton>
+                          <IconButton className="mr-3" size="small" aria-label="delete" color="primary" onClick={(e)=>{changeselected(client);setservice_eq(
+                            equipe.filter(item =>item.Service.id === client.Service.id)
+                          ); toggleEdit();console.log(client.Service.id);console.log(equipe)}}>
+                          <EditIcon />
+                          </IconButton>     
+                          <IconButton size="small" aria-label="delete" color="primary" onClick={()=>{history.push(`/client/${client.id}`)}} style={{color :"#388e3c"}}>
+                          <Visibility />
+                          </IconButton>  
+             </>
+          );
+      }
+      },
+    ])
 
 // fonction add row table
     const Addclient = async (e) =>{
@@ -672,15 +769,7 @@ const Suppclient = async (e)=>{
     }
 }
 
-const filter = () =>{
- 
-    var value = $("#client-search").val().toLocaleLowerCase()
-    $("#client-body tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-     console.log( $(this).text())
-    });
-  
-}
+
 
 const prev = () =>{
   const url = URL.createObjectURL(document.getElementById('client-img').files[0])
@@ -727,56 +816,11 @@ const prev = () =>{
 
 
 
- const handelchangerow = (e)=>{
-  setrowselected(e.target.value)
-  setshownrow(clients.slice(0,e.target.value))
-}
-
-const Nextpage = (e) =>{
-console.log("next")
-setpageselected(pageselected +1)
-
-if(shownrow.length != 0){
-  change.first =   parseInt(change.first) +  parseInt(rowselected)
-  change.second =   parseInt(change.first) +  parseInt(rowselected) 
-  
-  setshownrow(clients.slice(change.first,change.second))
-}
-
-
-
-setTimeout(() => {
-  console.log(`
-  prev : ${change.first}
-  new : ${change.second}
-`)
-}, 2000);
-
-}
-
-const Prevpage = (e) =>{
-  console.log("prev")
-  
-  change.first =    parseInt(change.first) -   parseInt(rowselected)
-  change.second =   parseInt(change.second) -   parseInt(rowselected)
-
-  if(change.first < 0 ){
-    change.first = 0
-    change.second = rowselected
-  }
-
-  if(pageselected === 1){
-    setpageselected(1)
-  }
-  else{
-    setpageselected(pageselected - 1)
-
-  }
  
-  
-  setshownrow(clients.slice(change.first,change.second))
 
-}
+
+
+
 
 const up = () =>{
 console.log("up")
@@ -793,6 +837,8 @@ const down = () =>{
 
 
     return (
+
+      
       <>
       <ToastContainer
       position="top-right"
@@ -806,8 +852,16 @@ const down = () =>{
       pauseOnHover
       />
       
-
-      {/* <!-- Page Header--> */}
+      {
+        loding ? (
+          <Lottie 
+          options={defaultOptions}
+            height={"70%"}
+            width={"70%"}
+          />
+        ):(
+          <>
+          {/* <!-- Page Header--> */}
           <header class="page-header">
             <div class="container-fluid">
               <h2 class="no-margin-bottom">Liste des clients</h2>
@@ -827,64 +881,26 @@ const down = () =>{
             
 
             <div className="row col-12 mb-2">
-              <div className="col-4"> 
-              <MDBCol >
-                <MDBFormInline className="md-form">
-                  <MDBIcon icon="search" />
-                  <TextField className="ml-3 " size="small" label="Recherche" variant="outlined" id="client-search" type="text" onChange={()=>{filter()}}/>
-                </MDBFormInline>
-              </MDBCol>
-               </div> 
-               <div className="row col-5 d-flex justify-content-between">
-               <h5 className="text-center mt-2 ml-4 "><i class="fas fa-arrow-left mr-5 cursor" onClick={(e)=>{Prevpage(e)}}></i>{pageselected}<i class="fas fa-arrow-right ml-5 cursor" onClick={(e)=>{Nextpage(e)}}></i></h5>
-               <TextField className="col-2 mr-4 mt-2" size="medium" type="number" value={rowselected} onChange={(e)=>{handelchangerow(e)}} id="row_shown" />
-               </div>
-               <div className="col-3"> 
+              
+               
+               <div className="col-12 "> 
                 <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={()=>toggle(!open)}> Ajouter </Button> 
                </div>
             </div> 
-                <Table  striped bordered hover>
-                    
-                    <thead>
-                    <tr>
-                        <th style={{width:50}}>#</th>
-                        <th>Nom du client</th>
-                        <th>Service</th>
-                        <th>Equipe</th>
-                        <th style={{width:150}}>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody id="client-body">
+                
 
-
-                      {
-                        shownrow.map((client , index)=>(
-                            <tr key={index} id={client.id} >
-                        <td> {client.id}</td>
-                        <td id="img"  className=" d-flex justify-content-start align-items-center "> <Avatar className=" prof_img ml-3" src={client.Clientimg ? client.Clientimg.img_profile : ""} style={{width: 30, height :30}} /> <span id="Nomcli" className="ml-3 text-center">{client.Nom_compteCli}</span></td>
-                        <td id="sercli"  className=""> <div className="cursor" >{client.Service.Nom_service}</div> </td>
-                        <td id="eqcli"  > <span className="cursor" onClick={()=>{history.push(`/Equipe/${client.Equipe.id}`)}}>{client.Equipe ? client.Equipe.Nom_equipe : ""}</span></td>
-                        <td>
-                        <IconButton className="mr-3" size="small" aria-label="delete" color="secondary" onClick={()=> {changeselected(client);toggleSupp()}}>
-                        <DeleteIcon />
-                        </IconButton>
-                        <IconButton className="mr-3" size="small" aria-label="delete" color="primary" onClick={()=>{changeselected(client);setservice_eq(
-                          equipe.filter(item =>item.Service.id === client.Service.id)
-                        ); toggleEdit()}}>
-                        <EditIcon />
-                        </IconButton>     
-                        <IconButton size="small" aria-label="delete" color="primary" onClick={()=>{history.push(`/client/${client.id}`)}} style={{color :"#388e3c"}}>
-                        <Visibility />
-                        </IconButton>     
-                        </td>
-                      </tr>
-                          ))
-                      }
-                      
-
-
-                    </tbody>
-            </Table>
+              
+              <ReactDatatable
+                config={config}
+                records={clients}
+                columns={column}/>
+            </div>
+            </div>
+            </>
+        )
+      }
+      
+        
 
                         {/* MODAL ADD */}
               <MDBModal isOpen={open} toggle={()=>toggle()} disableBackdrop={true} size="lg">
@@ -933,7 +949,7 @@ const down = () =>{
               <div className="row col-12 mt-5 ">
                 <div className="col-7">
                 <TextField className="col-12 mt-1 float-right" value={nomclient} onChange={(e)=>{setnomclient(e.target.value)}} id="standard-basic" label="Nom du client" required />
-                <TextField value={description} onChange={(e)=>{setdescription(e.target.value)}} className="col-12 mt-3" id="time" type="text" label="description" multiline={true} variant="outlined" size="small" rows={7} />
+                <TextField value={description} onChange={(e)=>{setdescription(e.target.value)}} className="col-12 mt-2" id="time" type="text" label="description" multiline={true} variant="outlined" size="small" rows={7} />
                 <TextField
                         className=" ml-2 col-5 mb-5 mt-3"
                         id="standard-select-currency"
@@ -1034,7 +1050,7 @@ const down = () =>{
                   </label>
                     </section>
                   
-                  <h3 id="compteclientnom" className=" ml-3 mt-5"  style={{position:"relative" ,color: selectedrow.Theme.Color}}>{selectedrow.Nom_compteCli}</h3>
+                  <h3 id="compteclientnom" className=" ml-3 mt-4"  style={{position:"relative" ,color: selectedrow.Theme.Color}}>{selectedrow.Nom_compteCli}</h3>
                   </div>
                 
             
@@ -1091,9 +1107,16 @@ const down = () =>{
                       >
 
                       {
-                        service_eq.map((eq , index)=>(
-                          <MenuItem key={index} value={eq.id}>{eq.Nom_equipe}</MenuItem>
-                        ))
+                        userlvl ? (
+                          equipe.map((eq , index)=>(
+                            <MenuItem key={index} value={eq.id}>{eq.Nom_equipe}</MenuItem>
+                          ))
+                        ): (
+                          service_eq.map((eq , index)=>(
+                            <MenuItem key={index} value={eq.id}>{eq.Nom_equipe}</MenuItem>
+                          ))
+                        )
+                        
                       }
                       
                       </TextField>
@@ -1144,8 +1167,7 @@ const down = () =>{
         striped
         bordered
        /> */}
-</div>
-            </div></>
+          </>
       
     );
 }

@@ -80,13 +80,20 @@ function Fileview(props) {
         ) : (
             <div>
             <CircularProgress className="mt-2" style={{color:"#2DCD94"}} variant="determinate" value={value} />
-            <p className="prog-value">% {value}</p>
+            {
+              value === 0 ? (
+                <i id="loading" className=" fas fa-spinner fa-spin fa-2x load mr-4" style={{color:"#2DCD94"}}></i>
+              ):(
+                <p className="prog-value">% {value}</p>
+              )
+            }
+          
             </div>
         )
         }
        
- 
-       
+      
+       {/* <i id="loading" className=" fas fa-spinner fa-spin fa-3x load" style={{color:"#2DCD94"}}></i> */}
        <div className="mt-4 mb-3  d-flex flex-row" >
        <a className=" mx-auto"><Avatar src={file.User.user_img} alt="aaa" style={{width:25 , height :25}} /></a><span style={{fontSize:10}}>{file.User.full_name} <br/> {file.createdAt}</span>
        <a href={file.url_file} className=" mx-auto"><i className="fas fa-download  cursor"></i></a>

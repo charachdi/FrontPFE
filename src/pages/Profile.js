@@ -216,7 +216,7 @@ function Profile(props) {
                           </div>
                           <div className="list-details">
                             <span>{user ? user.tel:""}</span>
-                            <small>Numéro de télephone</small>
+                            <small>Numéro de télephonessss</small>
                           </div>
                         </li>
                         <li className="list-group-item">

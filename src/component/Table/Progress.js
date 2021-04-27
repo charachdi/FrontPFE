@@ -37,7 +37,7 @@ function Progress(props) {
 
     return (
         <Box position="relative" display="inline-flex">
-                                <CircularProgress variant="determinate" style={{color : prog >= 80 ? '#2dcd94': '#CE1126'}} value={parseInt(prog)} />
+                                <CircularProgress variant="determinate" style={{color : prog >= props.ar.Prog ? '#2dcd94': '#CE1126'}} value={parseInt(prog)} />
                                 <Box
                                     top={0}
                                     left={0}

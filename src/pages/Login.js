@@ -16,6 +16,8 @@ import Popover from "@material-ui/core/Popover";
 import { ToastContainer, toast } from "react-toastify";
 
 function Login() {
+
+  
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [emailpopopen, setemailpopopen] = useState(false);
   const [pwdpopopen, setpwdpopopen] = useState(false);
@@ -71,6 +73,13 @@ function Login() {
       $("#sidebar").hide();
     };
 
+    const checkuser = ()=>{
+      const user =JSON.parse(localStorage.getItem('user')) ;
+      if(user){
+        history.push("/Home");
+      }
+    }
+    checkuser()
     hidesidebar();
   }, []);
 

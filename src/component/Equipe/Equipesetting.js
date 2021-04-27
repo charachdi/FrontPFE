@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useState , useEffect} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -18,11 +18,15 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function Equipesetting() {
+function Equipesetting(props) {
+
 const classes = useStyles();
 const [selectedIndex, setSelectedIndex] = React.useState(0);
-  
+const [archive, setarchive] = useState(props.archive)
 
+const updatear = (prog , req)=>{
+    props.update(prog,req)
+ }
     return (
         <div className="row col-12 justify-content-start" style={{minHeight:500}}>
             <div className="col-3 setting" style={{backgroundColor:"white"}}>
@@ -46,7 +50,7 @@ const [selectedIndex, setSelectedIndex] = React.useState(0);
 
 
             <div className="col-7 mx-auto card">
-                <Archive />
+                <Archive prog={archive.Prog} req={archive.requete} update={updatear}/>
             </div>
         </div>
     )

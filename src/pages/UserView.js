@@ -12,7 +12,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import EditIcon from '@material-ui/icons/Edit';
-
+import { Line } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 
 function UserView(props) {
 
@@ -21,6 +22,51 @@ function UserView(props) {
     const userId = props.match.params.id
     const [user, setuser] = useState({})
 
+
+    const piedata = {
+      labels: ["1" ,"2"],
+      datasets: [{
+        label: 'My First Dataset',
+        data: ["1" ,"2"],
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)',
+          'rgb(218, 92, 250)',
+          'rgb(43, 200, 145)'
+        ],
+        hoverOffset: 4
+      }]
+    };
+
+    const linedata = {
+      labels: ["1" ,"2"],
+      datasets: [{
+        spanGaps: true,
+        lineTension: 0,
+          backgroundColor: "transparent",
+          borderColor: '#FAFAFA',
+          pointBorderColor: '#da4c59',
+          pointHoverBackgroundColor: '#da4c59',
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          borderWidth: 1,
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 5,
+          pointHoverRadius: 8,
+          pointHoverBorderColor: "#fff",
+         pointHoverBorderWidth: 2,
+         pointRadius: 1,
+         pointHitRadius: 0,
+        label: 'Requetes',
+        data: ["1" ,"2"],
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0
+      }]
+    };
         useEffect(() => {
             const getuser = async () =>{
                 const res = await axios({
@@ -86,62 +132,16 @@ function UserView(props) {
                 </div>
                 <div class="col-lg-8">
                    <div class="card z-depth-3">
-                    <div class="card-body">
-                    <ul class="nav nav-pills nav-pills-primary nav-justified">
-                        <li class="nav-item">
-                            <a href="javascript:void();" data-target="#profile" data-toggle="pill" class="nav-link active"><i class="icon-user"></i> <span class="hidden-xs">Profile</span></a>
-                        </li>
-                    </ul>
+                    <div class="row card-body">
+                   
                     {/* SHOW DATA PROFILE */}
-                    <div class="tab-content p-3">
-                       
-                        <div className="tab-pane active show" id="profile">
-                             <form className="col-12">
-                            <div className="form-group row" >
-                                <label className="col-lg-3 col-form-label text-center form-control-label">Nom et Prénom</label>
-                                   <h5 className="mt-2">{user ? user.full_name:"..."}</h5>
-                            </div>
-
-                              
-                            <div className="form-group row">
-                                <label className="col-lg-3 col-form-label form-control-label text-center">Télephone</label>
-                                <h6 className="mt-2">{user ? user.tel:"..."}</h6>
-                            </div>
-
-                            <div className="form-group row">
-                                <label className="col-lg-3 col-form-label form-control-label text-center">equipe</label>
-                                <h6 className="mt-2">{user.Equipe ? user.Equipe.Nom_equipe:""}</h6>
-                            </div>
-
-                            <div className="form-group row">
-                                <label className="col-lg-3 col-form-label form-control-label text-center">Service</label>
-                                <h6 className="mt-2">{user.Equipe ? user.Equipe.Service.Nom_service:""}</h6>
-                            </div>
-
-                            <div className="form-group row">
-                                <label className="col-lg-3 col-form-label text-center form-control-label">site</label>
-                           
-                                <h6 className="mt-2">{user ? user.Website:""}</h6>
-                            </div>
-                         
-
-                            <div className="form-group row">
-                                <label className="col-lg-3 col-form-label form-control-label text-center">Fax</label>
-                                <h6 className="mt-2">{user ? user.fax:""}</h6>
-                            </div>
-
-                          
-
-                            <div className="form-group row">
-                                <label className="col-lg-3 col-form-label form-control-label text-center">Adresse</label>
-                              
-                                <h6 className="mt-2">{user ? user.address:""}</h6>
-                            </div>                
-                            
-                        </form>
-           
-                        </div>
+                    <div className="col-6">
+                    <Pie  data={piedata} width={50} height={40}/>
                     </div>
+                    <div className="col-6">
+                    <Line  data={linedata} width={50} height={40}/>
+                    </div>
+                    
                 </div>
               </div>
               </div>
