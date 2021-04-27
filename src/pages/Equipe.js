@@ -15,15 +15,17 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { MDBDataTableV5 } from 'mdbreact';
 import axios from 'axios'
 import $ from 'jquery'
+import Avatar from '@material-ui/core/Avatar';
 import Api_url from './../component/Api_url';
 import { ToastContainer, toast } from 'react-toastify';
 import { useHistory } from "react-router-dom";
+import ReactDatatable from '@ashvin27/react-datatable';
 import GroupIcon from '@material-ui/icons/Group';
 import Select from '@material-ui/core/Select';
 // import { mdbTableEditor } from 'mdb-table-editor'
 
 
-function Equipe() {
+function Equipe(props) {
     const token = localStorage.getItem('token')
     const [open, setopen] = useState(false)
     const history = useHistory();
@@ -57,6 +59,91 @@ function Equipe() {
 
      
     } 
+
+    // datatable
+    const [loading, setloading] = useState(true)
+
+
+  useEffect(() => {
+    const loading_screen = ()=>{
+       
+        setloading(true)
+        setTimeout(() => {
+          setloading(false)
+        }, 800);
+
+    }
+    loading_screen()
+  }, [])
+
+
+    const [column, setcolumn] = useState([
+      {
+        key: "id",
+        text: "#",
+        cell: (equipe, index) => {
+          return (
+            <>
+                <p>{equipe.id}</p>
+             </>
+          );
+      }
+      },
+      {
+        key: "Nom_equipe",
+        text: "Equipe",
+        sortable: true,
+        
+      },
+  
+      {
+        key: "Service",
+        text: "Service",
+        sortable: true,
+        cell: (equipe, index) => {
+          return equipe.Service.Nom_service
+      }
+      },
+      {
+        key: "Action",
+        text: "Action",
+        cell: (equipe, index) => {
+          return (
+            <>
+                       
+                       
+                        <IconButton className="float-right mr-3" size="small" aria-label="delete" color="secondary" onClick={()=> {changeselected(equipe);toggleSupp()}}>
+                        <DeleteIcon />
+                        </IconButton>
+
+                        <IconButton className="float-right mr-3" size="small" aria-label="delete" color="primary" onClick={()=>{changeselected(equipe); toggleEdit()}}>
+                        <EditIcon />
+                        </IconButton>
+                        <IconButton size="small" className="float-right mr-3" aria-label="eye" onClick={()=>{history.push(`/equipe/${equipe.id}`)}} style={{color :"#388e3c"}} >
+                        <Visibility />
+                        </IconButton> 
+
+                        <IconButton className="float-left mr-2" size="small" aria-label="delete" color="primary" >
+                        <GroupIcon /> <span className="ml-2" style={{fontSize:15}}>{equipe.Users.length}</span>
+                        </IconButton> 
+             </>
+          );
+      }
+      },
+       
+    ])
+
+    const config = {
+      page_size: 10,
+      length_menu: [10, 20, 50],
+      show_filter: true,
+      show_pagination: true,
+      pagination: 'advance',
+      button: {
+          excel: false,
+          print: false
+      }
+    }
 
     useEffect(() => {
    // fonction affiche table
@@ -370,26 +457,26 @@ const Prevpage = (e) =>{
             <div className="col-12 text-center">
             
 
-            <div className="row col-12 mb-2">
-              <div id="ser" className="col-xl-4 col-lg-4 col-md-3 col-sm-4 col-4"> 
-              <MDBCol >
+            
+               
+              {/* <MDBCol >
                 <MDBFormInline className="row md-form">
                   <MDBIcon icon="search" />
                   <TextField className="ml-3 " size="small" style={{width:"50%"}} label="Recherche" variant="outlined" id="equipe-search" type="text" onChange={()=>{filter()}}/>
                 </MDBFormInline>
               </MDBCol>
-              
-               </div> 
+               */}
+                
 
-               <div  className="row col-xl-4 col-lg-4 col-md-5 col-sm-4 col-4d-flex justify-content-between" style={{width:"50%"}}>
+               {/* <div  className="row col-xl-4 col-lg-4 col-md-5 col-sm-4 col-4d-flex justify-content-between" style={{width:"50%"}}>
                <h5 id="pagebtn" className="text-center mt-2 "><i class="fas fa-arrow-left mr-5 cursor" onClick={(e)=>{Prevpage(e)}}></i>{pageselected}<i class="fas fa-arrow-right ml-5 cursor" onClick={(e)=>{Nextpage(e)}}></i></h5>
                <TextField className="col-2  mt-2" size="small" type="number" value={rowselected} onChange={(e)=>{handelchangerow(e)}} id="row_shown" />
+               </div> */}
+               <div id="addbtn" className="col-3 mb-2" style={{width:"50%"}}> 
+                <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={()=>toggle(!open)}> Ajouter </Button> 
                </div>
-               <div id="addbtn" className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4" style={{width:"50%"}}> 
-                <Button variant="contained"  color="primary" startIcon={<AddIcon />} onClick={()=>toggle(!open)}> Ajouter </Button> 
-               </div>
-            </div> 
-                <Table  striped bordered hover>
+            
+                {/* <Table  striped bordered hover>
                     
                     <thead>
                     <tr>
@@ -429,7 +516,7 @@ const Prevpage = (e) =>{
 
 
                     </tbody>
-            </Table>
+            </Table> */}
 
                         {/* MODAL ADD */}
               <MDBModal isOpen={open} toggle={()=>toggle()}  size="lg" disableBackdrop={true}>
@@ -518,19 +605,18 @@ const Prevpage = (e) =>{
                 </MDBModalFooter>
                 </div>
                 </MDBModal>
+                
 
 
-      {/* <div className="container">
-        <mdb-table-editor
-        :data="datatable"
-        striped
-        bordered
-       /> */}
+    
 </div>
             </div>
-            {/* pagination */}
+      
 
-           
+            <ReactDatatable
+                config={config}
+                records={equipes}
+                columns={column}/>
             </>
       
     );
