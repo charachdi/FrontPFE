@@ -18,11 +18,12 @@ import Api_url from './../component/Api_url';
 import { ToastContainer, toast } from 'react-toastify';
 import Popover from '@material-ui/core/Popover';
 import { useHistory } from "react-router-dom";
+import ReactDatatable from '@ashvin27/react-datatable';
 
 // import { mdbTableEditor } from 'mdb-table-editor'
 
 
-function Service() {
+function Service(props) {
     const token = localStorage.getItem('token')
     const [open, setopen] = useState(false)
     const [suppopen, setsuppopen] = useState(false)
@@ -31,7 +32,7 @@ function Service() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [selectedrow, setselectedrow] = useState({id: 26, Nom_service: "hhhh", createdAt: "2021-03-09T15:20:45.000Z", updatedAt: "2021-03-09T15:20:45.000Z"})
     const history = useHistory();
-
+    const [loading, setloading] = useState(true)
     const [shownrow, setshownrow] = useState([])
     const [rowselected, setrowselected] = useState(7)
     const [pageselected, setpageselected] = useState(1)
@@ -59,6 +60,61 @@ function Service() {
 
      
     } 
+
+    //datatable
+    useEffect(() => {
+      const loading_screen = ()=>{
+         
+          setloading(true)
+          setTimeout(() => {
+            setloading(false)
+          }, 800);
+  
+      }
+      loading_screen()
+    }, [])
+
+    const [column, setcolumn] = useState([
+     
+      {
+        key: "Nom_service",
+        text: "Service",
+        sortable: true,
+        
+      },
+  
+      {
+        key: "Action",
+        text: "Action",
+        cell: (service, index) => {
+          return (
+            <>
+              <IconButton className="float-right mr-3" size="small" aria-label="delete" color="secondary" onClick={()=> {changeselected(service);toggleSupp()}}>
+              <DeleteIcon />
+              </IconButton>
+              <IconButton className="float-right mr-3" size="small" aria-label="delete" color="primary" onClick={()=>{changeselected(service); toggleEdit()}}>
+              <EditIcon />
+              </IconButton>   
+             </>
+          );
+      }
+      },
+       
+    ])
+    const config = {
+      page_size: 10,
+      length_menu: [10, 20, 50],
+      show_filter: true,
+      show_pagination: true,
+      pagination: 'advance',
+      button: {
+          excel: false,
+          print: false
+      }
+    }
+
+
+
 
     useEffect(() => {
    // fonction affiche table
@@ -324,24 +380,24 @@ const Prevpage = (e) =>{
             <div className="col-12 text-center">
             
 
-            <div className="row col-12 mb-2">
-              <div className="col-4"> 
+       
+              {/* <div className="col-4"> 
               <MDBCol >
                 <MDBFormInline className="md-form">
                   <MDBIcon icon="search" />
                   <TextField className="ml-3 " size="small" label="Recherche" variant="outlined" id="service-search" type="text" onChange={()=>{filter()}}/>
                 </MDBFormInline>
               </MDBCol>
-               </div> 
-               <div className="row col-5 d-flex justify-content-between">
+               </div>  */}
+               {/* <div className="row col-5 d-flex justify-content-between">
                <h5 className="text-center mt-2 ml-4 "><i class="fas fa-arrow-left mr-5 cursor" onClick={(e)=>{Prevpage(e)}}></i>{pageselected}<i class="fas fa-arrow-right ml-5 cursor" onClick={(e)=>{Nextpage(e)}}></i></h5>
                <TextField className="col-2 mr-4 mt-2" size="medium" type="number" value={rowselected} onChange={(e)=>{handelchangerow(e)}} id="row_shown" />
-               </div>
-               <div className="col-3"> 
+               </div> */}
+               <div className="col-3 mb-2"> 
                 <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={()=>toggle(!open)}> Ajouter </Button> 
                </div>
-            </div> 
-                <Table  striped bordered hover>
+         
+                {/* <Table  striped bordered hover>
                     
                     <thead>
                     <tr>
@@ -374,7 +430,7 @@ const Prevpage = (e) =>{
 
 
                     </tbody>
-            </Table>
+            </Table> */}
 
                       <Popover
                           id={popopen ? selectedrow.Nom_service : undefined}
@@ -469,7 +525,12 @@ const Prevpage = (e) =>{
         bordered
        /> */}
 </div>
-            </div></>
+            </div>
+            <ReactDatatable
+                config={config}
+                records={services}
+                columns={column}/>
+            </>
       
     );
 }
