@@ -15,6 +15,8 @@ import Colture from './../component/Table/Colture'
 import Visibility from '@material-ui/icons/Visibility';
 import IconButton from '@material-ui/core/IconButton';
 
+import Lottie from 'react-lottie';
+import Loading from './../images/loading.json'
 
 function Compteclientequipe() {
 
@@ -23,12 +25,22 @@ function Compteclientequipe() {
     const [equipeclient, setequipeclient] = useState([])
     const [length, setlength] = useState(3)
     const history = useHistory();
+    const [loding, setloding] = useState(true)
     
+
+    const defaultOptions = {
+      loop: true,
+      autoplay: true,
+      animationData: Loading,
+    };
     useEffect(() => {
 
 
         const loding = () =>{
-            
+          setloding(true)
+            setTimeout(() => {
+              setloding(false)
+            }, 2000);
         }
 
         const getequipe = async() =>{
@@ -40,6 +52,7 @@ function Compteclientequipe() {
             setequipeclient(res.data.clients)  
             setlength(res.data.clients.length)
         }
+        loding()
         getequipe()
         
         }, [])
@@ -125,7 +138,7 @@ const [column, setcolumn] = useState([
 
                             {
                                 cl.Auths[0].Permission.Read === "false" ? (
-                                    <img src={accesdenied} className="access" style={{filter:"none"}}/>
+                                    <p className="mt-2" style={{color:'red'}}>denied</p>
                                 ) : (
                                     <IconButton size="small" aria-label="eye" onClick={()=> gotoclient(cl.id ,cl.Auths[0].Permission.Read )} style={{color :"#388e3c"}} >
                                     <Visibility />
@@ -153,11 +166,24 @@ const [column, setcolumn] = useState([
 
     return (
         <div className="row col-12 justify-content-center">
-               
-     <ReactDatatable
+
+          {
+              loding ? (
+                <Lottie 
+	    options={defaultOptions}
+        height={"50%"}
+        width={"50%"}
+      />
+              ) :(
+                <ReactDatatable
                 config={config}
                 records={equipeclient}
-                columns={column}/>
+                columns={column}
+                />
+              )
+          }
+               
+    
     
         </div>
     )

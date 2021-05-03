@@ -21,6 +21,7 @@ function Fileview(props) {
   //  console.log(props.file)
    
     }, [])
+  //  lister window close
 
     const defaultOptions = {
         loop: false,

@@ -177,11 +177,20 @@ const archiver = async (id)=>{
     url : `${Api_url}Clients/archive/${id}`,
 })
 if(res.status === 200){
-  setcomptecli(
-    comptecli.filter(item => item.id !== res.data.cli.id)
-   )
+  console.log(res)
 
-  setClient_archive([res.data.cli , ...Client_archive])
+
+  var targetIndex = comptecli.findIndex(item => item.id === res.data.cli.id);
+  // setcomptecli(
+  //   comptecli.filter((item, index) => index !== targetIndex)
+  //  )
+   
+
+   comptecli.splice(targetIndex, 1);
+  //  Client_archive.push(res.data.cli)
+  setClient_archive([...Client_archive , res.data.cli ])
+
+
 }
 
 }
