@@ -14,6 +14,31 @@ import { ToastContainer, toast } from 'react-toastify';
 import EditIcon from '@material-ui/icons/Edit';
 import { Line } from 'react-chartjs-2';
 import { Pie } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
+import {  withStyles } from '@material-ui/core/styles';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import ReactDatatable from '@ashvin27/react-datatable';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Lottie from 'react-lottie';
+import Loading from './../images/loading.json'
+
+const BorderLinearProgress = withStyles((theme) => ({
+  root: {
+    height: 10,
+    borderRadius: 5,
+  },
+  colorPrimary: {
+    backgroundColor: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
+  },
+  bar: {
+    borderRadius: 5,
+    backgroundColor: '#1a90ff',
+  },
+}))(LinearProgress);
+
+
 
 function UserView(props) {
 
@@ -21,13 +46,105 @@ function UserView(props) {
     const token = localStorage.getItem('token')
     const userId = props.match.params.id
     const [user, setuser] = useState({})
+    const [isloading, setisloading] = useState(true)
+
+    const [Clientsdata, setClientsdata] = useState([])
+
+
+ // Line data
+    const [date, setdate] = useState([])
+    const [date_value, setdate_value] = useState([])
+
+//pie data
+
+    const [clients, setclients] = useState([])
+    const [clients_value, setclients_value] = useState([])
+
+  //bar data
+
+  const [Orgine, setOrgine] = useState([])
+  const [Origine_value, setOrigine_value] = useState([])
+
+    useEffect(() => {
+
+      const loading_screen = () =>{
+        setisloading(true)
+        setTimeout(() => {
+            setisloading(false)
+        }, 2500);
+      }
+
+      const getuser = async () =>{
+        const res = await axios({
+            headers: {'Authorization': `Bearer ${token}`},
+            method: 'get',
+            url : `${Api_url}user/${userId}`,
+            });
+          
+           setuser(res.data.user)
+      }
+
+      
+      const getclients = async () =>{
+        const res = await axios({
+          headers: { Authorization: `Bearer ${token}` },
+          method: "get",
+          url: `${Api_url}user/stat/clients/${userId}`,
+          
+        });
+       console.log(res)
+       setClientsdata(res.data.Clients)
+      }
+      const getLine = async () =>{
+        const Line = await axios({
+          headers: { Authorization: `Bearer ${token}` },
+          method: "get",
+          url: `${Api_url}user/stat/line/${userId}`,
+          
+        });
+        setdate(Line.data.date)
+        setdate_value(Line.data.value)
+      }
+
+      const getpIE = async () =>{
+        const Pie = await axios({
+          headers: { Authorization: `Bearer ${token}` },
+          method: "get",
+          url: `${Api_url}user/stat/pie/${userId}`,
+          
+        });
+        setclients(Pie.data.client)
+        setclients_value(Pie.data.value)
+      
+      }
+
+      const getBar = async () =>{
+        const Bar = await axios({
+          headers: { Authorization: `Bearer ${token}` },
+          method: "get",
+          url: `${Api_url}user/stat/bar/${userId}`,
+        });
+          setOrgine(Bar.data.Origine)
+          setOrigine_value(Bar.data.value)
+        
+      }
+
+      //
+
+      loading_screen()
+      getBar()
+      getuser()
+      getLine()
+      getclients()
+      getpIE()
+    }, [])
 
 
     const piedata = {
-      labels: ["1" ,"2"],
+      labels: clients,
       datasets: [{
         label: 'My First Dataset',
-        data: ["1" ,"2"],
+        data: clients_value,
         backgroundColor: [
           'rgb(255, 99, 132)',
           'rgb(54, 162, 235)',
@@ -39,8 +156,44 @@ function UserView(props) {
       }]
     };
 
+    const pieoption={
+      legend: {
+        display: true,
+        position : 'right',
+    }
+    }
+
+    const defaultOptions = {
+      loop: true,
+      autoplay: true,
+      animationData: Loading,
+    };
+
+    const bardata = {
+      labels: Orgine,
+      datasets: [{
+        label: Orgine,
+        data: Origine_value,
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)',
+          'rgb(218, 92, 250)',
+          'rgb(43, 200, 145)'
+        ],
+        hoverOffset: 4
+      }]
+    };
+
+    const baroption={
+      legend: {
+        display: false,
+        position : 'top',
+    }
+    }
+
     const linedata = {
-      labels: ["1" ,"2"],
+      labels: date,
       datasets: [{
         spanGaps: true,
         lineTension: 0,
@@ -61,92 +214,169 @@ function UserView(props) {
          pointRadius: 1,
          pointHitRadius: 0,
         label: 'Requetes',
-        data: ["1" ,"2"],
+        data: date_value,
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
         tension: 0
       }]
     };
-        useEffect(() => {
-            const getuser = async () =>{
-                const res = await axios({
-                    headers: {'Authorization': `Bearer ${token}`},
-                    method: 'get',
-                    url : `${Api_url}user/${userId}`,
-                    });
-                  
-                   setuser(res.data.user)
-              }
-              getuser()
-        }, [])
-
-           
+{/*  */}
+    const [column, setcolumn] = useState([
+      {
+        key: "name",
+        text: "",
+        cell: (client, index) => {
+          return (
+            <div className="d-flex flex-row">
+                <div className="d-flex flex-row"> <Avatar src={client.profile ? client.profile : ""} alt={client.client} style={{width: 40, height : 40}} /> 
+                <p className="mt-2 ml-4" style={{fontSize : 13}}>{client.client}  </p>
+                 </div>
+                
+             </div>
+          );
+      }
+    },
+    {
+      key: "",
+      text: "progres",
+      cell: (client, index) => {
+        return (
+          <div className="mt-3" style={{minWidth:250}}>
+             <BorderLinearProgress variant="determinate" value={client.prog_value} color=""  />
+           </div>
+        );
+    }
+  },
+  {
+    key: "",
+    text: "",
+    cell: (client, index) => {
+      return (
+        <div className="mt-1">
+           <Box position="relative" display="inline-flex" className="">
+                                <CircularProgress variant="determinate" style={{color :"#1A90FF"}} value={client.prog_value} />
+                                <Box
+                                    top={0}
+                                    left={0}
+                                    bottom={0}
+                                    right={0}
+                                    position="absolute"
+                                    display="flex"
+                                    alignItems="center"
+                                    justifyContent="center"
+                                >
+                                    <Typography variant="caption" component="div"   style={{color: "#212529" , fontSize:10}}>{`${client.prog_value}%`}</Typography>
+                                </Box>
+                                </Box>
+         </div>
+      );
+  }
+},
+    {
+      key: "ok",
+      text: "Clôturé",
+      cell: (client, index) => {
+        return (
+          <>
+             <p className="text-center">{client.ok}</p>
+           </>
+        );
+    }
+       },
+      {
+      key: "ko",
+      text: "En cours",
+      cell: (client, index) => {
+        return (
+          <>
+             <p className="text-center">{client.ko}</p>
+           </>
+        );
+    }
+       },
+       {
+        key: "total_Requetes",
+        text: "Total",
+        cell: (client, index) => {
+          return (
+            <>
+               <p className="text-center">{client.total_Requetes}</p>
+             </>
+          );
+      }
+         },
+       
+    ])
+    const config = {
+      page_size: 5,
+      length_menu: [5, 10, 20],
+      show_filter: true,
+      show_pagination: true,
+      pagination: 'advance',
+      button: {
+          excel: false,
+          print: false
+      }
+    }
+      
+        
     return (
-        <div className="col-12 justify-content-center " style={{height:"90vh"}}>
-          <div class="row">
-                <div class="col-lg-4" >
-                   <div class="profile-card-4 z-depth-3">
-                    <div class="card">
-                      <div class="card-body text-center rounded-top" style={{backgroundColor:"#2DCD94"}}>
-                       <div class="user-box text-center">
-                       <Avatar  style={{width:200, height:200}} className="profile_img cursor" alt="Haboubi amine" src={user ? user.user_img:"" } />
-                      </div>
-                      <h5 class="mb-1 text-white">{user ? user.full_name:"" }</h5>
-                      <h6 class="text-light">{user ? user.user_level:""}</h6>
-                     </div>
-                      <div class="card-body">
-                        <ul class="list-group shadow-none">
-                        <li class="list-group-item">
-                          <div class="list-icon">
-                            <i class="fa fa-phone-square"></i>
-                          </div>
-                          <div class="list-details">
-                            <span>{user ? user.tel:""}</span>
-                            <small>Numéro de télephone</small>
-                          </div>
-                        </li>
-                        <li class="list-group-item">
-                          <div class="list-icon">
-                            <i class="fa fa-envelope"></i>
-                          </div>
-                          <div class="list-details">
-                            <span>{user ? user.user_email:""}</span>
-                            <small>Adresse Email</small>
-                          </div>
-                        </li>
-                        <li class="list-group-item">
-                          <div class="list-icon">
-                            <i class="fa fa-globe"></i>
-                          </div>
-                          <div class="list-details">
-                            <span>{user ? user.Website:""}</span>
-                            <small>Website Address</small>
-                          </div>
-                        </li>
-                        </ul>
-                        
-                       </div>
-                      
-                     </div>
-                   </div>
-                </div>
-                <div class="col-lg-8">
-                   <div class="card z-depth-3">
-                    <div class="row card-body">
+        <div className="row col-12 justify-content-center " style={{height:"90vh"}}>
+
+          {
+            isloading ? (
+              <Lottie 
+          options={defaultOptions}
+            height={"70%"}
+            width={"70%"}
+            isClickToPauseDisabled={true}
+          />
+            ) : (
+              <>
+                <div className="row col-12 justify-content-center historique mb-5">
+
+                    <div className="d-flex flex-column mt-3 mb-3">
+                    <Avatar src={user.user_img} className="mx-auto"  style={{width : 150 , height:150}}/>
+                      <h2>{user.full_name}</h2>
+                    </div>
+                    
+                  </div>
+                <div className="col-12">
+                   <div className="">
+                    <div className="row ">
                    
                     {/* SHOW DATA PROFILE */}
                     <div className="col-6">
-                    <Pie  data={piedata} width={50} height={40}/>
+                    <Line  data={linedata} options={baroption} width={10} height={5}/>
                     </div>
                     <div className="col-6">
-                    <Line  data={linedata} width={50} height={40}/>
+                    <Pie  data={piedata} width={10} options={pieoption} height={5}/>
                     </div>
+                    <div className="col-9 mt-5 mb-5">
+                    <ReactDatatable
+                        config={config}
+                        records={Clientsdata}
+                        columns={column}/>
+                    
+                    </div>
+ 
+                    <div className="col-3 mt-5 mb-5">
+                    <Bar  data={bardata} options={baroption} width={10} height={"20%"}/>
+                    </div>
+
+                    
+                   
                     
                 </div>
               </div>
-              </div>
-                
+              
+    
             </div>
+            </>
+            )
+          }
+
+                  
        </div>
     )
 }

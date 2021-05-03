@@ -244,6 +244,7 @@ return (
         options={defaultOptions}
           height={"70%"}
           width={"70%"}
+          isClickToPauseDisabled={true}
         />
       ) : (
         <div id="account-box" className="row col-12 justify-content-center " >
@@ -267,7 +268,7 @@ return (
             ))}
             </div>
             <div id="view" className="col-xl-8  z-depth-3" >
-            <Userview selected={selecteduser} setstate={updateuser} delete={deleteuser} showEdit={true} />
+            <Userview selected={selecteduser} setstate={updateuser} delete={deleteuser} showEdit={false} />
 
             <div id="add-account" className="city" >
             <form className="row col-12 justify-content-center align-middle" autoComplete={"off"}>
@@ -276,12 +277,14 @@ return (
               <hr />
               <br />
               <div className="row" >
-              <TextField  value={email} onChange={(e)=>{setemail(e.target.value)}} className="" label="Email" id="standard-size-small" type="email"  size="" required/>
+              <TextField variant="outlined"   value={email} onChange={(e)=>{setemail(e.target.value)}} className="float-left ml-5 mr-4 col-5" label="Email" id="standard-size-small" type="email" style={{width:250}}  size="small" required/>
               <TextField
-                  className="ml-3"
+                  className=" col-5 float-right"
                   style={{width:250}}
+                  variant="outlined" 
                   id="domaine"
                   select
+                  size="small"
                   label="domaine"
                   value={domaine}
                   onChange={(e)=>{setdomaine(e.target.value)}}
@@ -295,10 +298,11 @@ return (
              
               <br />
                <TextField
-                className="float-center mt-5 col-5 mr-5"
+                className="float-left ml-5 mt-3 col-5 "
                 id="role"
+                variant="outlined" 
                 select
-                size="medium"
+                size="small"
                 label="Role"
                 helperText="selectioner Role"
                 value={level}
@@ -344,12 +348,13 @@ return (
               {
                 eqdisabled ? (
                   <TextField
-                
-                  className="float-center mt-5 col-5"
+                  variant="outlined" 
+                  className="float-right mt-3 col-5"
                   id="Service"
                   select
-                  size="medium"
+                  size="small"
                   label="Service"
+                  style={{width:250}}
                   helperText="selectioner Serices"
                   value={service}
                   onChange={(e)=>{setservice(e.target.value)}}
@@ -364,10 +369,12 @@ return (
                 ) : (
                   <TextField
                   disabled={eqdisabled}
-                  className="float-center mt-5 col-5"
+                  style={{width:250}}
+                  className="float-center mt-3 col-6"
                   id="equipe"
                   select
-                  size="medium"
+                  variant="outlined" 
+                  size="small"
                   label="equipe"
                   helperText="select equipe"
                   value={usereq}
@@ -385,10 +392,10 @@ return (
               }
             
 
-            <TextField  value={fullname} onChange={(e)=>{setfullname(e.target.value)}} className="mt-5 col-8" label="Nom et Prenom" id="standard-size-small" type="text"  size="" required/>
+            <TextField variant="outlined"   value={fullname} onChange={(e)=>{setfullname(e.target.value)}} className="mt-5 col-8" label="Nom et Prenom" id="standard-size-small" type="text"   size="small" required/>
 
 
-              <div className="row justify-content-center mt-5">
+              <div className="row justify-content-center mt-4">
               <button type="submit" className="btn text-lowercase" style={{width:100}}  onClick={(e)=>{Adduser(e)}}>ajouter</button>
               </div>
               </div>

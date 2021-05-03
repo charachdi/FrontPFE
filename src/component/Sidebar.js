@@ -9,7 +9,13 @@ import { useHistory } from "react-router-dom";
 import $ from 'jquery'
 import axios from 'axios'
 import Api_url from './../component/Api_url'
-function Sidebar() {
+import { ToastContainer, toast } from 'react-toastify';
+import {socket} from './../Socket/Socket'
+
+
+import Editrequete from './../component/Notification/Editrequete'
+
+function Sidebar(props) {
 
 
   const history = useHistory();
@@ -18,8 +24,11 @@ function Sidebar() {
   const [url, seturl] = useState("")
   const [fullname, setfullname] = useState("")
   const user = JSON.parse(localStorage.getItem('user')) ;
+
   
   
+ 
+
 const [current, setcurrent] = useState("")
   useEffect(() => {
    
@@ -32,13 +41,42 @@ const [current, setcurrent] = useState("")
         url : `${Api_url}user/${user.id}`,  
         });
         setcurrent(currentuser.data.user.user_level)
+       
 
     }
+    // Chef.Service.Roomid
+    const socketon = ()=>{
+      
+        // console.log(data)
+      if(user){
+        if(user.user_level === "Chef Service"){
+          socket.on(`${user.Chef.Service.Roomid}`, (data)=>{
+          
+             toast.info( <Editrequete data={data}/>,{
+            position: "bottom-right",
+            autoClose: 3500,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
 
+          });
+         
+         
+      
+        }
+      }
+        
+        
+      
+    }
+   
     if(user){
       info()
     }
-
+    socketon()
     
   }, [])
   
@@ -58,6 +96,17 @@ const [current, setcurrent] = useState("")
     return (
        
       <nav id="sidebar">
+        <ToastContainer
+      position="bottom-right"
+      autoClose={5000}
+      hideProgressBar={true}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      />
       <div className="custom-menu">
         <button type="button" id="sidebarCollapse" className="btn btn-success">
           <i className="fa fa-bars"></i>

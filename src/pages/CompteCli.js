@@ -23,6 +23,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { useHistory } from "react-router-dom";
 import Permission from './../component/Comptcli/Permission'
 import Requete from './../component/Comptcli/Requete'
+import Historique from '../component/Comptcli/Historique'
 import Clidata from './../component/Comptcli/Clidata'
 import domtoimage from 'dom-to-image';
 
@@ -39,8 +40,10 @@ function CompteCli(props) {
     const [Auths, setAuths] = useState([])
 
     const [exportauth , setexportauth] = useState(false)
+    const [Writeauth, setWriteauth] = useState(false)
 
     const [profimg, setprofimg] = useState({})
+    const [proftheme, setproftheme] = useState({})
     const [service, setservice] = useState({})
     const [equipe, setequipe] = useState({})
 
@@ -49,6 +52,9 @@ function CompteCli(props) {
 
     const [isopen, setisopen] = useState(false)
     const [isadchef, setisadchef] = useState(false)
+    
+
+    const [selectedrow, setselectedrow] = useState({})
 
     const defaultOptions = {
       loop: true,
@@ -68,6 +74,9 @@ function CompteCli(props) {
           if((currentuser.data.user.user_level === "admin") ||( currentuser.data.user.user_level === "Chef Service")){
             setisadchef(true)
             setexportauth(true)
+            getrequetesadmin()
+         }else{
+           getrequetecollab()
          }
       
        }
@@ -92,9 +101,12 @@ function CompteCli(props) {
         method: 'get',
         url : `${Api_url}clients/${client_id}`,  
         });
+        console.log(res.data.compteCli)
         setAuths(res.data.compteCli.Auths)
         setclient(res.data.compteCli)
+        setselectedrow(res.data.compteCli)
         setprofimg(res.data.compteCli.Clientimg)
+        setproftheme(res.data.compteCli.Theme)
         setequipe(res.data.compteCli.Equipe)
         setservice(res.data.compteCli.Service)
         const user =JSON.parse(localStorage.getItem('user')) ;
@@ -110,6 +122,10 @@ function CompteCli(props) {
             if(au.Permission.export === 'true'){
                  setexportauth(true)
             }
+
+            if(au.Permission.Write === 'true'){
+              setWriteauth(true)
+         }
             
           }
      });
@@ -117,7 +133,7 @@ function CompteCli(props) {
         
     }
 
-    const getrequetes = async()=>{
+    const getrequetesadmin = async()=>{
       const res = await axios({
         headers: {'Authorization': `Bearer ${token}`},
         method: 'get',
@@ -126,10 +142,19 @@ function CompteCli(props) {
         setrequete(res.data.compteCli.Requetes)
     }
 
+    const getrequetecollab = async()=>{
+      const res = await axios({
+        headers: {'Authorization': `Bearer ${token}`},
+        method: 'get',
+        url : `${Api_url}clients/requete/collab/${client_id}`,  
+        });
+        setrequete(res.data.compteCli.Requetes)
+    }
+
     getcurrentuser()
     getequipelist()
     loading_screen()
-    getrequetes()
+    
     
     }, [])
   
@@ -137,20 +162,25 @@ function CompteCli(props) {
 const switchtodata = () =>{
   $("#requetetab").hide()
   $("#permissiontab").hide()
+  $("#historitab").hide()
   $("#Datatab").show()
 
   $("#reqbtn").removeClass("active")
   $("#databtn").addClass("active")
+  $("#hisbtn").removeClass("active")
   $("#perbtn").removeClass("active")
 }
 const switchtoreq = () =>{
 
   $("#permissiontab").hide()
   $("#Datatab").hide()
+  $("#historitab").hide()
   $("#requetetab").show()
+  
 
   $("#perbtn").removeClass("active")
   $("#databtn").removeClass("active")
+  $("#hisbtn").removeClass("active")
   $("#reqbtn").addClass("active")
 }
 
@@ -158,12 +188,31 @@ const switchtoper = () =>{
 
   $("#requetetab").hide()
   $("#Datatab").hide()
+  $("#historitab").hide()
   $("#permissiontab").show()
 
   $("#reqbtn").removeClass("active")
   $("#databtn").removeClass("active")
+  $("#hisbtn").removeClass("active")
   $("#perbtn").addClass("active")
 }
+
+const switchtohist = () =>{
+
+  $("#requetetab").hide()
+  $("#Datatab").hide()
+  $("#permissiontab").hide()
+  $("#historitab").show()
+
+  $("#reqbtn").removeClass("active")
+  $("#databtn").removeClass("active")
+  $("#perbtn").removeClass("active")
+  $("#hisbtn").addClass("active")
+
+  
+  
+}
+
 const exportPNG = ()=>{
   console.log("png")
   // Equipedata
@@ -179,9 +228,285 @@ setTimeout(() => {
  
 }
 
+const updaterequete = async (req) =>{
+ 
+ 
+
+  const data = {
+    Statut : req.Statut,
+    Origine_de_la_requete : req.Origine_de_la_requete,
+    Motifs_de_resiliation : req.Motifs_de_resiliation,
+    Heure_de_fermeture : req.Heure_de_fermeture,
+    Famille_de_demande_RC : req.Famille_de_demande_RC,
+  }
+
+   const res = await axios({
+    headers: {'Authorization': `Bearer ${token}`},
+    method: 'put',
+    url : `${Api_url}clients/requete/${req.id}`,  
+    data
+    });
+    
+
+    if(res.status === 200){
+      toast.success(`Requete Modifier`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        });
+
+      setrequete(
+        requete.map(item => 
+            item.id === res.data.requete.id
+            ? res.data.requete 
+            : item 
+    ))
+    }
+}
+const upprev = () => {
+  const url = URL.createObjectURL(
+    document.getElementById("up-client-img").files[0]
+  );
+  // Clientimg img_profile img_background
+  setselectedrow({
+    ...selectedrow,
+    Clientimg: {
+      ...selectedrow.Clientimg,
+      img_profile: url,
+    },
+  });
+};
+
+const upprev2 = () => {
+  const url = URL.createObjectURL(
+    document.getElementById("up-client-bg").files[0]
+  );
+  setselectedrow({
+    ...selectedrow,
+    Clientimg: {
+      ...selectedrow.Clientimg,
+      img_background: url,
+    },
+  });
+};
 
 const toggleEdit = ()=>{
   setisopen(!isopen)
+}
+
+const handelupdatecolor = (col) => {
+  setselectedrow({
+    ...selectedrow,
+    Theme: {
+      Color: col.hex,
+    },
+  });
+};
+ // fonction update table
+ const updatedclient = async (e) => {
+  e.preventDefault();
+  const formData = new FormData();
+  // formData.append('clientimg[]',document.getElementById('up-client-img').files[0]);
+  // formData.append('clientimg[]',document.getElementById('up-client-bg').files[0]);
+  formData.append("Nom_compteCli", selectedrow.Nom_compteCli);
+  formData.append("ServiceId", selectedrow.Service.id);
+  formData.append("EquipeId", selectedrow.Equipe.id);
+  formData.append("description", selectedrow.description);
+  formData.append("color", selectedrow.Theme.Color);
+
+  if (
+    (document.getElementById("up-client-bg").files[0] !== undefined) ===
+      true &&
+    (document.getElementById("up-client-img").files[0] !== undefined) ===
+      false
+  ) {
+    formData.append(
+      "clientimg[]",
+      document.getElementById("up-client-bg").files[0]
+    );
+    const res = await axios({
+      headers: { Authorization: `Bearer ${token}` },
+      method: "put",
+      url: `${Api_url}clients/update/clients/bg/${selectedrow.id}`,
+      data: formData,
+    });
+    console.log(res);
+    if (res.status === 200) {
+      toast.success(
+        `Le client ${res.data.client.Nom_client} a été modifée avec succès`,
+        {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+        }
+      );
+      setprofimg(res.data.client.Clientimg)
+      setproftheme(res.data.client.Theme)
+      // setclient({ Clientimg :  res.data.client.Clientimg , Theme : res.data.client.Theme , description : res.data.client.description , Nom_compteCli : res.data.client.Nom_compteCli ,  ...client})
+      console.log(client)
+      setisopen(!isopen)
+    } else {
+      toast.error("error", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+      });
+    }
+  } else if (
+    (document.getElementById("up-client-bg").files[0] !== undefined) ===
+      false &&
+    (document.getElementById("up-client-img").files[0] !== undefined) === true
+  ) {
+    formData.append(
+      "clientimg[]",
+      document.getElementById("up-client-img").files[0]
+    );
+    const res = await axios({
+      headers: { Authorization: `Bearer ${token}` },
+      method: "put",
+      url: `${Api_url}clients/update/clients/prof/${selectedrow.id}`,
+      data: formData,
+    });
+    console.log(res);
+    if (res.status === 200) {
+      toast.success(
+        `Le client ${res.data.client.Nom_client} a été modifée avec succès`,
+        {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+        }
+      );
+      setprofimg(res.data.client.Clientimg)
+      setproftheme(res.data.client.Theme)
+      setisopen(!isopen)
+    } else {
+      toast.error("error", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+      });
+    }
+  } else if (
+    (document.getElementById("up-client-bg").files[0] !== undefined) ===
+      true &&
+    (document.getElementById("up-client-img").files[0] !== undefined) === true
+  ) {
+    formData.append(
+      "clientimg[]",
+      document.getElementById("up-client-img").files[0]
+    );
+    formData.append(
+      "clientimg[]",
+      document.getElementById("up-client-bg").files[0]
+    );
+    const res = await axios({
+      headers: { Authorization: `Bearer ${token}` },
+      method: "put",
+      url: `${Api_url}clients/update/clients/${selectedrow.id}`,
+      data: formData,
+    });
+    console.log(res);
+    if (res.status === 200) {
+      toast.success(
+        `Le client ${res.data.client.Nom_client} a été modifée avec succès`,
+        {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+        }
+      );
+      setprofimg(res.data.client.Clientimg)
+      setproftheme(res.data.client.Theme)
+      setisopen(!isopen)
+    } else {
+      toast.error("error", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+      });
+    }
+  } else if (
+    (document.getElementById("up-client-bg").files[0] !== undefined) ===
+      false &&
+    (document.getElementById("up-client-img").files[0] !== undefined) ===
+      false
+  ) {
+    const data = {
+      Nom_compteCli: selectedrow.Nom_compteCli,
+      ServiceId: selectedrow.Service.id,
+      EquipeId: selectedrow.Equipe.id,
+      description: selectedrow.description,
+      color: selectedrow.Theme.Color,
+    };
+    const res = await axios({
+      headers: { Authorization: `Bearer ${token}` },
+      method: "put",
+      url: `${Api_url}clients/update/clients/false/${selectedrow.id}`,
+      data,
+    });
+    console.log(res);
+    if (res.status === 200) {
+      toast.success(
+        `Le client ${res.data.client.Nom_client} a été modifée avec succès`,
+        {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+        }
+      );
+      //
+      setprofimg(res.data.client.Clientimg)
+      setproftheme(res.data.client.Theme)
+      setisopen(!isopen)
+    } else {
+      toast.error("error", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+      });
+    }
+  }
+};
+
+const addrequte = (req)=>{
+  toast.success("Requete Ajouter", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+  });
+    setrequete([req , ...requete])
+
 }
 
     return (
@@ -204,8 +529,9 @@ const toggleEdit = ()=>{
         isloading ? (
           <Lottie 
 	    options={defaultOptions}
-        height={"50%"}
-        width={"50%"}
+        height={"40%"}
+        width={"40%"}
+        isClickToPauseDisabled={true}
       />
         ) : (
           <>
@@ -242,7 +568,7 @@ const toggleEdit = ()=>{
        
           <div id="client-image" className="row ml-2">
           <span ><Avatar  src={profimg.img_profile} className="mb-4" style={{width:140,height:140}} alt=""/></span> 
-          <h4 className="mt-5 ml-2" style={{color: client.Theme ? client.Theme.Color : "black"}} >{client.Nom_compteCli}</h4>
+          <h4 className="mt-5 ml-2" style={{color: proftheme ? proftheme.Color : "black"}} >{client.Nom_compteCli}</h4>
           </div>
          
        </div>
@@ -266,6 +592,10 @@ const toggleEdit = ()=>{
    {
      isadchef ?  <li onClick={(e)=>{switchtoper()}} className="nav-item"><span  id="perbtn"  className="nav-link cursor" data-toggle="tab">Permission</span></li> : null
    }
+
+    {
+     isadchef ?  <li onClick={(e)=>{switchtohist()}} className="nav-item"><span  id="hisbtn"  className="nav-link cursor" data-toggle="tab">historique</span></li> : null
+   }
   
 </ul>
 </div>
@@ -285,9 +615,12 @@ const toggleEdit = ()=>{
    </div>
 
    <div id="requetetab" style={{display: exportauth ? "none": "block"}} className="row col-12 mb-2">
-     <Requete Requetelist={requete}/>
+     <Requete Requetelist={requete} updatereq={updaterequete} auth={Writeauth} admin={isadchef} clientID={client_id} clientname={client.Nom_compteCli} add={addrequte} />
    </div>
 
+   <div id="historitab" style={{display: "none" , minHeight : 600}} className="row col-12 justify-content-center mb-2">
+     <Historique  clientID={client_id}/>
+   </div>
   
    </div>
    </div>
@@ -306,7 +639,7 @@ const toggleEdit = ()=>{
                 <form className="row col-12 justify-content-center align-middle" >
                   <div className="col-12 mt-2">
                     <div className="text-right right_button">
-                    <input accept="image/*"  id="up-client-bg" type="file"  style={{display:'none'}}  required/>
+                    <input accept="image/*"  id="up-client-bg" type="file"  style={{display:'none'}}   onChange={(e)=>{upprev2()}}/>
                     <label htmlFor="up-client-bg">
                       <IconButton className="" color="primary"  aria-label="upload picture" component="span">
                         <PhotoCamera style={{color:'#c2c1c1'}}/>
@@ -316,15 +649,15 @@ const toggleEdit = ()=>{
                 <div  className="d-flex justify-content-center " >
 
                 <div className="profile-header-cover-modal">
-                <img  style={{width:"100%", borderRadius:10}} className=""  alt="" src={profimg.img_background} />
+                <img  style={{width:"100%", borderRadius:10}} className=""  alt="" src={selectedrow.Clientimg ? selectedrow.Clientimg.img_background : ""} />
                
                </div>
                  
                   
                   <div id="client-image" className="row">
                     <section>
-                    <Avatar className="ml-3" style={{width:100, height:100}}  alt="" src={profimg.img_profile} />
-                  <input accept="image/*"  id="up-client-img" type="file" className="mb-3"  style={{display:'none'}}   required/>
+                    <Avatar className="ml-3" style={{width:100, height:100}}  alt="" src={selectedrow.Clientimg ? selectedrow.Clientimg.img_profile : ""} />
+                  <input accept="image/*"  id="up-client-img" type="file" className="mb-3"  style={{display:'none'}}   required onChange={(e)=>{upprev()}} />
                   <label htmlFor="up-client-img">
                     <IconButton className="mt-2 ml-5" color="primary" aria-label="upload picture" component="span">
                       <PhotoCamera style={{color:'#2DCD94'}}/>
@@ -332,7 +665,7 @@ const toggleEdit = ()=>{
                   </label>
                     </section>
                   
-                  <h3 id="compteclientnom" className=" ml-3 mt-4"  style={{color: client.Theme ? client.Theme.Color : "black"}}>{client.Nom_compteCli}</h3>
+                  <h3 id="compteclientnom" className=" ml-3 mt-4"  style={{color: selectedrow.Theme ? selectedrow.Theme.Color : "black"}}>{selectedrow.Nom_compteCli}</h3>
                   </div>
                 
             
@@ -343,8 +676,8 @@ const toggleEdit = ()=>{
 
               <div className="row col-12 mt-5 ">
                 <div className="col-7">
-                <TextField className="col-12 mt-1 float-right" value={client.Nom_compteCli}  id="standard-basic" label="Nom du client" required />
-                <TextField value={client.description ? "" : client.description}  className="col-12 mt-3" id="time" type="text" label="description" multiline={true} variant="outlined" size="small" rows={7} />
+                <TextField className="col-12 mt-1 float-right" value={selectedrow.Nom_compteCli}  id="standard-basic" label="Nom du client" required />
+                <TextField value={selectedrow.description ? "" : selectedrow.description}  className="col-12 mt-3" id="time" type="text" label="description" multiline={true} variant="outlined" size="small" rows={7} />
                       
                       
 
@@ -353,14 +686,17 @@ const toggleEdit = ()=>{
                 </div>
 
                 <div className="col-4">
-                <TwitterPicker color={"black"}  className="ml-1 mt-5 " /><br/>
+                <TwitterPicker color={"black"}
+                onChangeComplete={(color) => {
+                  handelupdatecolor(color);
+                }}  className="ml-1 mt-5 " /><br/>
 
                
                
                 </div>
 
                 <div className="row col-12 justify-content-center">
-                <Button  variant="outlined" class="btn btn-outline-success">
+                <Button onClick={(e)=>{updatedclient(e)}}  variant="outlined" class="btn btn-outline-success">
                       Modifier
                       </Button> 
                 </div>

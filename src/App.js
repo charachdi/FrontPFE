@@ -25,9 +25,9 @@ import Userview from './component/Userview'
 import Sidebar from './component/Sidebar'
 import 'react-toastify/dist/ReactToastify.css';
 
-import io from "socket.io-client";
+// import io from "socket.io-client";
 
-
+import {socket} from './Socket/Socket'
 
 import AdminRoute from './component/AdminRoute'
 import Adminonly from './component/Adminonly'
@@ -40,24 +40,24 @@ function App() {
 
   
 
-  var connectionOptions =  {
-    "force new connection" : false,
-    "reconnectionAttempts": "Infinity", 
-    "timeout" : 100000000000000000,                  
-    "transports" : ["websocket"]
-  };
-  const ENDPOINT = "http://127.0.0.1:3001";
-  const [user, setuser] = useState({})
+  // var connectionOptions =  {
+  //   "force new connection" : false,
+  //   "reconnectionAttempts": "Infinity", 
+  //   "timeout" : 100000000000000000,                  
+  //   "transports" : ["websocket"]
+  // };
+  // const ENDPOINT = "http://127.0.0.1:3001";
+  // const socket = io.connect(ENDPOINT, connectionOptions);
 
-  const socket = io.connect(ENDPOINT, connectionOptions);
  
+const [user, setuser] = useState({})
 useEffect(() => {
   const getuser = ()=>{
      setuser(JSON.parse(localStorage.getItem('user')))
   }
 
   const socketconn = () =>{
-   
+    
   }
   getuser()
   socketconn()
@@ -66,19 +66,18 @@ useEffect(() => {
    console.log(user)
     const rendersidebar = () =>{
       if(window.location.pathname !== "/"){
-        return( <Sidebar />)
+        return( <Sidebar  />)
       }
       if(user !== null){
         return( <Sidebar />)
       }
     }
    
-  
-      //     //Here we broadcast it out to all other sockets EXCLUDING the socket which sent us the data
-      //    socket.broadcast.emit("outgoing data", {num: data});
-      // });
-  return (
     
+  return (
+
+    <>
+
     <Router>
       <div className="wrapper d-flex align-items-stretch" >
        {
@@ -115,6 +114,7 @@ useEffect(() => {
      
       
     </Router>
+    </>
   );
 }
 
