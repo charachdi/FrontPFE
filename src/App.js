@@ -16,6 +16,7 @@ import CompteCli from './pages/CompteCli'
 import EquipeView from './pages/EquipeView'
 import Stepperview from './pages/Stepperview'
 import FileView from './pages/FileView'
+import Fixrequete from './pages/Fixrequete'
 
 import UserView from './pages/UserView'
 import Login from './pages/Login'
@@ -93,6 +94,7 @@ useEffect(() => {
           <Adminonly path='/Service' component={Service} exact/>
           <Route path='/Client' component={Clients} exact/>
           <Comptecli path='/Compteclient' component={Compteclientequipe} exact/>
+          <Comptecli path='/Requetes' component={Fixrequete} exact/>
           {/* <Route path='/Chefscomptecli' component={Chefscomptecli} exact/> */}
 
 

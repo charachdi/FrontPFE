@@ -96,7 +96,7 @@ const [current, setcurrent] = useState("")
     return (
        
       <nav id="sidebar">
-        <ToastContainer
+        {/* <ToastContainer
       position="bottom-right"
       autoClose={5000}
       hideProgressBar={true}
@@ -106,7 +106,7 @@ const [current, setcurrent] = useState("")
       pauseOnFocusLoss
       draggable
       pauseOnHover
-      />
+      /> */}
       <div className="custom-menu">
         <button type="button" id="sidebarCollapse" className="btn btn-success">
           <i className="fa fa-bars"></i>
