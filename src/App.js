@@ -16,6 +16,7 @@ import CompteCli from './pages/CompteCli'
 import EquipeView from './pages/EquipeView'
 import Stepperview from './pages/Stepperview'
 import FileView from './pages/FileView'
+import Attendance from './pages/Attendance'
 
 import UserView from './pages/UserView'
 import Login from './pages/Login'
@@ -94,6 +95,7 @@ useEffect(() => {
           <Route path='/Client' component={Clients} exact/>
           <Comptecli path='/Compteclient' component={Compteclientequipe} exact/>
           {/* <Route path='/Chefscomptecli' component={Chefscomptecli} exact/> */}
+          <Route path='/Attendance' component={Attendance} exact/>
 
 
           <Route path='/Equipe/:id' render={(props) => <EquipeView socket={socket} {...props} /> } exact/>

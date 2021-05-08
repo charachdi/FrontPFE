@@ -215,6 +215,26 @@ const [current, setcurrent] = useState("")
             )
           }
          
+
+         {
+            current === "admin" ? (
+              <li>
+              <a className="text-left hover" onClick={()=>{history.push("/Attendance")}}><span className="fa fa-clock-o mr-3"></span>Présence</a>
+          </li>
+            ) : (
+              null
+            )
+          }
+
+        {
+            current === "Chef Service" ? (
+              <li>
+              <a className="text-left hover" onClick={()=>{history.push("/Attendance")}}><span className="fa fa-clock-o mr-3"></span>Présence</a>
+          </li>
+            ) : (
+              null
+            )
+          }
        
           <li>
             <a className="text-left" href="#" onClick={()=>{handelLogout()}}><i class="fas fa-sign-out-alt mr-3" style={{color:'white'}}></i> logout</a>
