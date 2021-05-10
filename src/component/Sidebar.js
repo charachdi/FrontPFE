@@ -119,7 +119,7 @@ const [current, setcurrent] = useState("")
         <li className="text-center d-flex flex-column mb-3">
           <div id="sidebarprofile" className="d-flex justify-content-center mb-2">
 
-          <Avatar  style={{width:80, height:80}} className="profile_img cursor" alt="Haboubi amine" src={user ? user.user_img : "" } onClick={()=>{history.push("/myprofile")}} />
+          <Avatar  style={{width:80, height:80}} className="profile_img cursor" alt="Haboubi amine" src={user ? user.user_img : "" } onClick={()=>{history.push(`/myprofile/${user.id}`)}} />
           </div>
         <h6 id="username" className="text-capitalize">{user ? user.full_name :""}</h6>
         
@@ -219,7 +219,7 @@ const [current, setcurrent] = useState("")
          {
             current === "admin" ? (
               <li>
-              <a className="text-left hover" onClick={()=>{history.push("/Attendance")}}><span className="fa fa-clock-o mr-3"></span>Présence</a>
+              <a className="text-left hover" onClick={()=>{history.push("/Attendance")}}><i class="fas fa-clipboard-list mr-3"></i>Présence</a>
           </li>
             ) : (
               null
@@ -229,7 +229,7 @@ const [current, setcurrent] = useState("")
         {
             current === "Chef Service" ? (
               <li>
-              <a className="text-left hover" onClick={()=>{history.push("/Attendance")}}><span className="fa fa-clock-o mr-3"></span>Présence</a>
+              <a className="text-left hover" onClick={()=>{history.push("/Attendance")}}><i class="fas fa-clipboard-list mr-3"></i>Présence</a>
           </li>
             ) : (
               null

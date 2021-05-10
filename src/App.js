@@ -104,7 +104,7 @@ useEffect(() => {
           <Route path='/profile/:id' component={UserView} exact/>
           <Route path='/Client/:id' component={CompteCli} exact/>
           <Route path='/File/:name/:id' component={FileView} exact/>
-          <Route path='/myProfile' component={Profile} exact/>
+          <Route path='/myProfile/:id' component={Profile} exact/>
 
 
           <Route path='/test' component={Test} exact/>

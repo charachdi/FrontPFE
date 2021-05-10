@@ -3,15 +3,8 @@ import axios from 'axios'
 import './../css/Profile.css'
 import $ from 'jquery'
 import Api_url from './../component/Api_url'
-import { useHistory } from "react-router-dom";
 import Avatar from '@material-ui/core/Avatar';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
-import { ToastContainer, toast } from 'react-toastify';
-import EditIcon from '@material-ui/icons/Edit';
 import { Line } from 'react-chartjs-2';
 import { Pie } from 'react-chartjs-2';
 import { Bar } from 'react-chartjs-2';
@@ -23,6 +16,9 @@ import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Lottie from 'react-lottie';
 import Loading from './../images/loading.json'
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
+
 
 const BorderLinearProgress = withStyles((theme) => ({
   root: {
@@ -44,7 +40,8 @@ function UserView(props) {
 
 
     const token = localStorage.getItem('token')
-    const userId = props.match.params.id
+    const localuser = JSON.parse(localStorage.getItem('user'))
+    const userId =  !props.id ? props.match.params.id : props.id
     const [user, setuser] = useState({})
     const [isloading, setisloading] = useState(true)
 
@@ -339,7 +336,14 @@ function UserView(props) {
                     <Avatar src={user.user_img} className="mx-auto"  style={{width : 150 , height:150}}/>
                       <h2>{user.full_name}</h2>
                     </div>
-                    
+                    {
+                      userId === `${localuser.id}` ? (
+                        <IconButton style={{position : 'absolute', right :20 , bottom :20}} onClick={()=>{props.toggle()}}>
+                        <EditIcon />
+                      </IconButton>
+                      ) : null
+                    }
+               
                   </div>
                 <div className="col-12">
                    <div className="">
