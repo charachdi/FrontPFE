@@ -14,6 +14,7 @@ import Progressuser from './../component/Table/Progressuser'
 import Colture from './../component/Table/Colture'
 import Visibility from '@material-ui/icons/Visibility';
 import IconButton from '@material-ui/core/IconButton';
+import Alert from '@material-ui/lab/Alert';
 
 import Lottie from 'react-lottie';
 import Loading from './../images/loading.json'
@@ -26,6 +27,7 @@ function Compteclientequipe() {
     const [length, setlength] = useState(3)
     const history = useHistory();
     const [loding, setloding] = useState(true)
+    const [warningcount, setwarningcount] = useState(0)
     
 
     const defaultOptions = {
@@ -52,6 +54,17 @@ function Compteclientequipe() {
             setequipeclient(res.data.clients)  
             setlength(res.data.clients.length)
         }
+
+        const getWarnningcount = async() =>{
+          const res = await axios({
+            headers: {'Authorization': `Bearer ${token}`},
+            method: 'get',
+            url : `${Api_url}user/Requete/false/${user.id}`,  
+            });
+            console.log(res)
+            setwarningcount(res.data.Count)
+        }
+        getWarnningcount()
         loding()
         getequipe()
         
@@ -66,15 +79,7 @@ function Compteclientequipe() {
         }
 
 
-        const filter = () =>{
-            var value = $("#client-search").val().toLowerCase();
-        $("#clientlist #client").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            console.log($(this).text().toLowerCase())
-            
-  });  
-
-}
+       
 
 
 const [column, setcolumn] = useState([
@@ -165,8 +170,9 @@ const [column, setcolumn] = useState([
   }
 
     return (
-        <div className="row col-12 justify-content-center">
+        <div className=" col-12 ">
 
+         
           {
               loding ? (
                 <Lottie 
@@ -175,11 +181,16 @@ const [column, setcolumn] = useState([
         width={"50%"}
       />
               ) :(
+                <>
+                <div className="row col-12 justify-content-end">
+                <Alert className="cursor" severity="warning" onClick={(e)=>{history.push("/Requetes")}}>{warningcount}</Alert>
+                </div>
                 <ReactDatatable
                 config={config}
                 records={equipeclient}
                 columns={column}
                 />
+                </>
               )
           }
                

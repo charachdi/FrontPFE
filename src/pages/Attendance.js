@@ -14,6 +14,8 @@ import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker, } from
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import TextField from '@material-ui/core/TextField';
+import Attend from './../component/Attend'
+import Comment from './../component/Comment'
 
 import Lottie from 'react-lottie';
 import Loading from './../images/loading.json'
@@ -26,8 +28,22 @@ function Attendance (props) {
     const history = useHistory();
     const [users, setusers] = useState([])
     const [endDate, setendDate] = useState([])
+    const [comment, setcomment] = useState("")
     const [startDate, setstartDate] = useState([])
     const [selectedDate, setSelectedDate] = useState(new Date('2021-08-18T21:11:54'));
+    const [refresh, setrefresh] = useState(false)
+    const [data, setdata] = useState({
+      total:0,
+      Present:0,
+      Absent:0,
+      Conge:0,
+      Retard:0,
+    })
+
+    
+
+
+
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -45,9 +61,17 @@ function Attendance (props) {
          const res = await axios({
            headers: {'Authorization': `Bearer ${token}`},
            method: 'get',
-           url : `${Api_url}user/`,  
+           url : `${Api_url}Presance/user/attend`,  
            });
-           setusers(res.data)  
+           setusers(res.data.user) 
+           setdata({
+            total: res.data.Present + res.data.Absent + res.data.Conge + res.data.Retard,
+            Present: res.data.Present,
+            Absent: res.data.Absent,
+            Conge: res.data.Conge,
+            Retard: res.data.Retard,
+           })
+            
        }
        const getdata = async() =>{
          const user =  JSON.parse(localStorage.getItem('user'))
@@ -96,12 +120,15 @@ function Attendance (props) {
   }, [])
 
 
+
+  
+
+
     const [column, setcolumn] = useState([
       
       {
         key: "full_name",
         text: "Employe",
-        sortable: true,
         cell: (user, index) => {
           return (
             <div className="d-flex flex-row">
@@ -116,13 +143,9 @@ function Attendance (props) {
         key: "Action",
         text: "Présance",
         cell: (user, index) => {
+
           return (
-            <>
-                       <i class="fas fa-check-circle fa-2x mr-2" style={{color:"#2dcd94"}} ></i>
-                       <i class="fas fa-ban fa-2x mr-2" style={{color:"#aaa7a8"}}></i>
-                       <i class="fas fa-mug-hot fa-2x mr-2" style={{color:"#aaa7a8"}}></i>
-                       <i class="fas fa-exclamation-circle fa-2x mr-2" style={{color:"#aaa7a8"}}></i>
-             </>
+            <Attend user={user} />
           );
       }
       },
@@ -130,11 +153,13 @@ function Attendance (props) {
       {
         key: "",
         text: "Commentaire",
+        className :"text-center",
         cell: (user, index) => {
           return (
-            <>
-                       <TextField id="outlined-basic"  variant="outlined" size='small'/>
-             </>
+            
+            
+            <TextField id={index} style={{width:"100%"}} placeholder="Commentaire" value={!user.Presances[0] ? "" : user.Presances[0].Comment}   variant="outlined" size='small'/>
+            
           );
       }
         
@@ -147,9 +172,9 @@ function Attendance (props) {
 
     const config = {
       page_size: 10,
-      length_menu: [10, 20, 50],
-      show_filter: true,
-      show_pagination: true,
+      length_menu: [],
+      show_filter: false,
+      show_pagination: false,
       pagination: 'advance',
       button: {
           excel: false,
@@ -157,7 +182,16 @@ function Attendance (props) {
       }
     }
 
-  
+  const updateuser = (res)=>{
+    setusers(
+      users.map(user=>
+        user.id === res.UserId 
+        ?{  Presances : [res], ...user}
+        :user
+        )
+    )
+  }
+
   
 
     return (
@@ -226,38 +260,66 @@ function Attendance (props) {
 <div className="row col-12 mb-4 justify-content-center">
 
 <div style={{minHeight:80}}  className="col-2 card z-depth-3 my-3 mx-2 text-center">
-<span className="mt-2 mb-2 " style={{fontSize:12}}>Total</span><i class="fas fa-archive fa-2x mb-2" style={{color:"#8086b7"}}></i>10
+<span className="mt-2 mb-2 " style={{fontSize:12}}>Total</span><i class="fas fa-archive fa-2x mb-2" style={{color:"#8086b7"}}></i>{data.total}
 
 </div>
 
 <div  style={{minHeight:80}} className="col-2 card z-depth-3 my-3 mx-2 text-center">
-<span className="mt-2 mb-2" style={{fontSize:12}}>Présent</span><i class="fas fa-check-circle fa-2x mb-2" style={{color:"#2dcd94"}}></i>3
+<span className="mt-2 mb-2" style={{fontSize:12}}>Présent</span><i class="fas fa-check-circle fa-2x mb-2" style={{color:"#2DCD94"}}></i>{data.Present}
 
 </div>
 
 <div style={{minHeight:80}}  className="col-2 card z-depth-3 my-3 mx-2 text-center">
-<span className="mt-2 mb-2" style={{fontSize:12}}>Absent</span><i class="fas fa-ban fa-2x mb-2" style={{color:"#aaa7a8"}}></i>8
+<span className="mt-2 mb-2" style={{fontSize:12}}>Absent</span><i class="fas fa-ban fa-2x mb-2" style={{color:"#F40010"}}></i>{data.Absent}
 
 </div>
 
 <div style={{minHeight:80}}  className="col-2 card z-depth-3 my-3 mx-2 text-center">
-<span className="mt-2 mb-2" style={{fontSize:12}}>Congé</span><i class="fas fa-mug-hot fa-2x mb-2" style={{color:"#FFD43B"}}></i>8
+<span className="mt-2 mb-2" style={{fontSize:12}}>Congé</span><i class="fas fa-mug-hot fa-2x mb-2" style={{color:"#767192"}}></i>{data.Conge}
 
 </div>
 
 <div style={{minHeight:80}}  className="col-2 card z-depth-3 my-3 mx-2 text-center">
-<span className="mt-2 mb-2" style={{fontSize:12}}>Retard</span><i class="fas fa-exclamation-circle fa-2x mb-2" style={{color:"#f40010"}}></i>8
+<span className="mt-2 mb-2" style={{fontSize:12}}>Retard</span><i class="fas fa-exclamation-circle fa-2x mb-2" style={{color:"#fedb1a"}}></i>{data.Retard}
 
 </div>
 
 
 
 </div>
-
+{/* 
           <ReactDatatable
               config={config}
               records={users}
-              columns={column}/>
+              columns={column}/> */}
+
+              <table className="table table-bordered mt-3">
+                <tr>
+                  <th className="text-center">Employe</th>
+                  <th className="text-center">Présance</th>
+                  <th className="text-center">Commentaire</th>
+                </tr>
+
+                <tbody>
+                  {
+                    users.map((user,index)=>(
+                      <tr key={index}>
+                    <td>
+                    <div className="d-flex flex-row">
+                      <Avatar src={user.user_img} style={{width:30 , height:30}} />
+                    <span className=" ml-2">{user.full_name}</span>
+             </div>
+                    </td>
+                    <td><Attend user={user} update={updateuser} refr={refresh} /></td>
+                    <td> 
+                    <Comment user={user} comment={!user.Presances[0] ? "" : user.Presances[0].Comment}/></td>
+                      </tr>
+                    
+                    ))
+                  }
+                 
+                </tbody>
+              </table>
 
 
           </>
