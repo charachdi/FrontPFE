@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import $ from 'jquery'
 import axios from 'axios'
 import Api_url from './../component/Api_url'
+import SettingsIcon from '@material-ui/icons/Settings';
 import { ToastContainer, toast } from 'react-toastify';
 import {socket} from './../Socket/Socket'
 
@@ -202,17 +203,20 @@ const [current, setcurrent] = useState("")
          
           
         {
-            current === "Chef Service" ? (
-            //   <li>
-            //   <a className="text-left hover" onClick={()=>{history.push("/Chefscomptecli")}}><span className="fa fa-suitcase mr-3"></span> Compte</a>
-            // </li>
-            <>
-            </>
-            ) : (
+            current === "Collaborateur" ? (
+           
               <li>
-            <a className="text-left hover" onClick={()=>{history.push("/Compteclient")}}><span className="fa fa-suitcase mr-3"></span> Compte</a>
-          </li>
-            )
+              <a className="text-left hover" onClick={()=>{history.push("/Compteclient")}}><span className="fa fa-suitcase mr-3"></span> Compte</a>
+            </li>
+            ) : null
+          }
+
+          {
+            current === "Chef equipe" ? (
+              <li>
+              <a className="text-left hover" onClick={()=>{history.push("/Compteclient")}}><span className="fa fa-suitcase mr-3"></span> Compte</a>
+            </li>
+            ) : null
           }
          
 
@@ -235,9 +239,20 @@ const [current, setcurrent] = useState("")
               null
             )
           }
-       
+        <li>
+              <a className="text-left hover" onClick={()=>{history.push("/Demande")}}><i class="fas fa-clipboard-list mr-3"></i>Demande</a>
+          </li>
+
           <li>
-            <a className="text-left" href="#" onClick={()=>{handelLogout()}}><i class="fas fa-sign-out-alt mr-3" style={{color:'white'}}></i> logout</a>
+              <a className="text-left hover" onClick={()=>{history.push("/Demandes")}}><i class="fas fa-clipboard-list mr-3"></i>RH</a>
+          </li>
+
+          <li>
+            <a className="text-left hover"  onClick={()=>{history.push("/Settings")}}><i class="fas fa-cog mr-3"></i>Settings</a>
+          </li>
+
+          <li>
+            <a className="text-left hover" href="" onClick={()=>{handelLogout()}}><i class="fas fa-sign-out-alt mr-3" style={{color:'white'}}></i> logout</a>
           </li>
         </ul>
   
@@ -345,7 +360,9 @@ const [current, setcurrent] = useState("")
           </li>
             )
           }
-         
+         <li>
+            <a className="text-left" href="#" onClick={()=>{handelLogout()}}><SettingsIcon style={{color:'white'}} /> </a>
+          </li>
        
           <li>
             <a className="text-left" href="#" onClick={()=>{handelLogout()}}><i class="fas fa-sign-out-alt " style={{color:'white'}}></i> </a>

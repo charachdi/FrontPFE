@@ -12,20 +12,23 @@ import Equipe from './pages/Equipe'
 import Service from './pages/Service'
 import Clients from './pages/Clients'
 import Notfound from './pages/Notfound'
+import Demande from './pages/Demande'
 import CompteCli from './pages/CompteCli'
 import EquipeView from './pages/EquipeView'
 import Stepperview from './pages/Stepperview'
 import FileView from './pages/FileView'
 import Fixrequete from './pages/Fixrequete'
 import Attendance from './pages/Attendance'
+import RHdemande from './pages/RHdemande'
+import Settings from './pages/Settings'
 
 import UserView from './pages/UserView'
 import Login from './pages/Login'
 import Test from './pages/Test'
-import Chefscomptecli from './pages/Chefscomptecli'
 import Userview from './component/Userview'
 import Sidebar from './component/Sidebar'
 import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 // import io from "socket.io-client";
 
@@ -79,7 +82,17 @@ useEffect(() => {
   return (
 
     <>
-
+ <ToastContainer
+    position="top-right"
+    autoClose={3000}
+    hideProgressBar={false}
+    newestOnTop={false}
+    closeOnClick
+    rtl={false}
+    pauseOnFocusLoss
+    draggable
+    pauseOnHover
+    />
     <Router>
       <div className="wrapper d-flex align-items-stretch" >
        {
@@ -96,9 +109,10 @@ useEffect(() => {
           <Route path='/Client' component={Clients} exact/>
           <Comptecli path='/Compteclient' component={Compteclientequipe} exact/>
           <Comptecli path='/Requetes' component={Fixrequete} exact/>
-          {/* <Route path='/Chefscomptecli' component={Chefscomptecli} exact/> */}
           <Route path='/Attendance' component={Attendance} exact/>
-
+          <Route path='/Demande' component={Demande} exact/>
+          <Route path='/demandes' component={RHdemande} exact/>
+          <Route path='/Settings' component={Settings} exact/>
 
           <Route path='/Equipe/:id' render={(props) => <EquipeView socket={socket} {...props} /> } exact/>
           <Route path='/profile/:id' component={UserView} exact/>
