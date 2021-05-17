@@ -243,20 +243,58 @@ setTimeout(() => {
             }
              
             
-               
-            <div className="col-4 mt-3" >
-            <Bar options={option} data={bardata}  width={50} height={60}/>
-            </div>
+             <div className="modal" tabindex="-1" role="dialog" className="col-4 mt-3">
+              <div className="modal-dialog" role="document">
+              <div className="modal-content"> 
+              <div className="modal-header text-center">
+               <h5 className="modal-title ">Requête par employé</h5>
+              </div>
+                <div className="modal-body">
+                 
+                  <Bar options={option} data={bardata}  width={50} height={60}/>
+                
+                </div>
+                </div>
+                </div>
+               </div>
     
-    
-    
-            <div className="col-4 mt-3">
+               <div className="modal" tabindex="-1" role="dialog" className="col-4 mt-3">
+              <div className="modal-dialog" role="document">
+              <div className="modal-content"> 
+              <div className="modal-header">
+               <h5 className="modal-title">Requête par client (top 5)</h5>
+              </div>
+                <div className="modal-body">
+                 
+                <Pie data={piedata} options={option2} width={50} height={60}/>
+                
+                </div>
+                </div>
+                </div>
+               </div>
+
+               <div className="modal" tabindex="-1" role="dialog" className="col-4 mt-3">
+              <div className="modal-dialog" role="document">
+              <div className="modal-content"> 
+              <div className="modal-header">
+               <h5 className="modal-title">Requête par date</h5>
+              </div>
+                <div className="modal-body">
+                 
+                <Line options={option}  data={linedata} width={50} height={60}/>
+                
+                </div>
+                </div>
+                </div>
+               </div>
+            
+            {/* <div className="col-4 mt-3">
               <Pie data={piedata} options={option2} width={50} height={60}/>
             </div>
     
             <div className="col-4 mt-3 " >
             <Line options={option}  data={linedata} width={50} height={60}/>
-            </div>
+            </div> */}
             </>
           )
         }
