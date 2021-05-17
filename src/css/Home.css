@@ -742,3 +742,7 @@ th  .text-{
 -moz-box-shadow: 3px 12px 25px -7px rgba(0,0,0,0.47);
 box-shadow: 3px 12px 25px -7px rgba(0,0,0,0.47);
 }
+
+.table-ssmall {
+    width: 10px;
+}

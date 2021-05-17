@@ -157,7 +157,7 @@ function Home() {
         });
         console.log(res)
           if(res.status === 200){
-            toast.success(`${res.data.user.user_email}  added`, {
+            toast.success(`${res.data.uuser.user_email}  added`, {
               position: "top-right",
               autoClose: 3000,
               hideProgressBar: false,
@@ -166,7 +166,7 @@ function Home() {
               draggable: true,
               });
                 setTimeout(() => {
-                  setusers([res.data.user ,...users])
+                  setusers([res.data.uuser ,...users])
                 }, 500);
 
                 setemail("")

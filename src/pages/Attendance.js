@@ -63,6 +63,7 @@ function Attendance (props) {
            method: 'get',
            url : `${Api_url}Presance/user/attend`,  
            });
+           console.log(res)
            setusers(res.data.user) 
            setdata({
             total: res.data.Present + res.data.Absent + res.data.Conge + res.data.Retard,
@@ -294,11 +295,14 @@ function Attendance (props) {
               columns={column}/> */}
 
               <table className="table table-bordered mt-3">
+                <thead>
                 <tr>
                   <th className="text-center">Employe</th>
                   <th className="text-center">Présance</th>
                   <th className="text-center">Commentaire</th>
                 </tr>
+                </thead>
+             
 
                 <tbody>
                   {
