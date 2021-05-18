@@ -18,7 +18,8 @@ import Lottie from 'react-lottie';
 import Loading from './../images/loading.json'
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
-
+import { DateRange } from 'react-date-range';
+import { addDays } from 'date-fns';
 
 const BorderLinearProgress = withStyles((theme) => ({
   root: {
@@ -38,7 +39,7 @@ const BorderLinearProgress = withStyles((theme) => ({
 
 function UserView(props) {
 
-
+    const [datec, setDatec] = useState(null);
     const token = localStorage.getItem('token')
     const localuser = JSON.parse(localStorage.getItem('user'))
     const userId =  !props.id ? props.match.params.id : props.id
@@ -46,8 +47,15 @@ function UserView(props) {
     const [isloading, setisloading] = useState(true)
 
     const [Clientsdata, setClientsdata] = useState([])
-
-
+    const [colors, setcolors] = useState([])
+    const [presance, setpresance] = useState([]);
+    const [state, setState] = useState([
+      {
+        startDate: new Date(),
+        endDate: new Date(),
+        key: 'selection'
+      }
+    ]);
  // Line data
     const [date, setdate] = useState([])
     const [date_value, setdate_value] = useState([])
@@ -114,7 +122,7 @@ function UserView(props) {
         setclients_value(Pie.data.value)
       
       }
-
+      
       const getBar = async () =>{
         const Bar = await axios({
           headers: { Authorization: `Bearer ${token}` },
@@ -126,6 +134,39 @@ function UserView(props) {
         
       }
 
+      const getpre = async ()=>{
+        const res = await axios({
+          headers: { Authorization: `Bearer ${token}` },
+          method: "get",
+          url: `${Api_url}user/presance/${userId}`,
+        });
+        console.log(res)
+      
+        res.data.forEach(ele => {
+          const element = {
+            startDate: new Date(ele.date),
+            endDate: new Date(ele.date),
+          }
+          // setpresance([...presance , element])
+          presance.push(element)
+          if(ele.Present === true){
+            colors.push( "#2DCD94")
+          }
+          else if (ele.Absent === true){
+            colors.push( "#F40010")
+          }
+          else if (ele.Conge === true){
+            colors.push( "#C5C5C5")
+          }
+          else if (ele.Retard === true){
+            colors.push( "#fedb1a")
+          }
+        });
+
+        console.log(presance)
+        console.log(colors)
+      }
+      
       //
 
       loading_screen()
@@ -134,6 +175,7 @@ function UserView(props) {
       getLine()
       getclients()
       getpIE()
+      getpre()
     }, [])
 
 
@@ -368,7 +410,21 @@ function UserView(props) {
                     <Bar  data={bardata} options={baroption} width={10} height={"20%"}/>
                     </div>
 
+                    <div className="row col-12 justify-content-end">
+                    <DateRange
+                      
+                      editableDateInputs={false}
+                      showSelectionPreview={false}
+                      showDateDisplay={false}
+                      onChange={item => setState([item.selection])}
+                      moveRangeOnFirstSelection={false}
+                      ranges={presance}
+                      rangeColors={colors}
+                      />
+                    </div>
+
                     
+                   
                    
                     
                 </div>

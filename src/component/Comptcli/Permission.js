@@ -206,7 +206,7 @@ function Permission(props) {
                     {
                     Auths.map((auth , index)=>(
                                 <tr key={index}>
-                                <td className=""> <div className="row justify-content-center"><Avatar className="ml-4" src={auth.User.user_img} alt={auth.User.full_name} style={{width:40, height:40}}/>  <span className="my-auto mx-auto">{auth.User.full_name ? auth.User.full_name : auth.User.user_email}</span></div></td>
+                                <td className=""> <div className="row justify-content-center"><Avatar className="ml-4" src={ auth.User ? auth.User.user_img : ""} alt={auth.User ? auth.User.full_name : ""} style={{width:40, height:40}}/>  <span className="my-auto mx-auto">{auth.User ? auth.User.full_name : ""}</span></div></td>
                                 <td>
                                 <Switch
                                     size="small"
