@@ -85,14 +85,13 @@ function Attendance (props) {
    
          
        if(currentuser.data.user.user_level === "Chef Service"){
-         const res = await axios({
-           headers: {'Authorization': `Bearer ${token}`},
-           method: 'get',
-           url : `${Api_url}service/dataservice/${currentuser.data.user.Chef.ServiceId}`,  
-           });
-           console.log(res)
-           
-           setusers(res.data.equipes)
+        const res = await axios({
+          headers: {'Authorization': `Bearer ${token}`},
+          method: 'get',
+          url : `${Api_url}Presance/user/attend`,  
+          });
+          console.log(res)
+          setusers(res.data.user) 
          
        }
        else{

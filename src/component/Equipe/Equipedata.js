@@ -7,7 +7,7 @@ import { Line } from 'react-chartjs-2';
 import Equipeheader from './../../component/Equipe/Equipeheader'
 import axios from 'axios'
 import $ from 'jquery'
-import TextField from '@material-ui/core/TextField';
+import Divider from '@material-ui/core/Divider';
 import MenuItem from '@material-ui/core/MenuItem';
 import domtoimage from 'dom-to-image';
 
@@ -33,6 +33,10 @@ function Equipedata(props) {
   //line chaarts
   const [date_req, setdate_req] = useState([])
   const [date_value, setdate_value] = useState([])
+
+  //bar origin chaarts
+  const [origin_req, setorigin_req] = useState([])
+  const [origin_value, setorigin_value] = useState([])
   
   const loding = {
     loop: true,
@@ -72,6 +76,11 @@ function Equipedata(props) {
         url : `${Api_url}stat/line/${equipe_id}`,
         });
    
+       const Oridata = await axios({
+        headers: {'Authorization': `Bearer ${token}`},
+        method: 'get',
+        url : `${Api_url}stat/equipe/origin/bar/${equipe_id}`,
+        });
     
       setcliname(res.data.cliname)
       setclilength(res.data.clilength)
@@ -83,6 +92,9 @@ function Equipedata(props) {
 
       setdate_req(Line.data.Trim_date)
       setdate_value(Line.data.date_value)
+
+      setorigin_req(Oridata.data.origin)
+      setorigin_value(Oridata.data.Origine_value)
 
     
     
@@ -146,6 +158,29 @@ function Equipedata(props) {
           borderWidth: 1,
         },
       ]
+    }
+
+    const bardataorigin = {
+      labels: origin_req,
+      datasets: [{
+        
+        data: origin_value,
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)',
+          'rgb(218, 92, 250)',
+          'rgb(43, 200, 145)'
+        ],
+        hoverOffset: 4
+      }]
+    };
+
+    const baroptionorigin={
+      legend: {
+        display: false,
+        position : 'top',
+    }
     }
 
 const linedata = {
@@ -235,66 +270,55 @@ setTimeout(() => {
             isClickToPauseDisabled={true}
           /> : (
             <>
-             <div  className="row col-12 justify-content-end">
+             <div  className="row col-12 justify-content-end nopad">
               <IconButton onClick={(e)=>{exportPNG()}}><i class="fas fa-file-export ml-1" style={{color:"#2DCD94"}}></i></IconButton> 
             </div>
             {
               apidata.colture !== undefined ? <Equipeheader data={apidata} />: null
             }
              
-            
-             <div className="modal" tabindex="-1" role="dialog" className="col-4 mt-3">
-              <div className="modal-dialog" role="document">
-              <div className="modal-content"> 
-              <div className="modal-header text-center">
-               <h5 className="modal-title ">Requête par employé</h5>
-              </div>
-                <div className="modal-body">
-                 
-                  <Bar options={option} data={bardata}  width={50} height={60}/>
+             <div  className="row col-12 justify-content-around nopad">
+           
+                 <div className="card col-4 mt-3 cardstat " style={{width:"30%"}} >
+                    <h5 className="card-title mt-3">Requête par employé</h5>
+                    <Divider />
+                      <div className="card-body">
+                        <Bar options={option} data={bardata}  width={50} height={45}/>
+                      </div>
+                      <Divider />
+                      dfsfsf
+                      </div>
                 
-                </div>
-                </div>
-                </div>
-               </div>
     
-               <div className="modal" tabindex="-1" role="dialog" className="col-4 mt-3">
-              <div className="modal-dialog" role="document">
-              <div className="modal-content"> 
-              <div className="modal-header">
-               <h5 className="modal-title">Requête par client (top 5)</h5>
-              </div>
-                <div className="modal-body">
-                 
-                <Pie data={piedata} options={option2} width={50} height={60}/>
-                
-                </div>
-                </div>
-                </div>
-               </div>
+                      <div className="card col-4 mt-3 cardstat "  style={{width:"30%"}}>
+                    <h5 className="card-title mt-3">top 5 client</h5>
+                    <Divider />
+                      <div className="card-body">
+                        <Pie data={piedata} options={option2} width={50} height={45}/>
+                      </div>
+                      </div>
 
-               <div className="modal" tabindex="-1" role="dialog" className="col-4 mt-3">
-              <div className="modal-dialog" role="document">
-              <div className="modal-content"> 
-              <div className="modal-header">
-               <h5 className="modal-title">Requête par date</h5>
-              </div>
-                <div className="modal-body">
-                 
-                <Line options={option}  data={linedata} width={50} height={60}/>
-                
-                </div>
-                </div>
-                </div>
-               </div>
+             
+               <div className="card col-4 mt-3 cardstat"  style={{width:"30%"}}>
+                    <h5 className="card-title mt-3">Requête par origin</h5>
+                    <Divider />
+                      <div className="card-body">
+                      <Bar options={baroptionorigin} data={bardataorigin}  width={50} height={45}/>
+                      </div>
+                      </div>
+
+
+             
+                    <div className="card col-12 mt-3 cardstat" >
+                    <h5 className="card-title mt-3">Requête par date</h5>
+                    <Divider />
+                      <div className="card-body">
+                      <Line options={option}  data={linedata} width={50} height={13}/>
+                      </div>
+                      </div>
+               
             
-            {/* <div className="col-4 mt-3">
-              <Pie data={piedata} options={option2} width={50} height={60}/>
-            </div>
-    
-            <div className="col-4 mt-3 " >
-            <Line options={option}  data={linedata} width={50} height={60}/>
-            </div> */}
+                      </div>
             </>
           )
         }

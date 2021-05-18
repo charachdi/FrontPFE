@@ -267,6 +267,18 @@ function Demande() {
     return (
         <>
 
+<header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">Liste des demandes de congés</h2>
+                </div>
+            </header>
+   
+            <div class="breadcrumb-holder container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item" ><a href="home" >Home </a></li>
+                    <li class="breadcrumb-item active">Congé</li>
+                </ul>
+            </div>
         {
             isloading ? (
                 <Lottie 
@@ -276,6 +288,10 @@ function Demande() {
                 isClickToPauseDisabled={true}
               />
             ) : (
+
+               
+
+
                 <section className=" ">
                     <div className="row col-12 justify-content-center">
                     <IconButton style={{backgroundColor : "#2ECD94"}}  onClick={()=>{toggle()}}>
@@ -355,7 +371,7 @@ function Demande() {
               </MDBModalBody>
               </MDBModal>
               </>
-    )
+    );
 }
 
 export default Demande
