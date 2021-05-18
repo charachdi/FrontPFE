@@ -25,7 +25,9 @@ function Sidebar(props) {
   const [url, seturl] = useState("")
   const [fullname, setfullname] = useState("")
   const user = JSON.parse(localStorage.getItem('user')) ;
+
   const [Serviceroom, setServiceroom] = useState("0")
+
   
   
  
@@ -43,9 +45,11 @@ const [current, setcurrent] = useState("")
         });
         setcurrent(currentuser.data.user.user_level)
         if(currentuser.data.user.Chef){
+
           setServiceroom(currentuser.data.user.Chef.Service.Roomid)
         }
        
+
        
 
     }
@@ -55,7 +59,9 @@ const [current, setcurrent] = useState("")
         // console.log(data)
       if(user){
         if(user.user_level === "Chef Service"){
+
           socket.on(`${Serviceroom}`, (data)=>{
+
           
              toast.info( <Editrequete data={data}/>,{
             position: "bottom-right",

@@ -90,7 +90,7 @@ function Attendance (props) {
           method: 'get',
           url : `${Api_url}Presance/user/attend`,  
           });
-          console.log(res)
+
           setusers(res.data.user) 
          
        }
