@@ -11,7 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import domtoimage from 'dom-to-image';
 import Cliheader from './Cliheader'
-
+import Divider from '@material-ui/core/Divider';
 import Lottie from 'react-lottie';
 import Chartsloding from './../../images/chartsloding.json'
 import IconButton from '@material-ui/core/IconButton';
@@ -31,6 +31,10 @@ function Clidata(props) {
 //  bar charts
   const [date, setdate] = useState([])
   const [date_value, setdate_value] = useState([])
+
+  //bar origin
+  const [origin, setorigin] = useState([])
+  const [origin_value, setorigin_value] = useState([])
 
 //Line charts
   const [Lineusers, setLineusers] = useState([])
@@ -76,6 +80,16 @@ function Clidata(props) {
           }
 
 
+          const getbardataorigin = async()=>{
+            const Oridata = await axios({
+                headers: {'Authorization': `Bearer ${token}`},
+                method: 'get',
+                url : `${Api_url}stat/comptcli/origin/bar/${id}`,
+                });
+                setorigin(Oridata.data.origin)
+                 setorigin_value(Oridata.data.Origine_value)
+        }
+
           const getLinedata = async()=>{
             const Line = await axios({
                 headers: {'Authorization': `Bearer ${token}`},
@@ -89,9 +103,31 @@ function Clidata(props) {
             getpiedata()
             getbardata()
             getLinedata()
+            getbardataorigin()
         }, [])
 
+        const bardataorigin = {
+          labels: origin,
+          datasets: [{
+            
+            data: origin_value,
+            backgroundColor: [
+              'rgb(255, 99, 132)',
+              'rgb(54, 162, 235)',
+              'rgb(255, 205, 86)',
+              'rgb(218, 92, 250)',
+              'rgb(43, 200, 145)'
+            ],
+            hoverOffset: 4
+          }]
+        };
     
+        const baroptionorigin={
+          legend: {
+            display: false,
+            position : 'top',
+        }
+        }
 
     const piedata = {
         labels: username,
@@ -135,7 +171,7 @@ function Clidata(props) {
     const pieoption={
       legend: {
         display: true,
-        position : 'right',
+        position : 'bottom',
     }
     }
       
@@ -166,17 +202,43 @@ function Clidata(props) {
             <Cliheader id={id}/>
 
 
-            <div className="col-6">
-            <Bar data={bardata} width={30}  height={20}/>
+
+            <div className="card col-4 mt-3 cardstat "  style={{width:"30%"}}>
+                <h5 className="card-title mt-3">Nombre de requête par jour</h5>
+              <Divider />
+                <div className="card-body">
+                    <Bar data={bardata} width={30}  height={20}/>
+                </div>
             </div>
 
-            <div className="col-6">
-            <Pie data={piedata} options={pieoption}  width={30}  height={20} />
+            <div className="card col-4 mt-3 cardstat "  style={{width:"30%"}}>
+                <h5 className="card-title mt-3">Total de requêtes par collaborateurs</h5>
+              <Divider />
+                <div className="card-body">
+                <Pie data={piedata} options={pieoption}  width={30}  height={20} />
+                </div>
             </div>
 
-            <div className="col-12 mt-5">
-            <Line data={linedata} options={lineoption}  width={160}  height={50} />
+
+            <div className="card col-4 mt-3 cardstat "  style={{width:"30%"}}>
+                <h5 className="card-title mt-3">Origin des requêtes</h5>
+              <Divider />
+                <div className="card-body">
+                <Bar data={bardataorigin} width={30}  height={20}/>
+                </div>
             </div>
+
+
+          
+            <div className="card col-12 mt-3 cardstat " >
+                <h5 className="card-title mt-3">Total de requête par jour et par collaborateur</h5>
+              <Divider />
+                <div className="card-body">
+                <Line data={linedata} options={lineoption}  width={160}  height={50} />
+                </div>
+            </div>
+
+            
             </>
           )
         }

@@ -8,12 +8,13 @@ import { setLoginStatus } from "./../redux/actions/authAction";
 import apiurl from "./../component/Api_url";
 import { useHistory } from "react-router-dom";
 import wave from "./../images/wave.png";
-import bg from "./../images/bg.svg";
+import etai from "./../images/etai.png";
 import avatar from "./../images/avatar.svg";
 import $ from "jquery";
 import Stepper from "./Stepperview";
 import Popover from "@material-ui/core/Popover";
 import { ToastContainer, toast } from "react-toastify";
+
 
 function Login() {
 
@@ -159,13 +160,14 @@ function Login() {
         pauseOnHover
       />
       <img className="wave" src={wave} />
-      <div className="container mt-5" style={{ height: "80vh" }}>
+      
+      <div className="container " style={{ height: "80vh" }}>
         <div className="img">
-          <img src={bg} />
+       
         </div>
         <div className="login-content">
           <form action="index.html">
-            <img src={avatar} />
+            <img src={etai} style={{width:"150px", height:"200px" }} />
             <h2 className="title">Bienvenue</h2>
             <div className="input-div one">
               <div className="i">
@@ -244,6 +246,7 @@ function Login() {
           </form>
         </div>
       </div>
+     
     </>
   );
 }

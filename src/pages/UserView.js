@@ -18,8 +18,12 @@ import Lottie from 'react-lottie';
 import Loading from './../images/loading.json'
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
+
 import { DateRange } from 'react-date-range';
 import { addDays } from 'date-fns';
+
+import Divider from '@material-ui/core/Divider';
+
 
 const BorderLinearProgress = withStyles((theme) => ({
   root: {
@@ -198,7 +202,7 @@ function UserView(props) {
     const pieoption={
       legend: {
         display: true,
-        position : 'right',
+        position : 'bottom',
     }
     }
 
@@ -388,16 +392,33 @@ function UserView(props) {
                
                   </div>
                 <div className="col-12">
-                   <div className="">
+                 
                     <div className="row ">
                    
                     {/* SHOW DATA PROFILE */}
-                    <div className="col-6">
-                    <Line  data={linedata} options={baroption} width={10} height={5}/>
-                    </div>
-                    <div className="col-6">
-                    <Pie  data={piedata} width={10} options={pieoption} height={5}/>
-                    </div>
+                  
+                  
+                    <div className="card col-6 mt-3 cardstat" >
+                    <h5 className="card-title mt-3">Requête par employé</h5>
+                    <Divider />
+                      <div className="card-body">
+                      <Line  data={linedata} options={baroption} width={10} height={8}/>
+                      </div>
+                      </div>
+                  
+                  
+                  
+                      <div className="card col-6 mt-3 cardstat " >
+                    <h5 className="card-title mt-3">Requête par client</h5>
+                    <Divider />
+                      <div className="card-body">
+                      <Pie  data={piedata} width={10} options={pieoption} height={8}/>
+                      </div>
+                      </div>
+
+              
+
+
                     <div className="col-9 mt-5 mb-5">
                     <ReactDatatable
                         config={config}
@@ -406,9 +427,8 @@ function UserView(props) {
                     
                     </div>
  
-                    <div className="col-3 mt-5 mb-5">
-                    <Bar  data={bardata} options={baroption} width={10} height={"20%"}/>
-                    </div>
+                    
+
 
                     <div className="row col-12 justify-content-end">
                     <DateRange
@@ -423,12 +443,20 @@ function UserView(props) {
                       />
                     </div>
 
+
+                    <div className="card col-3 mt-5 mb-5 cardstat " >
+                    <h5 className="card-title mt-3">Origin des requêtes</h5>
+                    <Divider />
+                      <div className="card-body">
+                      <Bar  data={bardata} options={baroption} width={10} height={"20%"}/>
+                      </div>
+                      </div>
                     
                    
                    
                     
                 </div>
-              </div>
+            
               
     
             </div>
