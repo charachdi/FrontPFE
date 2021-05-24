@@ -158,7 +158,7 @@ const [current, setcurrent] = useState("")
 {
             current === "admin" ? (
               <li>
-              <a className="text-left hover" onClick={()=>{history.push("/equipe")}}><span className="fa fa-user mr-3"></span>equipes</a>
+              <a className="text-left hover" onClick={()=>{history.push("/equipe")}}><span className="fa fa-user mr-3"></span>Equipes</a>
           </li>
             ) : (
               null
@@ -168,7 +168,7 @@ const [current, setcurrent] = useState("")
         {
             current === "Chef Service" ? (
               <li>
-              <a className="text-left hover" onClick={()=>{history.push("/equipe")}}><span className="fa fa-user mr-3"></span>equipes</a>
+              <a className="text-left hover" onClick={()=>{history.push("/equipe")}}><span className="fa fa-user mr-3"></span>Equipes</a>
           </li>
             ) : (
               null
@@ -193,7 +193,7 @@ const [current, setcurrent] = useState("")
 {
             current === "admin" ? (
               <li>
-              <a className="text-left hover"  onClick={()=>{history.push("/client")}}><span className="fa fa-sticky-note mr-3"></span> Clients</a>
+              <a className="text-left hover"  onClick={()=>{history.push("/client")}}><span className="fa fa-sticky-note mr-3"></span>Clients</a>
             </li>
             ) : (
               null
@@ -203,7 +203,7 @@ const [current, setcurrent] = useState("")
         {
             current === "Chef Service" ? (
               <li>
-              <a className="text-left hover"  onClick={()=>{history.push("/client")}}><span className="fa fa-sticky-note mr-3"></span> Clients</a>
+              <a className="text-left hover"  onClick={()=>{history.push("/client")}}><span className="fa fa-sticky-note mr-3"></span>Clients</a>
             </li>
             ) : (
               null
@@ -216,7 +216,7 @@ const [current, setcurrent] = useState("")
             current === "Collaborateur" ? (
            
               <li>
-              <a className="text-left hover" onClick={()=>{history.push("/Compteclient")}}><span className="fa fa-suitcase mr-3"></span> Compte</a>
+              <a className="text-left hover" onClick={()=>{history.push("/Compteclient")}}><span className="fa fa-suitcase mr-3"></span>Compte</a>
             </li>
             ) : null
           }
@@ -224,7 +224,7 @@ const [current, setcurrent] = useState("")
           {
             current === "Chef equipe" ? (
               <li>
-              <a className="text-left hover" onClick={()=>{history.push("/Compteclient")}}><span className="fa fa-suitcase mr-3"></span> Compte</a>
+              <a className="text-left hover" onClick={()=>{history.push("/Compteclient")}}><span className="fa fa-suitcase mr-3"></span>Compte</a>
             </li>
             ) : null
           }
@@ -258,11 +258,11 @@ const [current, setcurrent] = useState("")
           </li>
 
           <li>
-            <a className="text-left hover"  onClick={()=>{history.push("/Settings")}}><i class="fas fa-cog mr-3"></i>Settings</a>
+            <a className="text-left hover"  onClick={()=>{history.push("/Settings")}}><i class="fas fa-cog mr-3"></i>Paramètre</a>
           </li>
 
           <li>
-            <a className="text-left hover" href="" onClick={()=>{handelLogout()}}><i class="fas fa-sign-out-alt mr-3" style={{color:'white'}}></i> logout</a>
+            <a className="text-left hover" href="" onClick={()=>{handelLogout()}}><i class="fas fa-sign-out-alt mr-3" style={{color:'white'}}></i>logout</a>
           </li>
         </ul>
   

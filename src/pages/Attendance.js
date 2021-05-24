@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useHistory } from "react-router-dom";
 import ReactDatatable from '@ashvin27/react-datatable';
 import Select from '@material-ui/core/Select';
-import Chip from '@material-ui/core/Chip';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Avatar from "@material-ui/core/Avatar";
 import 'date-fns';
 import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker, } from '@material-ui/pickers';
@@ -227,7 +227,8 @@ function Attendance (props) {
        
         <div class="breadcrumb-holder container-fluid">
           <ul class="breadcrumb">
-          <li class="breadcrumb-item" ><a href="home" >Home </a></li>
+          <li ><a href="home" ><ArrowBackIosIcon /></a></li>
+          <li class="breadcrumb-item" >Home</li>
             <li class="breadcrumb-item active">Présence</li>
           </ul>
         </div>
@@ -296,7 +297,7 @@ function Attendance (props) {
               <table className="table table-bordered mt-3">
                 <thead>
                 <tr>
-                  <th className="text-center">Employe</th>
+                  <th className="text-center">Employé</th>
                   <th className="text-center">Présance</th>
                   <th className="text-center">Commentaire</th>
                 </tr>

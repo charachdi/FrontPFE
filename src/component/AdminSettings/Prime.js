@@ -3,6 +3,7 @@ import $ from 'jquery'
 import TextField from '@material-ui/core/TextField';
 import Api_url from './../../component/Api_url';
 import axios from 'axios'
+import Divider from '@material-ui/core/Divider';
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -65,13 +66,18 @@ function Prime() {
             console.log(res)
       }
     return (
-        <div className="mt-3 ml-5">
-           <TreeView
+        
+        <div className=" mt-3 ">
+            <h4>Parametrage des primes</h4>
+            <p>Les primes et les bonus doivent être paramétré à l'avance</p>
+            <Divider />
+           <TreeView 
+           className="mt-2"
         style={{color : "black"}}
       defaultCollapseIcon={<ExpandMoreIcon />}
       defaultExpandIcon={<ChevronRightIcon />}
     >
-      <TreeItem nodeId="100" label="Equipe">
+      <TreeItem nodeId="100" label="Equipe" className="mt-2 mb-2"> 
       
         {
             equipes.map((eq,index)=>(
@@ -105,6 +111,7 @@ function Prime() {
       </TreeItem>
     </TreeView>
         </div>
+      
     )
 }
 

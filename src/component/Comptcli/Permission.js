@@ -195,10 +195,10 @@ function Permission(props) {
             <thead>
                     <tr>
                         <th style={{width:50}}></th>
-                        <th style={{width:50}}>Read</th>
-                        <th style={{width:50}}>Write</th>
-                        <th style={{width:50}}>import</th>
-                        <th style={{width:50}}>export</th>
+                        <th style={{width:50}}>Lire</th>
+                        <th style={{width:50}}>Ecrir</th>
+                        <th style={{width:50}}>importer</th>
+                        <th style={{width:50}}>exporter</th>
                       </tr>
                     </thead>
                     <tbody id="equipe-body">

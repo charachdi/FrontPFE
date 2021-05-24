@@ -13,6 +13,7 @@ import UpdateIcon from '@material-ui/icons/Update';
 import CloseIcon from '@material-ui/icons/Close';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { ToastContainer, toast } from 'react-toastify';
+import Button from "@material-ui/core/Button";
 
 function Storage() {
 
@@ -160,9 +161,10 @@ function Storage() {
    
     return (
         <>
-         <IconButton className="float-right mb-1" size="small" onClick={()=>{toggle()}}   style={{backgroundColor : "#2ECD94"}} >
-            <AddIcon />
-        </IconButton>
+    
+        <div className=" mb-2 mt-2 justify-content-end"> 
+            <Button variant="contained" color="primary" startIcon={<AddIcon />}  onClick={()=>{toggle()}}>Ajouter une base de donnée</Button> 
+        </div>
         <table className="table table-bordered ">
             <thead style={{backgroundColor: "#767192" , color : "white"}} >
                 <tr className="text-center">
