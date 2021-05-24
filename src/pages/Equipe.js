@@ -86,17 +86,6 @@ function Equipe(props) {
 
     const [column, setcolumn] = useState([
       {
-        key: "id",
-        text: "#",
-        cell: (equipe, index) => {
-          return (
-            <>
-                <p>{equipe.id}</p>
-             </>
-          );
-      }
-      },
-      {
         key: "Nom_equipe",
         text: "Equipe",
         sortable: true,
@@ -112,8 +101,22 @@ function Equipe(props) {
       }
       },
       {
+        key: "",
+        text: "Member d'equipe",
+        className : "table-ssmall",
+        sortable: true,
+        cell: (equipe, index) => {
+          return (
+            <IconButton className="float-left mr-2" size="small" aria-label="delete" color="primary" >
+            <GroupIcon /> <span className="ml-2" style={{fontSize:15}}>{equipe.Users.length}</span>
+            </IconButton> 
+          )
+      }
+      },
+      {
         key: "Action",
         text: "Action",
+        className : "table-action text-center",
         cell: (equipe, index) => {
           return (
             <>
@@ -130,9 +133,7 @@ function Equipe(props) {
                         <Visibility />
                         </IconButton> 
 
-                        <IconButton className="float-left mr-2" size="small" aria-label="delete" color="primary" >
-                        <GroupIcon /> <span className="ml-2" style={{fontSize:15}}>{equipe.Users.length}</span>
-                        </IconButton> 
+                      
              </>
           );
       }

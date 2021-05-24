@@ -95,8 +95,8 @@ if(!showEdit){
                    </div>
                        
                             <div className="row col-12 align-items-center mx-auto text-center border border-gray border-left-0 border-right-0 ">
-                                        <div onClick={()=>{switchtoprofile() }} id="prof"  className=" text-center mt-1 mb-1 inner-user  link-two col-6 " ><i className="fas fa-user-alt fa-2x"></i><div id="profanime" className="anime"></div></div>
-                                        <div id="edit" onClick={()=>{switchtoedit()}} className=" text-center mt-1 mb-1 inner-user col-6   link-two "><i className="fas fa-wrench fa-2x"></i><div id="editanime" className=""></div></div>
+                                        <div onClick={()=>{switchtoprofile() }} id="prof"  className=" text-center mt-1 mb-1 inner-user  link-two col-6 " ><i className="fas fa-user-alt fa-1x"></i><div id="profanime" className="anime"></div></div>
+                                        <div id="edit" onClick={()=>{switchtoedit()}} className=" text-center mt-1 mb-1 inner-user col-6   link-two "><i className="fas fa-wrench fa-1x"></i><div id="editanime" className=""></div></div>
 
                             </div>
                        

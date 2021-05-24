@@ -746,6 +746,10 @@ box-shadow: 3px 12px 25px -7px rgba(0,0,0,0.47);
 .table-ssmall {
     width: 10px;
 }
+
+.table-action {
+    width: 200px;
+}
 .nopad {
     padding: 0px;
     margin-left: 0px;
