@@ -11,7 +11,7 @@ import StorageIcon from '@material-ui/icons/Storage';
 import PaymentIcon from '@material-ui/icons/Payment';
 import Storage from './../component/AdminSettings/Storage'
 import Prime from './../component/AdminSettings/Prime'
-
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 
 function Settings() {
@@ -27,18 +27,21 @@ function Settings() {
       <>
       <header class="page-header">
           <div class="container-fluid">
-            <h2 class="no-margin-bottom">parameters</h2>
+            <h2 class="no-margin-bottom">Paramèters</h2>
           </div>
         </header>
        
         <div class="breadcrumb-holder container-fluid">
           <ul class="breadcrumb">
-          <li class="breadcrumb-item" ><a href="home" >Home </a></li>
-            <li class="breadcrumb-item active">parameters</li>
+          <li ><a href="home" ><ArrowBackIosIcon /></a></li>
+                <li class="breadcrumb-item" >Home</li>
+            <li class="breadcrumb-item active">Paramèters</li>
           </ul>
         </div>
         <div className="row mt-5">
-        <div className="col-3 justify-content-center mt-3 border z-depth-3" style={{height : "60vh"}}>
+        <div className="col-3 justify-content-center border cardstat" style={{height : "100%"}}>
+        
+
         <List component="nav" aria-label="main mailbox folders">
         <ListItem
           button
@@ -48,7 +51,7 @@ function Settings() {
           <ListItemIcon>
             <StorageIcon />
           </ListItemIcon>
-          <ListItemText primary="Storage" />
+          <ListItemText primary="Stockage" />
         </ListItem>
         <Divider />
         <ListItem
@@ -63,7 +66,7 @@ function Settings() {
         </ListItem>
       </List>
         </div>
-          <div className="col-9 justify-content-center">
+          <div className="border cardstat ml-3 col-8 justify-content-center">
          {
              selectedIndex === 0 ? (
                  <Storage />

@@ -18,6 +18,7 @@ import Lottie from 'react-lottie';
 import Loading from './../images/loading.json'
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 import { DateRange } from 'react-date-range';
 import { addDays } from 'date-fns';
@@ -201,7 +202,7 @@ function UserView(props) {
 
     const pieoption={
       legend: {
-        display: true,
+        display: false,
         position : 'bottom',
     }
     }
@@ -351,8 +352,8 @@ function UserView(props) {
        
     ])
     const config = {
-      page_size: 5,
-      length_menu: [5, 10, 20],
+      page_size: 3,
+      length_menu: [3, 5, 10],
       show_filter: true,
       show_pagination: true,
       pagination: 'advance',
@@ -393,13 +394,13 @@ function UserView(props) {
                   </div>
                 <div className="col-12">
                  
-                    <div className="row ">
+                    <div className="row col-12 justify-content-around nopad ">
                    
                     {/* SHOW DATA PROFILE */}
                   
                   
-                    <div className="card col-6 mt-3 cardstat" >
-                    <h5 className="card-title mt-3">Requête par employé</h5>
+                    <div className="card col-4 mt-3 cardstat" >
+                    <h5 className="card-title mt-3 text-center">Requête de l'employé</h5>
                     <Divider />
                       <div className="card-body">
                       <Line  data={linedata} options={baroption} width={10} height={8}/>
@@ -408,18 +409,30 @@ function UserView(props) {
                   
                   
                   
-                      <div className="card col-6 mt-3 cardstat " >
-                    <h5 className="card-title mt-3">Requête par client</h5>
+                      <div className="card col-4 mt-3 cardstat " >
+                    <h5 className="card-title mt-3 text-center">Requête par client</h5>
                     <Divider />
                       <div className="card-body">
                       <Pie  data={piedata} width={10} options={pieoption} height={8}/>
                       </div>
                       </div>
 
+
+                      <div className="card col-4 mt-3 cardstat " >
+                    <h5 className="card-title mt-3 text-center">Origin des requêtes</h5>
+                    <Divider />
+                      <div className="card-body">
+                      <Bar  data={bardata} options={baroption} width={10} height={8}/>
+                      </div>
+                      </div>
+                    
+
+
+                      </div>
               
+                      <div className="row col-12 justify-content-around nopad ">
 
-
-                    <div className="col-9 mt-5 mb-5">
+                    <div className="col-8 mt-5 mb-5">
                     <ReactDatatable
                         config={config}
                         records={Clientsdata}
@@ -430,9 +443,11 @@ function UserView(props) {
                     
 
 
-                    <div className="row col-12 justify-content-end">
+                    <div className=" col-4 mt-5 justify-content-center  ">
+                    <h5 className="card-title text-center">Présance de l'employé</h5>
+                    <Divider style={{width:329}} className=" ml-4 "/>
                     <DateRange
-                      
+                      className="cardstat ml-4"
                       editableDateInputs={false}
                       showSelectionPreview={false}
                       showDateDisplay={false}
@@ -443,19 +458,12 @@ function UserView(props) {
                       />
                     </div>
 
-
-                    <div className="card col-3 mt-5 mb-5 cardstat " >
-                    <h5 className="card-title mt-3">Origin des requêtes</h5>
-                    <Divider />
-                      <div className="card-body">
-                      <Bar  data={bardata} options={baroption} width={10} height={"20%"}/>
-                      </div>
-                      </div>
+                    </div>
                     
                    
                    
                     
-                </div>
+             
             
               
     

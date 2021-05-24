@@ -38,13 +38,13 @@ function AccountTabs() {
                       <div className="col-3 text-left mr-2 ml-2">
                       <MDBFormInline className="md-form">
                         <MDBIcon icon="search" className="mr-1" />
-                        <TextField id="user-search" onChange={filter} label="search" variant="outlined" size='small' />
+                        <TextField id="user-search" onChange={filter} label="Recherche" variant="outlined" size='small' />
                     </MDBFormInline>
                      
                       </div>
                       <div className="row col-8 text-center align-items-center justify-content-center">
                         {/* <div id="profile" onClick={gotorofile} className="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 shadow link picked-right ml-5 mr-1" >Profile</div> */}
-                        <div id="addacc" onClick={gotoadd} className="border border-dark col-5 shadow ml-5 link picked-left">ajouter</div>
+                        <div id="addacc" onClick={gotoadd} className="border border-dark col-5 shadow ml-5 link picked-left">Ajouter un nouvel utilisateur</div>
                       </div>
             </div>
     )

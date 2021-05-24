@@ -242,7 +242,7 @@ const addrequete = async ()=>{
 return (
     <div id='requetetable' className="row col-12 justify-content-center">
 
-<Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={()=>setopenadd(!openadd)}> Ajouter </Button> 
+<Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={()=>setopenadd(!openadd)}> Ajouter une nouvelle requête </Button> 
      <ReactDatatable
                 config={config}
                 records={props.Requetelist}
@@ -252,7 +252,7 @@ return (
 
                   {/* MODAL add */}
             <MDBModal isOpen={openadd} toggle={()=>setopenadd(!openadd)} size="lg">
-              <MDBModalHeader toggle={()=>setopenadd(!openadd)} className="text-center"></MDBModalHeader>
+              <MDBModalHeader toggle={()=>setopenadd(!openadd)} className="text-center">Ajouter une nouvelle requête</MDBModalHeader>
               <MDBModalBody>
               <form className="col-12 " >
                 <div className="d-flex flex-row col-12 justify-content-center mb-3">
@@ -318,7 +318,7 @@ return (
 
 
                 <Button onClick={()=>{addrequete()}}   variant="outlined" class="btn btn-outline-success">
-                Modifier
+                Valider
                  </Button> 
                
 
@@ -330,7 +330,7 @@ return (
               {/* update  */}
 
               <MDBModal isOpen={open} toggle={()=>toggle()} size="md">
-              <MDBModalHeader toggle={()=>toggle()} className="text-center"></MDBModalHeader>
+              <MDBModalHeader toggle={()=>toggle()} className="text-center">Modifier les données de la requête</MDBModalHeader>
               <MDBModalBody>
               <form className="col-12 " >
                 <div className="d-flex flex-row col-12 justify-content-center mb-3">
@@ -367,7 +367,7 @@ return (
                 </div><br />
 
 
-                <Button onClick={()=>{update(selectedrow);}} disabled={dis}  variant="outlined" class="btn btn-outline-success">
+                <Button onClick={()=>{update(selectedrow);}} disabled={dis}  variant="outlined" class="btn ">
                 Modifier
                  </Button> 
                

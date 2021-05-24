@@ -303,23 +303,23 @@ return (
                 variant="outlined" 
                 select
                 size="small"
-                label="Role"
-                helperText="selectioner Role"
+                label="Rôle"
+                helperText="Sélectionner le rôle"
                 value={level}
                 onChange={(e)=>{setlevel(e.target.value); if(e.target.value==="Chef Service"){seteqdisabled(true)}else{seteqdisabled(false)}}}
               >
 
 
                 {
-                  user.user_level !== "Chef Service" ? <MenuItem value={"admin"}>admin</MenuItem> : null
+                  user.user_level !== "Chef Service" ? <MenuItem value={"admin"}>Administrateur</MenuItem> : null
                 }
                 
                 {
-                  user.user_level !== "Chef Service" ? <MenuItem value={"Chef Service"}>Chef Service</MenuItem> : null
+                  user.user_level !== "Chef Service" ? <MenuItem value={"Chef Service"}>Chef de service</MenuItem> : null
                 }
 
                 {
-                  user.user_level !== "Chef Service" ? <MenuItem value={"Chef equipe"}>Chef équipe</MenuItem> : null
+                  user.user_level !== "Chef Service" ? <MenuItem value={"Chef equipe"}>Chef d'équipe</MenuItem> : null
                 }
 
                 {
@@ -338,7 +338,7 @@ return (
 
                 
                 {
-                  user.user_level !== "Chef Service" ? <MenuItem value={"RH"}>RH</MenuItem> : null
+                  user.user_level !== "Chef Service" ? <MenuItem value={"RH"}>Responsable des ressources humaines</MenuItem> : null
                 }
 
 
@@ -405,9 +405,9 @@ return (
                   id="Service"
                   select
                   size="small"
-                  label="Service"
+                  label="Sérvice"
                   style={{width:250}}
-                  helperText="selectioner Serices"
+                  helperText="Sélectionner un sérices"
                   value={service}
                   onChange={(e)=>{setservice(e.target.value)}}
                 >
@@ -427,8 +427,8 @@ return (
                   select
                   variant="outlined" 
                   size="small"
-                  label="equipe"
-                  helperText="select equipe"
+                  label="Equipe"
+                  helperText="Sélectionner une équipe"
                   value={usereq}
                   onChange={(e)=>{setusereq(e.target.value)}}
                 >
@@ -445,11 +445,11 @@ return (
              
             */}
 
-            <TextField variant="outlined"   value={fullname} onChange={(e)=>{setfullname(e.target.value)}} className="mt-5 col-8" label="Nom et Prenom" id="standard-size-small" type="text"   size="small" required/>
+            <TextField variant="outlined"   value={fullname} onChange={(e)=>{setfullname(e.target.value)}} className="mt-5 col-8" label="Nom et Prénom" id="standard-size-small" type="text"   size="small" required/>
 
 
               <div className="row justify-content-center mt-4">
-              <button type="submit" className="btn text-lowercase" style={{width:100}}  onClick={(e)=>{Adduser(e)}}>ajouter</button>
+              <button type="submit" className="btn text-capitalize" style={{width:100}}  onClick={(e)=>{Adduser(e)}}>Valider</button>
               </div>
               </div>
 
