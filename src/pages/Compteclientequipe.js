@@ -182,6 +182,20 @@ const [column, setcolumn] = useState([
       />
               ) :(
                 <>
+                {/* <!-- Breadcrumb--> */}
+                <header class="page-header">
+          <div class="container-fluid">
+            <h2 class="no-margin-bottom">Liste des clients</h2>
+          </div>
+        </header>
+ <div className="breadcrumb-holder container-fluid">
+   <ul className="breadcrumb">
+     <li className="breadcrumb-item"><a href="home" onClick={()=>{history.push("/home")}}>Home</a></li>
+     <li className="breadcrumb-item active">Clients</li>
+     
+   </ul>
+ </div>
+
                 <div className="row col-12 justify-content-end">
                 <Alert className="cursor" severity="warning" onClick={(e)=>{history.push("/Requetes")}}>{warningcount}</Alert>
                 </div>

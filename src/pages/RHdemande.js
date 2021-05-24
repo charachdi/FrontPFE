@@ -16,7 +16,7 @@ import Avatar from '@material-ui/core/Avatar';
 import CheckIcon from '@material-ui/icons/Check';
 import EditIcon from '@material-ui/icons/Edit';
 import UpdateIcon from '@material-ui/icons/Update';
-import CloseIcon from '@material-ui/icons/Close';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Action from './../component/RH/Action'
 
 function RHdemande() {
@@ -45,12 +45,12 @@ function RHdemande() {
         },
         {
             key: "Startdate",
-            text: "Startdate",
+            text: "Date de début",
             className :"table-ssmall"
           },
           {
             key: "enddate",
-            text: "enddate", 
+            text: "Date de fin", 
             className :"table-ssmall"
           },
         {
@@ -121,7 +121,8 @@ function RHdemande() {
    
             <div class="breadcrumb-holder container-fluid">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item" ><a href="home" >Home </a></li>
+                <li ><a href="home" ><ArrowBackIosIcon /></a></li>
+                <li class="breadcrumb-item" >Home</li>
                     <li class="breadcrumb-item active">Demande</li>
                 </ul>
             </div>

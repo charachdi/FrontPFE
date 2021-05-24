@@ -17,7 +17,8 @@ import CheckIcon from '@material-ui/icons/Check';
 import EditIcon from '@material-ui/icons/Edit';
 import UpdateIcon from '@material-ui/icons/Update';
 import CloseIcon from '@material-ui/icons/Close';
-
+import Button from "@material-ui/core/Button";
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 function Demande() {
 
@@ -89,7 +90,7 @@ function Demande() {
     const [column, setcolumn] = useState([
         {
           key: "Employee",
-          text: "Employee",
+          text: "Employé",
           cell: (demande, index) => {
             return (
               <div className="d-flex flex-row">
@@ -106,17 +107,17 @@ function Demande() {
         },
         {
           key: "Startdate",
-          text: "Startdate",
+          text: "date de début",
           className :"table-ssmall"
         },
         {
           key: "enddate",
-          text: "enddate", 
+          text: "Date de fin", 
           className :"table-ssmall"
         },
          {
           key: "Approved",
-          text: "Approved", 
+          text: "Approuvé", 
           className : "table-ssmall",
            cell: (demande, index) => {
             return (
@@ -275,7 +276,8 @@ function Demande() {
    
             <div class="breadcrumb-holder container-fluid">
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item" ><a href="home" >Home </a></li>
+                <li ><a href="home" ><ArrowBackIosIcon /></a></li>
+                <li class="breadcrumb-item" >Home</li>
                     <li class="breadcrumb-item active">Congé</li>
                 </ul>
             </div>
@@ -294,9 +296,11 @@ function Demande() {
 
                 <section className=" ">
                     <div className="row col-12 justify-content-center">
-                    <IconButton style={{backgroundColor : "#2ECD94"}}  onClick={()=>{toggle()}}>
-                        <AddIcon />
-                    </IconButton>
+                   
+
+                    <div className="col-4 mb-2"> 
+                    <Button variant="contained" color="primary" startIcon={<AddIcon />}  onClick={()=>{toggle()}}> Demander un congé </Button> 
+                    </div>
                     </div>
                
                 <ReactDatatable

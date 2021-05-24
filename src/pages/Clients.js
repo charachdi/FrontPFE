@@ -6,7 +6,7 @@ import Visibility from "@material-ui/icons/Visibility";
 import Avatar from "@material-ui/core/Avatar";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import { makeStyles } from "@material-ui/core/styles";
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import KeyboardVoiceIcon from "@material-ui/icons/KeyboardVoice";
 import Icon from "@material-ui/core/Icon";
 import AddIcon from "@material-ui/icons/Add";
@@ -226,7 +226,7 @@ function Clients() {
   const [column, setcolumn] = useState([
     {
       key: "name",
-      text: "name",
+      text: "Nom client",
       cell: (client, index) => {
         return (
           <div className="d-flex flex-row">
@@ -908,9 +908,8 @@ function Clients() {
           {/* <!-- Breadcrumb--> */}
           <div class="breadcrumb-holder container-fluid">
             <ul class="breadcrumb">
-              <li class="breadcrumb-item">
-                <a href="home">Home</a>
-              </li>
+            <li ><a href="home" ><ArrowBackIosIcon /></a></li>
+          <li class="breadcrumb-item" >Home</li>
               <li class="breadcrumb-item active">Client</li>
             </ul>
           </div>
@@ -926,7 +925,7 @@ function Clients() {
                     onClick={() => toggle(!open)}
                   >
                     {" "}
-                    Ajouter{" "}
+                    Ajouter un nouveau client{" "}
                   </Button>
                 </div>
               </div>
@@ -1367,7 +1366,7 @@ function Clients() {
         isOpen={suppopen}
         toggle={() => toggleSupp()}
         disableBackdrop={true}
-        size="sm"
+        size="lg"
       >
         <MDBModalHeader toggle={() => toggleSupp()} className="text-center sm">
           Supprimer le client
@@ -1375,7 +1374,7 @@ function Clients() {
         <MDBModalBody>
           <div className="row col-12 ">
             <div>
-              <p>vous les vous vraiment supprimer ce client ?</p>
+              <p>voulez-vous vraiment supprimer ce client ?</p>
             </div>
           </div>
         </MDBModalBody>

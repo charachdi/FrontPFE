@@ -6,7 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { makeStyles } from '@material-ui/core/styles';
 import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
-import Icon from '@material-ui/core/Icon';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import AddIcon from '@material-ui/icons/Add';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter , MDBCol, MDBFormInline , MDBIcon } from 'mdbreact';
 import TextField from '@material-ui/core/TextField';
@@ -313,7 +313,8 @@ const Suppservice = async (e)=>{
         {/* <!-- Breadcrumb--> */}
         <div class="breadcrumb-holder container-fluid">
           <ul class="breadcrumb">
-          <li class="breadcrumb-item" ><a href="home" >Home </a></li>
+          <li ><a href="home" ><ArrowBackIosIcon /></a></li>
+          <li class="breadcrumb-item" >Home</li>
             <li class="breadcrumb-item active">Service</li>
           </ul>
         </div>
@@ -325,8 +326,8 @@ const Suppservice = async (e)=>{
      
          
           
-             <div className="col-3 mb-2"> 
-              <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={()=>toggle(!open)}> Ajouter </Button> 
+             <div className="col-4 mb-2"> 
+              <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={()=>toggle(!open)}> Ajouter un nouveau service </Button> 
              </div>
        
              
@@ -399,12 +400,12 @@ const Suppservice = async (e)=>{
 
 
                     {/* MODAL SUPP */}
-              <MDBModal isOpen={suppopen} toggle={()=>toggleSupp()} size="sm">
+              <MDBModal isOpen={suppopen} toggle={()=>toggleSupp()} size="lg">
               <MDBModalHeader toggle={()=>toggleSupp()} className="text-center sm">Supprimer le service</MDBModalHeader>
                   <MDBModalBody>
                       <div className="row col-12 ">
                         <div >
-                          <p>vous les vous vraiment supprimer ce service ?</p>
+                          <p>Voulez-vous vraiment supprimer ce service ?</p>
                         </div>
                       </div>
                 </MDBModalBody> 

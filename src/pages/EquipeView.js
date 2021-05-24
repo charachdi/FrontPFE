@@ -13,13 +13,13 @@ import Equipedata from '../component/Equipe/Equipedata'
 import Listcompte from '../component/Equipe/Listcompte'
 import Equipesetting from './../component/Equipe/Equipesetting'
 import Clientarchive from '../component/Equipe/Clientarchive'
-
-
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import IconButton from '@material-ui/core/IconButton';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import BackupIcon from '@material-ui/icons/Backup';
 import DescriptionIcon from '@material-ui/icons/Description';
-
+import Alert from '@material-ui/lab/Alert';
 import Lottie from 'react-lottie';
 import Loading from './../images/loading.json'
 import Import from './../images/import.json'
@@ -329,7 +329,8 @@ const switchtoarchive= () =>{
           {/* <!-- Breadcrumb--> */}
           <div className="breadcrumb-holder container-fluid">
             <ul className="breadcrumb">
-            <li className="breadcrumb-item" ><a href="home" onClick={()=>{history.push("/home")}}>Home </a></li>
+            <li ><a href="home" ><ArrowBackIosIcon /></a></li>
+          <li class="breadcrumb-item" >Home</li>
               <li className="breadcrumb-item active">{equipe.Nom_equipe}</li>
             </ul>
           </div>
@@ -373,7 +374,7 @@ const switchtoarchive= () =>{
                 <ul className="profile-header-tab nav nav-tabs  mt-4 mb-4" style={{backgroundColor:"#E9ECEF"}}>
                   <li onClick={()=>{switchtodata()}} className="nav-item"><span id="dattab" href="#" className="nav-link active show cursor" data-toggle="tab">Data</span></li>
                   <li onClick={()=>{switchtocompte()}} className="nav-item"><span id="listcompt" href="#" className="nav-link cursor" data-toggle="tab">Compte</span></li>
-                  <li onClick={()=>{switchtofile()}} className="nav-item"><span id="filetab" href="#" className="nav-link cursor" data-toggle="tab">Files</span></li>
+                  <li onClick={()=>{switchtofile()}} className="nav-item"><span id="filetab" href="#" className="nav-link cursor" data-toggle="tab">Fichier</span></li>
                   <li onClick={()=>{switchtoarchive()}}  className="nav-item"><span id="archivetab" href="#" className="nav-link cursor" data-toggle="tab">Archive</span></li>
                   {
                     isadmin ?  <li onClick={()=>{switchtosetting()}}className="nav-item"><span id="setting" href="#" className="nav-link cursor" data-toggle="tab"><i className="fas fa-cog"></i></span></li> : null
@@ -393,15 +394,21 @@ const switchtoarchive= () =>{
           <>
           
 
-        <div id="Equipedata" className="row col-12" style={{minHeight:500 , backgroundColor : '#FAFAFA'}}>
+        <div id="Equipedata" className="row col-12 mb-5" style={{minHeight:500 , backgroundColor : '#FAFAFA'}}>
         <Equipedata equipeid={equipe_id} />
         </div>  
-
+        
         <div id="Fileview" className="" style={{display:"none" , minHeight:600}} >
         <div className="">
-             <IconButton  onClick={(e)=>{toggle()}} className="mt-1" color="primary"  aria-label="upload picture" component="span">
-                  <BackupIcon  fontSize="large" style={{color:'#2DCD94'}}/>
-            </IconButton> </div>
+        
+        <Button variant="contained" className="  mb-3 mt-3" color="primary" onClick={(e)=>{toggle()}} startIcon={<CloudUploadIcon />}>
+        Télécharger un fichier 
+      </Button>
+      
+      <Alert severity="error">Seuls les fichiers de type Excel sont supporter!</Alert>
+      </div>
+
+            
           <div className="row justify-content-center d-inline-flex ">
 
 

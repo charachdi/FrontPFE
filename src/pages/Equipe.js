@@ -15,7 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { MDBDataTableV5 } from 'mdbreact';
 import axios from 'axios'
 import $ from 'jquery'
-import Avatar from '@material-ui/core/Avatar';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Api_url from './../component/Api_url';
 import { ToastContainer, toast } from 'react-toastify';
 import { useHistory } from "react-router-dom";
@@ -85,17 +85,7 @@ function Equipe(props) {
 
 
     const [column, setcolumn] = useState([
-      {
-        key: "id",
-        text: "#",
-        cell: (equipe, index) => {
-          return (
-            <>
-                <p>{equipe.id}</p>
-             </>
-          );
-      }
-      },
+     
       {
         key: "Nom_equipe",
         text: "Equipe",
@@ -113,7 +103,7 @@ function Equipe(props) {
       },
       {
         key: "Action",
-        text: "Action",
+        text: "",
         cell: (equipe, index) => {
           return (
             <>
@@ -394,11 +384,12 @@ const Suppequipe = async (e)=>{
        
         <div class="breadcrumb-holder container-fluid">
           <ul class="breadcrumb">
-          <li class="breadcrumb-item" ><a href="home" >Home </a></li>
+          <li ><a href="home" ><ArrowBackIosIcon /></a></li>
+          <li class="breadcrumb-item" >Home</li>
             <li class="breadcrumb-item active">Equipe</li>
           </ul>
         </div>
-
+       
       <div className="row  justify-content-center">
           <div className="col-12 text-center">
           
@@ -406,8 +397,8 @@ const Suppequipe = async (e)=>{
           
              
             
-             <div id="addbtn" className="col-3 mb-2" style={{width:"50%"}}> 
-              <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={()=>toggle(!open)}> Ajouter </Button> 
+             <div id="addbtn" className="col-4 mb-2" style={{width:"50%"}}> 
+              <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={()=>toggle(!open)}> Ajouter une nouvelle équipe </Button> 
              </div>
            
              
@@ -483,12 +474,12 @@ const Suppequipe = async (e)=>{
 
 
                     {/* MODAL SUPP */}
-              <MDBModal isOpen={suppopen} toggle={()=>toggleSupp()} size="sm" disableBackdrop={true}>
+              <MDBModal isOpen={suppopen} toggle={()=>toggleSupp()} size="lg" disableBackdrop={true}>
               <MDBModalHeader toggle={()=>toggleSupp()} className="text-center sm">Supprimer l'équipe</MDBModalHeader>
                   <MDBModalBody>
                       <div className="row col-12 ">
                         <div >
-                          <p>vous les vous vraiment supprimer cette équipe ?</p>
+                          <p>Voulesz-vous vraiment supprimer cette équipe ?</p>
                         </div>
                       </div>
                 </MDBModalBody> 
