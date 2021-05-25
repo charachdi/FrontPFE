@@ -3,7 +3,8 @@ import ReactDatatable from '@ashvin27/react-datatable';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import CloseIcon from '@material-ui/icons/Close';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter , MDBCol, MDBFormInline , MDBIcon } from 'mdbreact';
 import TextField from '@material-ui/core/TextField';
@@ -21,6 +22,8 @@ function Requete(props) {
     const [openadd, setopenadd] = useState(false)
     const token = localStorage.getItem('token')
     const user = JSON.parse(localStorage.getItem('user')) ;
+    const [deleteopen, setdeleteopen] = useState(false)
+    const [deleteselcted, setdeleteselcted] = useState(0)
 
 const update = (id)=>{
     props.updatereq(id)
@@ -32,6 +35,10 @@ const update = (id)=>{
 
 const toggle = () =>{
   setopen(!open)
+}
+
+const toggledelete = () =>{
+  setdeleteopen(!deleteopen)
 }
 
 const [startDate, setStartDate] = useState(new Date());
@@ -177,7 +184,7 @@ const [column, setcolumn] = useState([
             <EditIcon />
             </IconButton>
             
-             <IconButton className="float-right mr-3" size="small" aria-label="delete" color="secondary" onClick={()=>{setselectedrow(req);toggle();setdis(true)}}>
+             <IconButton className="float-right mr-3" size="small" aria-label="delete" color="secondary" onClick={()=>{setdeleteselcted(req.id);toggledelete()}}>
              <DeleteIcon />
              </IconButton>
              </div>
@@ -246,7 +253,9 @@ return (
      <ReactDatatable
                 config={config}
                 records={props.Requetelist}
-                columns={column}/>
+                columns={column}
+                tHeadClassName ="text-center text-samlll"
+                 />
 
 
 
@@ -373,6 +382,28 @@ return (
                
 
               </form>
+              </MDBModalBody>
+              </MDBModal>
+
+
+              <MDBModal isOpen={deleteopen} toggle={()=>toggledelete()} size="md">
+              <MDBModalBody>
+           <div className="row col-12 justify-content-around">
+
+                    <h4 className='text-center mb-5'>êtes-vous sûr de vouloir supprimer Cette Requete {deleteselcted}</h4>
+
+
+                         <IconButton className="hover" size="medium" style={{backgroundColor : "#ce1126"}} onClick={()=>{props.deletereq(deleteselcted) ; toggledelete()}} >
+                            <DeleteForeverIcon style={{color : "white"}} />
+                        </IconButton>
+                        
+                        <IconButton className="hover" size="medium" style={{backgroundColor : "#303f9f"}} onClick={()=>{toggledelete()}}>
+                            <CloseIcon style={{color : "white"}} />
+                        </IconButton>
+
+                     
+                  </div>
+               
               </MDBModalBody>
               </MDBModal>
     </div>

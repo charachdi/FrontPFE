@@ -94,7 +94,7 @@ function Archive(props) {
 
         </div>
            <div style={{position:'absolute', bottom:50 , left:'47%'}}>
-           <button type="submit" className="btn text-lowercase mr-5" style={{width:80 , fontSize:12 }} onClick={(e)=>{props.update(progress,requetes)}} >modifier</button>
+           <button type="submit" className="btn text-lowercase mr-5" style={{width:80 , fontSize:12 }} onClick={(e)=>{props.update(progress,requetes)}} >Modifier</button>
 
                </div> 
 

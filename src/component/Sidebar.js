@@ -258,7 +258,7 @@ const [current, setcurrent] = useState("")
           </li>
 
           <li>
-            <a className="text-left hover"  onClick={()=>{history.push("/Settings")}}><i class="fas fa-cog mr-3"></i>Paramètre</a>
+            <a className="text-left hover"  onClick={()=>{history.push("/Settings")}}><i class="fas fa-cog mr-2"></i>Paramètre</a>
           </li>
 
           <li>

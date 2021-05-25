@@ -746,7 +746,9 @@ box-shadow: 3px 12px 25px -7px rgba(0,0,0,0.47);
 .table-ssmall {
     width: 10px;
 }
-
+.table-mid {
+    width: 170px;
+}
 .table-action {
     width: 200px;
 }
@@ -759,4 +761,8 @@ box-shadow: 3px 12px 25px -7px rgba(0,0,0,0.47);
     -webkit-box-shadow: 4px 5px 21px -11px rgba(122,121,122,1);
     -moz-box-shadow: 4px 5px 21px -11px rgba(122,121,122,1);
     box-shadow: 4px 5px 21px -11px rgba(122,121,122,1);
+}
+
+.text-samlll {
+    font-size: 10px;
 }

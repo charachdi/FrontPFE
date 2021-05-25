@@ -41,22 +41,22 @@ function RHdemande() {
         {
             key:"Type",
             text: "Type",
-            className : "table-ssmall",
+            className :"table-mid text-center ",
         },
         {
             key: "Startdate",
             text: "Date de début",
-            className :"table-ssmall"
+            className :"table-mid text-center ",
           },
           {
             key: "enddate",
             text: "Date de fin", 
-            className :"table-ssmall"
+            className :"table-mid text-center ",
           },
         {
             key:"Action",
             text: "Action",
-            className : "table-ssmall",
+            className :"table-mid text-center ",
 
             cell: (demande, index) => {
                 return (

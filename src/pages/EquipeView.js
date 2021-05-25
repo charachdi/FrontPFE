@@ -24,6 +24,7 @@ import Lottie from 'react-lottie';
 import Loading from './../images/loading.json'
 import Import from './../images/import.json'
 import Fileempty from './../images/fileempty.json'
+import {socket} from './../Socket/Socket'
 
 
 function EquipeView(props) {
@@ -47,7 +48,7 @@ function EquipeView(props) {
     const [loading, setloading] = useState(true)
     const [Client_archive, setClient_archive] = useState([])
     //add file listiner
-    props.socket.on(`${equipe.Roomid}`, (data)=>{
+    socket.on(`${equipe.Roomid}`, (data)=>{
       //Here we broadcast it out to all other sockets EXCLUDING the socket which sent us the data
     setfiles([...files , data.file])
     });
@@ -418,7 +419,7 @@ const switchtoarchive= () =>{
               ):(
                 
                   files.map((file,index)=>(
-                    <Fileview file={file} updatecom={updatecomplete} index={index} socket={props.socket}/>
+                    <Fileview file={file} updatecom={updatecomplete} index={index} socket={socket}/>
                   ))
                 
               )
@@ -439,7 +440,7 @@ const switchtoarchive= () =>{
         </div>
 
         <div id="Clientarchive" style={{display:"none" , width:"100%" , minHeight:500 ,}}>
-        < Clientarchive  archive={Client_archive}/>
+        <Clientarchive  archive={Client_archive}/>
         </div>
         </>
 

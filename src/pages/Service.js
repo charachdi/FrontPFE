@@ -82,13 +82,13 @@ function Service(props) {
       {
         key: "Nom_service",
         text: "Service",
-        sortable: true,
-        
+        className:"text-center",
       },
   
       {
         key: "Action",
         text: "Action",
+        className:"table-mid",
         cell: (service, index) => {
           return (
             <>
@@ -429,7 +429,9 @@ const Suppservice = async (e)=>{
           <ReactDatatable
               config={config}
               records={services}
-              columns={column}/>
+              columns={column}
+              tHeadClassName ="text-center"
+              />
               </>
         )
       }

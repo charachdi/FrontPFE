@@ -88,14 +88,15 @@ function Equipe(props) {
       {
         key: "Nom_equipe",
         text: "Equipe",
-        sortable: true,
+        className:"text-center",
+        
         
       },
   
       {
         key: "Service",
         text: "Service",
-        sortable: true,
+        className:"text-center",
         cell: (equipe, index) => {
           return equipe.Service.Nom_service
       }
@@ -103,11 +104,10 @@ function Equipe(props) {
       {
         key: "",
         text: "Member d'equipe",
-        className : "table-ssmall",
-        sortable: true,
+        className : "table-mid text-center",
         cell: (equipe, index) => {
           return (
-            <IconButton className="float-left mr-2" size="small" aria-label="delete" color="primary" >
+            <IconButton className="float-center mr-2" size="small" aria-label="delete" color="primary" >
             <GroupIcon /> <span className="ml-2" style={{fontSize:15}}>{equipe.Users.length}</span>
             </IconButton> 
           )
@@ -122,7 +122,7 @@ function Equipe(props) {
             <>
                        
                        
-                        <IconButton className="float-right mr-3" size="small" aria-label="delete" color="secondary" onClick={()=> {changeselected(equipe);toggleSupp()}}>
+                        <IconButton className="float-right mr-3" disabled={equipe.Users.length !== 0 ? true : false} size="small" aria-label="delete" color="secondary" onClick={()=> {changeselected(equipe);toggleSupp()}}>
                         <DeleteIcon />
                         </IconButton>
 
@@ -511,7 +511,9 @@ const Suppequipe = async (e)=>{
           <ReactDatatable
               config={config}
               records={equipes}
-              columns={column}/>
+              columns={column}
+              tHeadClassName ="text-center"
+              />
           </>
         )
       }

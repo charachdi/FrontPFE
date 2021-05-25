@@ -114,7 +114,9 @@ useEffect(() => {
           <AdminRoute path='/demandes' component={RHdemande} exact/>
           <Adminonly path='/Settings' component={Settings} exact/>
 
-          <AdminRoute path='/Equipe/:id' render={(props) => <EquipeView socket={socket} {...props} /> } exact/>
+          {/* <AdminRoute path='/Equipe/:id' render={(props) => <EquipeView socket={socket} {...props} /> } exact/> */}
+        
+          <AdminRoute path='/Equipe/:id' component={EquipeView} exact/>
           <Route path='/profile/:id' component={UserView} exact/>
           <AdminRoute path='/Client/:id' component={CompteCli} exact/>
           <AdminRoute path='/File/:name/:id' component={FileView} exact/>
