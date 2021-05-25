@@ -228,6 +228,26 @@ setTimeout(() => {
  
 }
 
+const deleterequete = async (id)=>{
+const res = await axios({
+  headers: { Authorization: `Bearer ${token}` },
+  method: "delete",
+  url: `${Api_url}clients/Requete/${id}`,
+});
+if(res.status === 200){
+  setrequete(requete.filter(item => item.id !== res.data.id))
+  toast.success(`Requete Supprimer`, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    });
+}
+
+}
+
 const updaterequete = async (req) =>{
  
  
@@ -514,17 +534,7 @@ const addrequte = (req)=>{
       <div className="comptecli">
           
       
-      <ToastContainer
-      position="top-right"
-      autoClose={3000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      />
+     
       {
         isloading ? (
           <Lottie 
@@ -615,7 +625,7 @@ const addrequte = (req)=>{
    </div>
 
    <div id="requetetab" style={{display: exportauth ? "none": "block"}} className="row col-12 mb-2">
-     <Requete Requetelist={requete} updatereq={updaterequete} auth={Writeauth} admin={isadchef} clientID={client_id} clientname={client.Nom_compteCli} add={addrequte} />
+     <Requete Requetelist={requete} deletereq={deleterequete} updatereq={updaterequete} auth={Writeauth} admin={isadchef} clientID={client_id} clientname={client.Nom_compteCli} add={addrequte} />
    </div>
 
    <div id="historitab" style={{display: "none" , minHeight : 600}} className="row col-12 justify-content-center mb-2">

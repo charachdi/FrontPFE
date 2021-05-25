@@ -49,7 +49,7 @@ const updatear = (prog , req)=>{
             </div>
 
 
-            <div className="col-7 mx-auto card">
+            <div className="col-7 mx-auto card setting">
                 <Archive prog={archive.Prog} req={archive.requete} update={updatear}/>
             </div>
         </div>

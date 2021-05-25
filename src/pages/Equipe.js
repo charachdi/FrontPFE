@@ -85,31 +85,44 @@ function Equipe(props) {
 
 
     const [column, setcolumn] = useState([
-     
       {
         key: "Nom_equipe",
         text: "Equipe",
-        sortable: true,
+        className:"text-center",
+        
         
       },
   
       {
         key: "Service",
         text: "Service",
-        sortable: true,
+        className:"text-center",
         cell: (equipe, index) => {
           return equipe.Service.Nom_service
       }
       },
       {
+        key: "",
+        text: "Member d'equipe",
+        className : "table-mid text-center",
+        cell: (equipe, index) => {
+          return (
+            <IconButton className="float-center mr-2" size="small" aria-label="delete" color="primary" >
+            <GroupIcon /> <span className="ml-2" style={{fontSize:15}}>{equipe.Users.length}</span>
+            </IconButton> 
+          )
+      }
+      },
+      {
         key: "Action",
-        text: "",
+        text: "Action",
+        className : "table-action text-center",
         cell: (equipe, index) => {
           return (
             <>
                        
                        
-                        <IconButton className="float-right mr-3" size="small" aria-label="delete" color="secondary" onClick={()=> {changeselected(equipe);toggleSupp()}}>
+                        <IconButton className="float-right mr-3" disabled={equipe.Users.length !== 0 ? true : false} size="small" aria-label="delete" color="secondary" onClick={()=> {changeselected(equipe);toggleSupp()}}>
                         <DeleteIcon />
                         </IconButton>
 
@@ -120,9 +133,7 @@ function Equipe(props) {
                         <Visibility />
                         </IconButton> 
 
-                        <IconButton className="float-left mr-2" size="small" aria-label="delete" color="primary" >
-                        <GroupIcon /> <span className="ml-2" style={{fontSize:15}}>{equipe.Users.length}</span>
-                        </IconButton> 
+                      
              </>
           );
       }
@@ -500,7 +511,9 @@ const Suppequipe = async (e)=>{
           <ReactDatatable
               config={config}
               records={equipes}
-              columns={column}/>
+              columns={column}
+              tHeadClassName ="text-center"
+              />
           </>
         )
       }

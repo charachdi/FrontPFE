@@ -8,7 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Profile from './../component/Profile'
 import Statistique from './../component/Statistique'
 import Edituser from './../component/Edituser'
-
+import { useHistory } from "react-router-dom";
 
 
 function Userview(props) {
@@ -17,6 +17,7 @@ function Userview(props) {
        const [showEdit, setshowEdit] = useState()
         const [isloading, setisloading] = useState(true)
         const [show, setshow] = useState("none")
+        const history = useHistory();
 
 
     useEffect(() => {
@@ -88,15 +89,15 @@ if(!showEdit){
                            
                              {/* header */}
                              
-                    <div  className="d-flex justify-content-center mt-3" ><Avatar style={{width:110, height:110}} alt={selected.full_name} src={selected.user_img} /></div>  
+                    <div  className="d-flex justify-content-center mt-3" ><Avatar style={{width:110, height:110}} alt={selected.full_name} src={selected.user_img} onClick={()=>{history.push(`/profile/${selected.id}`)}} /></div>  
                    <div >
                        <h5 style={{display: show}} className="text-center text-capitalize mt-3">{ !selected.full_name ? "Full name" :selected.full_name }</h5>
                        <h6 style={{display: show}} className="text-center  mt-1">{selected.user_email ? selected.user_email : "User@gmail.com"}</h6>
                    </div>
                        
                             <div className="row col-12 align-items-center mx-auto text-center border border-gray border-left-0 border-right-0 ">
-                                        <div onClick={()=>{switchtoprofile() }} id="prof"  className=" text-center mt-1 mb-1 inner-user  link-two col-6 " ><i className="fas fa-user-alt fa-2x"></i><div id="profanime" className="anime"></div></div>
-                                        <div id="edit" onClick={()=>{switchtoedit()}} className=" text-center mt-1 mb-1 inner-user col-6   link-two "><i className="fas fa-wrench fa-2x"></i><div id="editanime" className=""></div></div>
+                                        <div onClick={()=>{switchtoprofile() }} id="prof"  className=" text-center mt-1 mb-1 inner-user  link-two col-6 " ><i className="fas fa-user-alt fa-1x"></i><div id="profanime" className="anime"></div></div>
+                                        <div id="edit" onClick={()=>{switchtoedit()}} className=" text-center mt-1 mb-1 inner-user col-6   link-two "><i className="fas fa-wrench fa-1x"></i><div id="editanime" className=""></div></div>
 
                             </div>
                        

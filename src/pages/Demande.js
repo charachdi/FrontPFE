@@ -103,22 +103,23 @@ function Demande() {
         {
           key: "Type",
           text: "Type",
-          className :"table-ssmall"
+          className :"table-mid text-center "
         },
         {
           key: "Startdate",
           text: "date de début",
-          className :"table-ssmall"
+          sortable : true ,
+          className :"table-mid text-center"
         },
         {
           key: "enddate",
           text: "Date de fin", 
-          className :"table-ssmall"
+          className :"table-mid text-center"
         },
          {
           key: "Approved",
           text: "Approuvé", 
-          className : "table-ssmall",
+          className : "table-mid text-center",
            cell: (demande, index) => {
             return (
              <div className="text-center">
@@ -152,7 +153,7 @@ function Demande() {
         {
             key : "Action",
             text:'Action',
-            className : "table-ssmall text-center",
+            className : "table-mid text-center text-center",
             cell: (demande, index) => {
                 return (
                     <div className="mt-2">
@@ -306,7 +307,9 @@ function Demande() {
                 <ReactDatatable
                 config={config}
                 records={Demande}
-                columns={column}/>
+                columns={column}
+                tHeadClassName ="text-center"
+                />
                  </section>
             )
         }

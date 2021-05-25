@@ -344,8 +344,60 @@ return (
 
                 
               </TextField>
-             
+
               {
+                level === "Chef Service" ? (
+                  <TextField
+                  variant="outlined" 
+                  className="float-right mt-3 col-5"
+                  id="Service"
+                  select
+                  size="small"
+                  label="Service"
+                  style={{width:250}}
+                  helperText="selectioner Serices"
+                  value={service}
+                  onChange={(e)=>{setservice(e.target.value)}}
+                >
+                  {
+                    services.map((ser , index) =>(
+                      <MenuItem key={index} value={ser.id}>{ser.Nom_service}</MenuItem>
+                    ))
+                  }
+                
+                </TextField>
+                ): null
+              }
+
+              {
+                level === "Chef équipe"  ? (
+                    level === "Collaborateur" ? (
+                      <TextField
+                      disabled={eqdisabled}
+                      style={{width:250}}
+                      className="float-center mt-3 col-6"
+                      id="equipe"
+                      select
+                      variant="outlined" 
+                      size="small"
+                      label="equipe"
+                      helperText="select equipe"
+                      value={usereq}
+                      onChange={(e)=>{setusereq(e.target.value)}}
+                    >
+                      {
+                        equipe.map((equ , index) =>(
+                          <MenuItem key={index} value={equ.id}>{equ.Nom_equipe}</MenuItem>
+                        ))
+                      } 
+                     
+                      
+                    </TextField>
+                    ) : null
+                ) : null
+              }
+             
+              {/* {
                 eqdisabled ? (
                   <TextField
                   variant="outlined" 
@@ -384,13 +436,14 @@ return (
                     equipe.map((equ , index) =>(
                       <MenuItem key={index} value={equ.id}>{equ.Nom_equipe}</MenuItem>
                     ))
-                  }
+                  } 
                  
                   
                 </TextField>
                 )
               }
-            
+             
+            */}
 
             <TextField variant="outlined"   value={fullname} onChange={(e)=>{setfullname(e.target.value)}} className="mt-5 col-8" label="Nom et Prénom" id="standard-size-small" type="text"   size="small" required/>
 

@@ -109,15 +109,17 @@ useEffect(() => {
           <Route path='/Client' component={Clients} exact/>
           <Comptecli path='/Compteclient' component={Compteclientequipe} exact/>
           <Comptecli path='/Requetes' component={Fixrequete} exact/>
-          <Route path='/Attendance' component={Attendance} exact/>
+          <AdminRoute path='/Attendance' component={Attendance} exact/>
           <Route path='/Demande' component={Demande} exact/>
-          <Route path='/demandes' component={RHdemande} exact/>
-          <Route path='/Settings' component={Settings} exact/>
+          <AdminRoute path='/demandes' component={RHdemande} exact/>
+          <Adminonly path='/Settings' component={Settings} exact/>
 
-          <Route path='/Equipe/:id' render={(props) => <EquipeView socket={socket} {...props} /> } exact/>
+          {/* <AdminRoute path='/Equipe/:id' render={(props) => <EquipeView socket={socket} {...props} /> } exact/> */}
+        
+          <AdminRoute path='/Equipe/:id' component={EquipeView} exact/>
           <Route path='/profile/:id' component={UserView} exact/>
-          <Route path='/Client/:id' component={CompteCli} exact/>
-          <Route path='/File/:name/:id' component={FileView} exact/>
+          <AdminRoute path='/Client/:id' component={CompteCli} exact/>
+          <AdminRoute path='/File/:name/:id' component={FileView} exact/>
           <Route path='/myProfile/:id' component={Profile} exact/>
 
 

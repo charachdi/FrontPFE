@@ -268,7 +268,8 @@ function UserView(props) {
     const [column, setcolumn] = useState([
       {
         key: "name",
-        text: "",
+        text: "Client",
+        className : "text-center",
         cell: (client, index) => {
           return (
             <div className="d-flex flex-row">
@@ -283,6 +284,7 @@ function UserView(props) {
     {
       key: "",
       text: "progres",
+      className : "text-center",
       cell: (client, index) => {
         return (
           <div className="mt-3" style={{minWidth:250}}>
@@ -294,6 +296,7 @@ function UserView(props) {
   {
     key: "",
     text: "",
+    className : "text-center",
     cell: (client, index) => {
       return (
         <div className="mt-1">
@@ -319,6 +322,7 @@ function UserView(props) {
     {
       key: "ok",
       text: "Clôturé",
+      className : "text-center",
       cell: (client, index) => {
         return (
           <>
@@ -330,6 +334,7 @@ function UserView(props) {
       {
       key: "ko",
       text: "En cours",
+      className : "text-center table-mid",
       cell: (client, index) => {
         return (
           <>
@@ -377,9 +382,9 @@ function UserView(props) {
           />
             ) : (
               <>
-                <div className="row col-12 justify-content-center historique mb-5">
+                <div className="row col-12 justify-content-center  mb-5">
 
-                    <div className="d-flex flex-column mt-3 mb-3">
+                    <div className="d-flex flex-column mt-3 mb-3 text-center">
                     <Avatar src={user.user_img} className="mx-auto"  style={{width : 150 , height:150}}/>
                       <h2>{user.full_name}</h2>
                     </div>
@@ -436,7 +441,9 @@ function UserView(props) {
                     <ReactDatatable
                         config={config}
                         records={Clientsdata}
-                        columns={column}/>
+                        columns={column}
+                        tHeadClassName ="text-center "
+                        />
                     
                     </div>
  
