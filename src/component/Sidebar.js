@@ -137,7 +137,7 @@ const [current, setcurrent] = useState("")
           </li>
           {
             current === "admin" ? (
-              <li className="active">
+              <li className="">
               <a className="text-left hover" onClick={()=>{history.push("/home")}}><i className="fas fa-user-friends mr-3"></i>Comptes</a>
             </li>
             ) : (
@@ -147,7 +147,7 @@ const [current, setcurrent] = useState("")
 
         {
             current === "Chef Service" ? (
-              <li className="active">
+              <li className="">
               <a className="text-left hover" onClick={()=>{history.push("/home")}}><i className="fas fa-user-friends mr-3"></i>Comptes</a>
             </li>
             ) : (

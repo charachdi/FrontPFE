@@ -19,11 +19,17 @@ import Loading from './../images/loading.json'
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-
+import * as locales from 'react-date-range/dist/locale';
 import { DateRange } from 'react-date-range';
 import { addDays } from 'date-fns';
 
 import Divider from '@material-ui/core/Divider';
+
+
+
+
+
+
 
 
 const BorderLinearProgress = withStyles((theme) => ({
@@ -50,6 +56,7 @@ function UserView(props) {
     const userId =  !props.id ? props.match.params.id : props.id
     const [user, setuser] = useState({})
     const [isloading, setisloading] = useState(true)
+    const [locale, setLocale] = React.useState('fr');
 
     const [Clientsdata, setClientsdata] = useState([])
     const [colors, setcolors] = useState([])
@@ -94,6 +101,11 @@ function UserView(props) {
            setuser(res.data.user)
       }
 
+
+      const nameMapper = {
+        fr: 'French'
+      };
+      
       
       const getclients = async () =>{
         const res = await axios({
@@ -443,6 +455,8 @@ function UserView(props) {
                         records={Clientsdata}
                         columns={column}
                         tHeadClassName ="text-center "
+                        
+                        
                         />
                     
                     </div>
@@ -462,6 +476,7 @@ function UserView(props) {
                       moveRangeOnFirstSelection={false}
                       ranges={presance}
                       rangeColors={colors}
+                      locale={locales[locale]}
                       />
                     </div>
 

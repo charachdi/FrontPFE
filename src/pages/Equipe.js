@@ -12,7 +12,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter , MDBCol, MDBFormInline , MDBIcon } from 'mdbreact';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-import { MDBDataTableV5 } from 'mdbreact';
+import Alert from '@material-ui/lab/Alert';
 import axios from 'axios'
 import $ from 'jquery'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -150,6 +150,17 @@ function Equipe(props) {
       button: {
           excel: false,
           print: false
+      },
+      language: {
+          length_menu: "Afficher  _MENU_ enregistrements par page",
+          filter: "Recherche...",
+          info: "Affiche  _START_ à  _END_ de _TOTAL_ entrées",
+          pagination: {
+              first: "Premier",
+              previous: "Précédent",
+              next: "Suivant",
+              last: "Dernier"
+          }
       }
     }
 
@@ -401,28 +412,35 @@ const Suppequipe = async (e)=>{
           </ul>
         </div>
        
-      <div className="row  justify-content-center">
-          <div className="col-12 text-center">
-          
-
-          
+        
+              <div className="row col-12 mb-2 justify-content-center">
              
-            
+          
              <div id="addbtn" className="col-4 mb-2" style={{width:"50%"}}> 
               <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={()=>toggle(!open)}> Ajouter une nouvelle équipe </Button> 
+            
              </div>
-           
+              </div>
+
+             <ReactDatatable
+              config={config}
+              records={equipes}
+              columns={column}
+              tHeadClassName ="text-center"
+              />
              
+          
 
                       {/* MODAL ADD */}
             <MDBModal isOpen={open} toggle={()=>toggle()}  size="lg" disableBackdrop={true}>
               <MDBModalHeader toggle={()=>toggle()} className="text-center">Ajouter une nouvelle équipe</MDBModalHeader>
               <MDBModalBody>
+              <Alert severity="info" className="mb-3">les deux zones doivent être remplies pour finaliser l'ajout !</Alert>
               <form className="row col-12 justify-content-center align-middle" >
                     
                     <div className="mb-5 col-12">
-                    <TextField className="col-3" value={nomequipe} onChange={(e)=>{setnomequipe(e.target.value)}} id="standard-basic" label="Nom de l'equipe" required />
-                    <TextField className="ml-5 col-2" id="standard-select-currency"  select required size="medium" label="Service"value={service} onChange={(e)=>{setservice(e.target.value)}}>
+                    <TextField className="col-6" value={nomequipe} onChange={(e)=>{setnomequipe(e.target.value)}} id="standard-basic" label="Nom de l'equipe" required />
+                    <TextField className="ml-5 col-5" id="standard-select-currency"  select required size="medium" label="Service"value={service} onChange={(e)=>{setservice(e.target.value)}}>
                     <MenuItem ></MenuItem>
                             {
                               services.map((ser , index)=>(
@@ -435,52 +453,48 @@ const Suppequipe = async (e)=>{
                             
                     </div>
                     <div className=" col-7">
-                    <Button onClick={(e)=>{Addequipe(e)}} variant="outlined" class="btn btn-outline-success">
+                    <Button onClick={(e)=>{Addequipe(e)}} variant="outlined" class="btn btn-outline-success text-capitalize">
                     Ajouter
                     </Button> 
                     </div>
               </form>
               </MDBModalBody>
               </MDBModal>
+
                       {/* MODAL EDIT */}
               <MDBModal isOpen={editopen} toggle={()=>toggleEdit()} disableBackdrop={true} size="lg">
               <MDBModalHeader toggle={()=>toggleEdit()} className="text-center">Modifier les données de l'équipe</MDBModalHeader>
               <MDBModalBody>
-              <form className="row col-12 justify-content-center align-middle" >
-            <div>
-            <div className="mb-3">
-            <TextField value={selectedrow.Nom_equipe} onChange={(e)=>{setselectedrow({...selectedrow , Nom_equipe : e.target.value})}} id="standard-basic" label="Nom de l'equipe" />
-                    <TextField
-                      className="ml-5"
-                      id="standard-select-currency"
-                      select
-                      size="medium"
-                      label="Service"
-                      defaultValue="aaaaa"
-                      value={selectedrow.Service ? selectedrow.Service.id : null}
-                      onChange={(e)=>{setselectedrow({...selectedrow , Service : {
-                        id : e.target.value
-                      } })}}
-                    >
-
-                  { 
-                      services.map((ser , index)=>(
-                        <MenuItem key={index} value={ser.id}>{ser.Nom_service}</MenuItem>
-                      ))
-                    }
+              <Alert severity="info" className="justify-content-center mb-3">Vous pouvez changer le nom de l'équipe ou/et le service !</Alert>
+            <form className="row col-12 justify-content-center align-middle" >
+              <div className="mb-5 col-12">
+                    <TextField value={selectedrow.Nom_equipe} onChange={(e)=>{setselectedrow({...selectedrow , Nom_equipe : e.target.value})}}  className="col-6" id="standard-basic" label="Nom de l'equipe" />
+                            <TextField
+                              className="ml-5 col-5"
+                              id="standard-select-currency"
+                              select
+                              size="medium"
+                              label="Service"
+                              defaultValue="aaaaa"
+                              value={selectedrow.Service ? selectedrow.Service.id : null}
+                              onChange={(e)=>{setselectedrow({...selectedrow , Service : {
+                                id : e.target.value
+                              } })}}
+                            >
+                          { 
+                              services.map((ser , index)=>(
+                                <MenuItem key={index} value={ser.id}>{ser.Nom_service}</MenuItem>
+                              ))
+                            }
                     </TextField>
-
-                    
-                    </div>
-                   
-              </div>
-              </form>
+                </div>
+                <div className=" col-7 ">
+                        <Button onClick={(e)=>{updatedequipe(e)}} variant="outlined" class="btn btn-outline-success text-capitalize">
+                          Modifier
+                        </Button> 
+                </div>
+           </form>
               </MDBModalBody>
-              <MDBModalFooter>
-                    <Button onClick={(e)=>{updatedequipe(e)}} variant="outlined" class="btn btn-outline-success">
-                    Modifier
-                    </Button> 
-                    </MDBModalFooter>
               </MDBModal>
 
 
@@ -488,10 +502,9 @@ const Suppequipe = async (e)=>{
               <MDBModal isOpen={suppopen} toggle={()=>toggleSupp()} size="lg" disableBackdrop={true}>
               <MDBModalHeader toggle={()=>toggleSupp()} className="text-center sm">Supprimer l'équipe</MDBModalHeader>
                   <MDBModalBody>
+                     <Alert severity="warning" className="justify-content-center">Seule les équipes n'ayant aucun collaborateur peuvent être supprimer !</Alert>
                       <div className="row col-12 ">
-                        <div >
-                          <p>Voulesz-vous vraiment supprimer cette équipe ?</p>
-                        </div>
+                         <p>Voulez-vous vraiment supprimer cette équipe ?</p>
                       </div>
                 </MDBModalBody> 
                 <div>
@@ -505,15 +518,9 @@ const Suppequipe = async (e)=>{
 
 
   
-</div>
-          </div>
 
-          <ReactDatatable
-              config={config}
-              records={equipes}
-              columns={column}
-              tHeadClassName ="text-center"
-              />
+
+         
           </>
         )
       }

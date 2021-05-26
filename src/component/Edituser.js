@@ -233,19 +233,19 @@ const handelchangebanned = async()=>{
         <div className=" col-12 justify-content-center text-center  mt-4" >
             
             <div className="mt-5 mb-3 ">
-           <TextField className="mr-2 col-5" size="small" variant="outlined" id="fullname" label="fullname" type="text" value={fullname} onChange={(e)=>{setfullname(e.target.value)}}/>
-           <TextField className="ml-2 col-5" size="small" variant="outlined" id="email" label="email" type="email" value={email} onChange={(e)=>{setemail(e.target.value)}}/>
+           <TextField className="mr-2 col-5" size="small" variant="outlined" id="fullname" label="Nom et prénom" type="text" value={fullname} onChange={(e)=>{setfullname(e.target.value)}}/>
+           <TextField className="ml-2 col-5" size="small" variant="outlined" id="email" label="E-mail" type="email" value={email} onChange={(e)=>{setemail(e.target.value)}}/>
            </div>
            <div className="mt-3">
-           <TextField className="mr-2 col-5" size="small" variant="outlined" id="password" label="password"  type="password" value={pwd} onChange={(e)=>{setpwd(e.target.value)}}/>
+           <TextField className="mr-2 col-5" size="small" variant="outlined" id="password" label="Mot de passe"  type="password" value={pwd} onChange={(e)=>{setpwd(e.target.value)}}/>
            <TextField
                 className="ml-2 col-5"
                 variant="outlined"
                 id="standard-select-currency"
                 select
                 size="small"
-                label="Role"
-                helperText="select Role"
+                label="Rôle"
+                helperText="Modifier le rôle"
                 value={level}
                 onChange={(e)=>{setlevel(e.target.value); if(e.target.value==="Chef Service"){setdiasbled(true)}else{setdiasbled(false)}}}
               >
@@ -283,7 +283,7 @@ const handelchangebanned = async()=>{
                 select
                 size="small"
                 label="service"
-                helperText="select service"
+                helperText="Modifier le service"
                 value={service}
                 onChange={(e)=>{setservice(e.target.value)}}
               >
@@ -324,7 +324,7 @@ const handelchangebanned = async()=>{
                 {
                   user.user_level === "admin" ? (
                     <div className="row col-5 ml-3 mt-3 justify-content-center ">
-                        <p className="">Banned</p>
+                        <p className="">Banni</p>
                         <Switch
                                     size="small"
                                     checked={banned === 1 ? true : false}
@@ -348,8 +348,8 @@ const handelchangebanned = async()=>{
            <br/>
         
            <div className="row col-12 justify-content-center mt-1">
-              <button type="submit" className="btn text-lowercase mr-5" style={{width:70 , fontSize:12 ,display: selected.id === ""  ? "none" : "block"}} onClick={(e)=>{update(e)}}>modifier</button>
-              <button type="submit" className="btn-danger text-lowercase" style={{width:70 , fontSize:12 ,display: selected.id === ""  ? "none" : "block"}} onClick={(e)=>{deleteUs(e)}}>supprimer</button>
+              <button type="submit" className="btn  mr-5 text-capitalize col-3" style={{width:70 , fontSize:12 ,display: selected.id === ""  ? "none" : "block"}} onClick={(e)=>{update(e)}}>Valider les modifications</button>
+              <button type="submit" className="btn-danger text-capitalize col-3" style={{width:70 , fontSize:12 ,display: selected.id === ""  ? "none" : "block"}} onClick={(e)=>{deleteUs(e)}}>Supprimer l'utilisateur</button>
             </div>
         </div>
 

@@ -259,7 +259,23 @@ return (
                      <div id="user_info" className="ml-2">
                        <h4 className="text-center" style={{fontSize:13}}>{ !user.full_name ? null :user.full_name }</h4>
                        <h4 className="text-center" style={{fontSize:11}}>{user.user_email}</h4>
-                       <h6 className="text-center" style={{fontSize:13}}>{user.user_level}</h6>
+                       <h6 className="text-center" style={{fontSize:13}}>
+                         {
+                         user.user_level === "admin" ? "Administrateur" : null
+                         }
+                        {
+                          user.user_level === "Chef Service" ? "Chef de service" : null
+                        }
+                        {
+                          user.user_level === "Chef equipe" ? "Chef d'équipe" : null
+                        }
+                        {
+                          user.user_level === "Collaborateur" ? "Collaborateur" : null
+                        }
+                        {
+                          user.user_level === "RH" ? "Responsable des ressources humaines" : null
+                        }
+                       </h6>
                      </div>
                  </div>
                 
@@ -297,6 +313,7 @@ return (
 
              
               <br />
+              <div className="row" >
                <TextField
                 className="float-left ml-5 mt-3 col-5 "
                 id="role"
@@ -326,10 +343,15 @@ return (
                   user.user_level !== "Chef Service" ? <MenuItem value={"Collaborateur"}>Collaborateur</MenuItem> : null
                 }
 
-               
+                {
+                  user.user_level !== "Chef Service" ? <MenuItem value={"RH"}>Responsable des ressources humaines</MenuItem> : null
+                }
+
+
+
 
                 {
-                  user.user_level === "Chef Service" ? <MenuItem value={"Chef equipe"}>Chef équipe</MenuItem> : null
+                  user.user_level === "Chef Service" ? <MenuItem value={"Chef equipe"}>Chef d'équipe</MenuItem> : null
                 }
 
                 {
@@ -337,9 +359,7 @@ return (
                 }
 
                 
-                {
-                  user.user_level !== "Chef Service" ? <MenuItem value={"RH"}>Responsable des ressources humaines</MenuItem> : null
-                }
+                
 
 
                 
@@ -349,13 +369,13 @@ return (
                 level === "Chef Service" ? (
                   <TextField
                   variant="outlined" 
-                  className="float-right mt-3 col-5"
+                  className=" float-right ml-4 mt-3 col-5"
                   id="Service"
                   select
                   size="small"
                   label="Service"
                   style={{width:250}}
-                  helperText="selectioner Serices"
+                  helperText="Sélectionner un service"
                   value={service}
                   onChange={(e)=>{setservice(e.target.value)}}
                 >
@@ -381,7 +401,7 @@ return (
                       variant="outlined" 
                       size="small"
                       label="equipe"
-                      helperText="select equipe"
+                      helperText="Sélectionner une équipe"
                       value={usereq}
                       onChange={(e)=>{setusereq(e.target.value)}}
                     >
@@ -396,6 +416,7 @@ return (
                     ) : null
                 ) : null
               }
+              </div>
              
               {/* {
                 eqdisabled ? (
@@ -407,7 +428,7 @@ return (
                   size="small"
                   label="Sérvice"
                   style={{width:250}}
-                  helperText="Sélectionner un sérices"
+                  helperText="Sélectionner un service"
                   value={service}
                   onChange={(e)=>{setservice(e.target.value)}}
                 >

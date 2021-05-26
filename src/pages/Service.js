@@ -113,6 +113,17 @@ function Service(props) {
       button: {
           excel: false,
           print: false
+      },
+      language: {
+          length_menu: "Afficher  _MENU_ enregistrements par page",
+          filter: "Recherche...",
+          info: "Affiche  _START_ à  _END_ de _TOTAL_ entrées",
+          pagination: {
+              first: "Premier",
+              previous: "Précédent",
+              next: "Suivant",
+              last: "Dernier"
+          }
       }
     }
 
@@ -306,64 +317,38 @@ const Suppservice = async (e)=>{
         ) : (
           <>
           <header class="page-header">
-          <div class="container-fluid">
-            <h2 class="no-margin-bottom">Liste des services</h2>
-          </div>
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">Liste des services</h2>
+            </div>
         </header>
         {/* <!-- Breadcrumb--> */}
         <div class="breadcrumb-holder container-fluid">
           <ul class="breadcrumb">
-          <li ><a href="home" ><ArrowBackIosIcon /></a></li>
-          <li class="breadcrumb-item" >Home</li>
-            <li class="breadcrumb-item active">Service</li>
+              <li ><a href="home" ><ArrowBackIosIcon /></a></li>
+              <li class="breadcrumb-item" >Home</li>
+              <li class="breadcrumb-item active">Service</li>
           </ul>
         </div>
 
-      <div className="row  justify-content-center">
-          <div className="col-12 text-center">
-          
-
-     
-         
-          
-             <div className="col-4 mb-2"> 
-              <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={()=>toggle(!open)}> Ajouter un nouveau service </Button> 
-             </div>
        
+              <div className="row col-12 mb-2 justify-content-center">
+          
+                  <div className="col-4 mb-2"> 
+                    <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={()=>toggle(!open)}> Ajouter un nouveau service </Button> 
+                  </div>
+             </div>
+          
+                  <ReactDatatable
+                    config={config}
+                    records={services}
+                    columns={column}
+                    tHeadClassName ="text-center"
+                    />
+              
+               
              
 
-                    <Popover
-                        id={popopen ? selectedrow.Nom_service : undefined}
-                        open={popopen}
-                        anchorEl={anchorEl}
-                        onClose={()=>{setpopopen(!popopen)}}
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'center',
-                        }}
-                        transformOrigin={{
-                          vertical: 'top',
-                          horizontal: 'center',
-                        }}
-                        className="col-12"
-                      >
-                   {selectedrow.Equipes ?(
-                       <Table className="table table-white" >
-                       <tbody className="mt-2">
-                     {selectedrow.Equipes.map((equipe ,index)=>(
-                    
-                               <tr className="" key={index}>
-                                 <td className="text-center cursor pop grow" onClick={(e)=>{history.push(`/Equipe/${equipe.id}`)}}>{equipe.Nom_equipe}</td>
-                               </tr>
-                        
-                    ))}
-                    </tbody>
-                      </Table> ):(
-                     null
-                   )
-                   }
-                  </Popover>
-
+            
                       {/* MODAL ADD */}
             <MDBModal isOpen={open} toggle={()=>toggle()} size="lg">
               <MDBModalHeader toggle={()=>toggle()} className="text-center">Ajouter un nouveau service</MDBModalHeader>
@@ -418,20 +403,7 @@ const Suppservice = async (e)=>{
               </MDBModal>
 
 
-    {/* <div class="container">
-      <mdb-table-editor
-      :data="datatable"
-      striped
-      bordered
-     /> */}
-</div>
-          </div>
-          <ReactDatatable
-              config={config}
-              records={services}
-              columns={column}
-              tHeadClassName ="text-center"
-              />
+         
               </>
         )
       }
