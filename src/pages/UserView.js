@@ -2,9 +2,11 @@ import React , { useState , useEffect} from 'react'
 import axios from 'axios'
 import './../css/Profile.css'
 import $ from 'jquery'
+import DeleteIcon from '@material-ui/icons/Delete';
 import Api_url from './../component/Api_url'
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
+import { ToastContainer, toast } from 'react-toastify';
 import { Line } from 'react-chartjs-2';
 import { Pie } from 'react-chartjs-2';
 import { Bar } from 'react-chartjs-2';
@@ -19,11 +21,12 @@ import Loading from './../images/loading.json'
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-
+import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter , MDBCol, MDBFormInline , MDBIcon } from 'mdbreact';
 import { DateRange } from 'react-date-range';
 import { addDays } from 'date-fns';
-
+import PlanComment from './../component/PlanComment'
 import Divider from '@material-ui/core/Divider';
+import { useIsFocusVisible } from '@material-ui/core';
 
 
 const BorderLinearProgress = withStyles((theme) => ({
@@ -50,10 +53,11 @@ function UserView(props) {
     const userId =  !props.id ? props.match.params.id : props.id
     const [user, setuser] = useState({})
     const [isloading, setisloading] = useState(true)
-
+    const [plans, setplans] = useState([])
     const [Clientsdata, setClientsdata] = useState([])
     const [colors, setcolors] = useState([])
     const [presance, setpresance] = useState([]);
+    const [plancomm, setplancomm] = useState("");
     const [state, setState] = useState([
       {
         startDate: new Date(),
@@ -61,6 +65,7 @@ function UserView(props) {
         key: 'selection'
       }
     ]);
+    const [hovered, sethovered] = useState(false)
  // Line data
     const [date, setdate] = useState([])
     const [date_value, setdate_value] = useState([])
@@ -74,6 +79,27 @@ function UserView(props) {
 
   const [Orgine, setOrgine] = useState([])
   const [Origine_value, setOrigine_value] = useState([])
+
+
+
+  const [open, setopen] = useState(false)
+
+  const toggle = () =>{
+    setopen(!open)
+  }
+
+  const deleteplan = async (id)=>{
+    const res = await axios({
+      headers: {'Authorization': `Bearer ${token}`},
+      method: 'delete',
+      url : `${Api_url}plan/${id}`,
+      });    
+        console.log(res)
+      if(res.status === 200){
+        setplans(res.data)
+      }
+      
+  }
 
     useEffect(() => {
 
@@ -145,7 +171,7 @@ function UserView(props) {
           method: "get",
           url: `${Api_url}user/presance/${userId}`,
         });
-        console.log(res)
+      
       
         res.data.forEach(ele => {
           const element = {
@@ -167,11 +193,16 @@ function UserView(props) {
             colors.push( "#fedb1a")
           }
         });
-
-        console.log(presance)
-        console.log(colors)
       }
-      
+      const getplans = async ()=>{
+        const res = await axios({
+          headers: { Authorization: `Bearer ${token}` },
+          method: "get",
+          url: `${Api_url}plan/${userId}`,
+        });
+       
+        setplans(res.data)     
+        }
       //
 
       loading_screen()
@@ -181,6 +212,7 @@ function UserView(props) {
       getclients()
       getpIE()
       getpre()
+      getplans()
     }, [])
 
 
@@ -265,6 +297,39 @@ function UserView(props) {
       }]
     };
 {/*  */}
+    const [plan, setplan] = useState([
+      {
+        key: "Text",
+        text: "",
+        className : "text-center",
+        cell: (plan, index) => {
+          return (
+            <PlanComment comment={plan.Text} id={plan.id}/>
+          );
+      }
+    },
+    {
+      key: "Action",
+      text: "Action",
+      className : "table-ssmal text-center",
+      cell: (plan, index) => {
+        return (
+          <>
+                
+                      <IconButton className=""  size="small" aria-label="delete" color="secondary" onClick={()=>{deleteplan(plan.id)}} >
+                      <DeleteIcon />
+                      </IconButton>
+
+                     
+
+                    
+           </>
+        );
+    }
+    },
+    ])
+
+    /////////////////////////////////
     const [column, setcolumn] = useState([
       {
         key: "name",
@@ -367,7 +432,61 @@ function UserView(props) {
           print: false
       }
     }
-      
+    const configplan = {
+      page_size: 6,
+      length_menu: [6, 15, 20],
+      show_filter: true,
+      show_pagination: true,
+      pagination: 'basic',
+      button: {
+          excel: false,
+          print: false
+      }
+    }
+
+
+    const switchtoadd = ()=>{
+      $('#planadd').show()
+      $('#plantable').hide()
+      $('#addbtn').hide()
+      $('#back').show()
+
+
+    }
+
+    const switchtotable = ()=>{
+      $('#planadd').hide()
+      $('#plantable').show()
+      $('#back').hide()
+      $('#addbtn').show()
+    }
+
+    const Addplan = async ()=>{
+        const data = {
+          Text : plancomm
+        }
+      const res = await axios({
+        headers: { Authorization: `Bearer ${token}` },
+        method: "post",
+        url: `${Api_url}plan/${userId}`,
+        data
+      });
+      console.log(res)
+      if(res.status === 200){
+        setplans([...plans , res.data])
+        setplancomm("")
+        toast.success('Plan Ajouter', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          });
+          switchtotable()
+
+      }
+    }
         
     return (
         <div className="row col-12 justify-content-center " style={{height:"90vh"}}>
@@ -389,14 +508,45 @@ function UserView(props) {
                       <h2>{user.full_name}</h2>
                     </div>
                     {
+                      localuser.user_level === "admin" ? (
+                      <IconButton className="mb-3" style={{position : 'absolute', right :20 , top :150 , color : "#38D39F"}} onClick={()=>{toggle()}} >
+                    <i class="fas fa-comment-dots fa-1x"></i>
+                      </IconButton>
+                      ) : null
+                    }
+
+                    {
+                      localuser.user_level === "Chef Service" ? (
+                      <IconButton className="mb-3" style={{position : 'absolute', right :20 , top :150 , color : "#38D39F"}} onClick={()=>{toggle()}} >
+                    <i class="fas fa-comment-dots fa-1x"></i>
+                      </IconButton>
+                      ) : null
+                    }
+                    
+                    {
                       userId === `${localuser.id}` ? (
-                        <IconButton style={{position : 'absolute', right :20 , bottom :20}} onClick={()=>{props.toggle()}}>
+                        <IconButton style={{position : 'absolute', right :20 , bottom :70}} onClick={()=>{props.toggle()}}>
                         <EditIcon />
                       </IconButton>
                       ) : null
                     }
-               
+          
+                <Divider className="col-12 mb-3"/>
+                  <div className="row col-12 ">
+                  <ul className="row col-12 justify-content-start" style={{listStyle: "none"}}>
+                  {
+                  plans.map((plan , index)=>(
+                    <li className="col-4 my-3 text-start" key={index}>
+                      <small><i class="fas fa-circle mr-2 mt-2" style={{fontSize : 5}}></i>{plan.Text}</small>
+                    </li>
+                  ))
+                }
+                  </ul>
                   </div>
+                
+              
+                  </div>
+                 
                 <div className="col-12">
                  
                     <div className="row col-12 justify-content-around nopad ">
@@ -479,7 +629,54 @@ function UserView(props) {
             )
           }
 
-                  
+        <MDBModal isOpen={open} toggle={()=>toggle()}  size="lg" disableBackdrop={false} >
+              <MDBModalHeader toggle={()=>toggle()} className="text-center"></MDBModalHeader>
+              <MDBModalBody className="">
+           
+
+               
+                <div className="row col-12 justify-content-center ml-1"  >
+                 <a id="back" className="mr-auto p-2" onMouseEnter={() => sethovered(true)} onMouseLeave={() => sethovered(false)} style={{color : hovered ? "#38D39F" : "" , display : 'none'}}  onClick={()=>{ switchtotable()}}  ><ArrowBackIosIcon /></a>
+
+                <button id="addbtn" type="submit" className="btn text-capitalize ml-auto p-2 mr-5" style={{width:100}} onClick={()=>{switchtoadd()}}>Ajouter<i class="fas fa-plus fa-1x ml-2"></i></button>
+                </div>
+           <div className=" col-12 justify-content-center">
+
+             <div id="plantable" className="ml-3" style={{width : '100%'}}>
+                      <ReactDatatable
+                        config={configplan}
+                        records={plans}
+                        columns={plan}
+                        tHeadClassName ="text-center"
+                        />
+             </div>
+                   
+
+
+                        <div id="planadd"  className="row col-12 justify-content-center mb-4" style={{display : 'none' , height : '70vh'}}>
+                         
+                           <TextField
+                              id="outlined-multiline-static"
+                              label="Multiline"
+                              multiline
+                              value={plancomm}
+                              rows={4}
+                              onChange={(e)=>{setplancomm(e.target.value)}}
+                              className="col-6 text-center mt-5"
+                              defaultValue="Default Value"
+                              variant="outlined"
+                            />
+                      
+                          <div className="row col-12 justify-content-center">
+                          <button  type="submit" className="btn text-capitalize " style={{width:100}} onClick={()=>{Addplan()}} >Valider</button>
+
+                          </div>
+
+                        </div>
+           </div>
+         
+              </MDBModalBody>
+              </MDBModal>    
        </div>
     )
 }

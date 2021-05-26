@@ -82,7 +82,6 @@ function Service(props) {
       {
         key: "Nom_service",
         text: "Service",
-        className:"text-center",
       },
   
       {
@@ -418,19 +417,13 @@ const Suppservice = async (e)=>{
               </MDBModal>
 
 
-    {/* <div class="container">
-      <mdb-table-editor
-      :data="datatable"
-      striped
-      bordered
-     /> */}
+   
 </div>
           </div>
           <ReactDatatable
               config={config}
               records={services}
               columns={column}
-              tHeadClassName ="text-center"
               />
               </>
         )

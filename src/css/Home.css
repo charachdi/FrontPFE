@@ -766,3 +766,16 @@ box-shadow: 3px 12px 25px -7px rgba(0,0,0,0.47);
 .text-samlll {
     font-size: 10px;
 }
+
+.back {
+
+}
+.back :hover {
+    color : "red";
+    background-color: "red";
+    
+}
+
+.planmodal {
+    height: 70vh;
+}

@@ -24,16 +24,18 @@ import Loading from './../images/loading.json'
 
 function Attendance (props) {
     const token = localStorage.getItem('token')
+    const [date, setdate] = useState("");
     const [open, setopen] = useState(false)
     const history = useHistory();
     const [users, setusers] = useState([])
     const [endDate, setendDate] = useState([])
+    const [loading, setloading] = useState(true)
     const [comment, setcomment] = useState("")
     const [startDate, setstartDate] = useState([])
     const [selectedDate, setSelectedDate] = useState(new Date('2021-08-18T21:11:54'));
     const [refresh, setrefresh] = useState(false)
     const [data, setdata] = useState({
-      total:0,
+      total: 0,
       Present:0,
       Absent:0,
       Conge:0,
@@ -41,7 +43,7 @@ function Attendance (props) {
     })
 
     
-
+    const [filterloading, setfilterloading] = useState(false);
 
 
 
@@ -56,6 +58,15 @@ function Attendance (props) {
     };
 
     useEffect(() => {
+
+      const loading_screen = ()=>{
+       
+        setloading(true)
+        setTimeout(() => {
+          setloading(false)
+        }, 1500);
+
+    }
      
        const getuserlist = async ()=>{
          const res = await axios({
@@ -64,15 +75,8 @@ function Attendance (props) {
            url : `${Api_url}Presance/user/attend`,  
            });
            console.log(res)
-           setusers(res.data.user) 
-           setdata({
-            total: res.data.Present + res.data.Absent + res.data.Conge + res.data.Retard,
-            Present: res.data.Present,
-            Absent: res.data.Absent,
-            Conge: res.data.Conge,
-            Retard: res.data.Retard,
-           })
-            
+           setusers(res.data.user)
+           changestat(res.data.user) 
        }
        const getdata = async() =>{
          const user =  JSON.parse(localStorage.getItem('user'))
@@ -83,104 +87,160 @@ function Attendance (props) {
            url : `${Api_url}user/${user.id}`,  
            });
    
-         
        if(currentuser.data.user.user_level === "Chef Service"){
         const res = await axios({
           headers: {'Authorization': `Bearer ${token}`},
           method: 'get',
-          url : `${Api_url}Presance/user/attend`,  
+          url : `${Api_url}Presance/Service/user/attend/${currentuser.data.user.Chef.Service.id}`,  
           });
-
+        
           setusers(res.data.user) 
+          changestat(res.data.user)
          
        }
        else{
         getuserlist()
        }
      } 
-   
+     loading_screen()
      getdata()
       
        }, [])
 
-    // datatable
-    const [loading, setloading] = useState(true)
 
+    const  getAttendbydate = async (D)=>{
 
-  useEffect(() => {
-    const loading_screen = ()=>{
+    const result =   D.split('-')
        
-        setloading(true)
-        setTimeout(() => {
-          setloading(false)
-        }, 1500);
-
+    const date = {
+      y :result[0] ,
+      M :result[1] ,
+      d :result[2] ,
     }
-    loading_screen()
-  }, [])
-
-
-
-  
-
-
-    const [column, setcolumn] = useState([
-      
-      {
-        key: "full_name",
-        text: "Employe",
-        cell: (user, index) => {
-          return (
-            <div className="d-flex flex-row">
-                <Avatar src={user.user_img} style={{width:30 , height:30}} />
-                <span className=" ml-2">{user.full_name}</span>
-             </div>
-          );
-      }
-        
-      },
-      {
-        key: "Action",
-        text: "Présance",
-        cell: (user, index) => {
-
-          return (
-            <Attend user={user} />
-          );
-      }
-      },
-
-      {
-        key: "",
-        text: "Commentaire",
-        className :"text-center",
-        cell: (user, index) => {
-          return (
-            
-            
-            <TextField id={index} style={{width:"100%"}} placeholder="Commentaire" value={!user.Presances[0] ? "" : user.Presances[0].Comment}   variant="outlined" size='small'/>
-            
-          );
-      }
-        
-      },
-      
-  
-    
-       
-    ])
-
-    const config = {
-      page_size: 10,
-      length_menu: [],
-      show_filter: false,
-      show_pagination: false,
-      pagination: 'advance',
-      button: {
-          excel: false,
-          print: false
-      }
+    if(parseInt(result[1]) < 9 ){
+      date.M =  result[1].substring(1)
     }
+        const finalldate = `${date.M}/${date.d}/${date.y}`
+
+        const data ={
+          datee :finalldate
+        }
+        const res = await axios({
+          headers: {'Authorization': `Bearer ${token}`},
+          method: 'post',
+          url : `${Api_url}Presance/attend/bydate`,  
+          data 
+          });
+          console.log(res)
+         
+          if(res.status === 200){
+            
+         await   setusers(res.data.user)
+            changestat(res.data.user)
+
+
+            setTimeout(() => {
+              setfilterloading(false)
+            }, 2000);
+
+
+          }
+      }
+
+
+
+
+       const changestat = (data)=>{
+        const changeddata = {
+          total: 0,
+          Present:0,
+          Absent:0,
+          Conge:0,
+          Retard:0,
+        }
+        data.forEach(user => {
+            if(user.Presances.length !== 0){
+              if(user.Presances[0].Present){
+               changeddata.total++
+               changeddata.Present++
+              }
+              else if(user.Presances[0].Absent){
+                changeddata.total++
+                changeddata.Absent++
+              }
+              else if(user.Presances[0].Conge){
+                changeddata.total++
+                changeddata.Conge++
+              }
+              else if(user.Presances[0].Retard){
+                changeddata.total++
+                changeddata.Retard++
+              }
+  
+            }
+         });
+         setdata(changeddata)
+       }
+
+       const updatestat = (data , newdata)=>{
+        const changeddata = {
+          total: 0,
+          Present:0,
+          Absent:0,
+          Conge:0,
+          Retard:0,
+        }
+        data.forEach(user => {
+            if(user.Presances.length !== 0){
+
+              if(user.Presances[0].id === newdata.id){
+                if(newdata.Present){
+                  changeddata.total++
+                  changeddata.Present++
+                 }
+                 else if(newdata.Absent){
+                   changeddata.total++
+                   changeddata.Absent++
+                 }
+                 else if(newdata.Conge){
+                   changeddata.total++
+                   changeddata.Conge++
+                 }
+                 else if(newdata.Retard){
+                   changeddata.total++
+                   changeddata.Retard++
+                 }
+              }
+              
+              else{
+                if(user.Presances[0].Present){
+                  changeddata.total++
+                  changeddata.Present++
+                 }
+                 else if(user.Presances[0].Absent){
+                   changeddata.total++
+                   changeddata.Absent++
+                 }
+                 else if(user.Presances[0].Conge){
+                   changeddata.total++
+                   changeddata.Conge++
+                 }
+                 else if(user.Presances[0].Retard){
+                   changeddata.total++
+                   changeddata.Retard++
+                 }
+              }
+            
+  
+            }
+         });
+         setdata(changeddata)
+       }
+
+
+
+
+ 
 
   const updateuser = (res)=>{
     setusers(
@@ -190,6 +250,7 @@ function Attendance (props) {
         :user
         )
     )
+    updatestat(users , res)
   }
 
   
@@ -235,95 +296,92 @@ function Attendance (props) {
 
       <div className="row  justify-content-center">
           <div className="col-12 text-center">
-          
-  
+          <TextField
+          id="date"
+          label="date"
+          type="date"
+          value={date}
+          defaultValue={date}
+          onChange={(e)=>{setdate(e.target.value) ; getAttendbydate(`${e.target.value}`); setfilterloading(!filterloading)}}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
 </div>
           </div>
 
-          {/* <MuiPickersUtilsProvider utils={DateFnsUtils} >
-             <Grid container justify="space-around">
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="MM/dd/yyyy"
-                margin="normal"
-                id="date-picker-inline"
-                label="Choisir date"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-              />
-            </Grid>
-           </MuiPickersUtilsProvider> */}
+          
+{
+  filterloading ? (
+    <i id="loading" style={{position : 'absolute' , right : '43%' , top : '50%'}}  className="fas fa-spinner fa-spin fa-3x "></i>
+  ) : (
+                <>
+                <div className="row col-12 mb-4 justify-content-center">
 
-<div className="row col-12 mb-4 justify-content-center">
+                <div style={{minHeight:80}}  className="col-2 card z-depth-3 my-3 mx-2 text-center">
+                <span className="mt-2 mb-2 " style={{fontSize:12}}>Total</span><i class="fas fa-archive fa-2x mb-2" style={{color:"#8086b7"}}></i>{data.total}
 
-<div style={{minHeight:80}}  className="col-2 card z-depth-3 my-3 mx-2 text-center">
-<span className="mt-2 mb-2 " style={{fontSize:12}}>Total</span><i class="fas fa-archive fa-2x mb-2" style={{color:"#8086b7"}}></i>{data.total}
+                </div>
 
-</div>
+                <div  style={{minHeight:80}} className="col-2 card z-depth-3 my-3 mx-2 text-center">
+                <span className="mt-2 mb-2" style={{fontSize:12}}>Présent</span><i class="fas fa-check-circle fa-2x mb-2" style={{color:"#2DCD94"}}></i>{data.Present}
 
-<div  style={{minHeight:80}} className="col-2 card z-depth-3 my-3 mx-2 text-center">
-<span className="mt-2 mb-2" style={{fontSize:12}}>Présent</span><i class="fas fa-check-circle fa-2x mb-2" style={{color:"#2DCD94"}}></i>{data.Present}
+                </div>
 
-</div>
+                <div style={{minHeight:80}}  className="col-2 card z-depth-3 my-3 mx-2 text-center">
+                <span className="mt-2 mb-2" style={{fontSize:12}}>Absent</span><i class="fas fa-ban fa-2x mb-2" style={{color:"#F40010"}}></i>{data.Absent}
 
-<div style={{minHeight:80}}  className="col-2 card z-depth-3 my-3 mx-2 text-center">
-<span className="mt-2 mb-2" style={{fontSize:12}}>Absent</span><i class="fas fa-ban fa-2x mb-2" style={{color:"#F40010"}}></i>{data.Absent}
+                </div>
 
-</div>
+                <div style={{minHeight:80}}  className="col-2 card z-depth-3 my-3 mx-2 text-center">
+                <span className="mt-2 mb-2" style={{fontSize:12}}>Congé</span><i class="fas fa-mug-hot fa-2x mb-2" style={{color:"#767192"}}></i>{data.Conge}
 
-<div style={{minHeight:80}}  className="col-2 card z-depth-3 my-3 mx-2 text-center">
-<span className="mt-2 mb-2" style={{fontSize:12}}>Congé</span><i class="fas fa-mug-hot fa-2x mb-2" style={{color:"#767192"}}></i>{data.Conge}
+                </div>
 
-</div>
+                <div style={{minHeight:80}}  className="col-2 card z-depth-3 my-3 mx-2 text-center">
+                <span className="mt-2 mb-2" style={{fontSize:12}}>Retard</span><i class="fas fa-exclamation-circle fa-2x mb-2" style={{color:"#fedb1a"}}></i>{data.Retard}
 
-<div style={{minHeight:80}}  className="col-2 card z-depth-3 my-3 mx-2 text-center">
-<span className="mt-2 mb-2" style={{fontSize:12}}>Retard</span><i class="fas fa-exclamation-circle fa-2x mb-2" style={{color:"#fedb1a"}}></i>{data.Retard}
-
-</div>
+                </div>
 
 
 
-</div>
-{/* 
-          <ReactDatatable
-              config={config}
-              records={users}
-              columns={column}/> */}
+                </div>
 
-              <table className="table table-bordered mt-3">
-                <thead>
-                <tr>
-                  <th className="text-center">Employé</th>
-                  <th className="text-center">Présance</th>
-                  <th className="text-center">Commentaire</th>
-                </tr>
-                </thead>
-             
 
-                <tbody>
-                  {
-                    users.map((user,index)=>(
-                      <tr key={index}>
-                    <td>
-                    <div className="d-flex flex-row">
-                      <Avatar src={user.user_img} style={{width:30 , height:30}} />
-                    <span className=" ml-2">{user.full_name}</span>
-             </div>
-                    </td>
-                    <td><Attend user={user} update={updateuser} refr={refresh} /></td>
-                    <td> 
-                    <Comment user={user} comment={!user.Presances[0] ? "" : user.Presances[0].Comment}/></td>
-                      </tr>
-                    
-                    ))
-                  }
-                 
-                </tbody>
-              </table>
+                <table className="table table-bordered mt-3">
+                  <thead>
+                  <tr>
+                    <th className="text-center">Employé</th>
+                    <th className="text-center">Présance</th>
+                    <th className="text-center">Commentaire</th>
+                  </tr>
+                  </thead>
+              
+
+                  <tbody>
+                    {
+                      users.map((user,index)=>(
+                        <tr key={index}>
+                      <td>
+                      <div className="d-flex flex-row">
+                        <Avatar src={user.user_img} style={{width:30 , height:30}} />
+                      <span className=" ml-2">{user.full_name}</span>
+              </div>
+                      </td>
+                      <td><Attend user={user} update={updateuser} refr={refresh} /></td>
+                      <td> 
+                      <Comment user={user} comment={!user.Presances[0] ? "" : user.Presances[0].Comment}/></td>
+                        </tr>
+                      
+                      ))
+                    }
+                  
+                  </tbody>
+                </table>
+                </>
+  )
+}
+
 
 
           </>

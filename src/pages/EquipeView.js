@@ -331,7 +331,7 @@ const switchtoarchive= () =>{
           <div className="breadcrumb-holder container-fluid">
             <ul className="breadcrumb">
             <li ><a href="home" ><ArrowBackIosIcon /></a></li>
-          <li class="breadcrumb-item" >Home</li>
+          <li class="breadcrumb-item" >Equipe</li>
               <li className="breadcrumb-item active">{equipe.Nom_equipe}</li>
             </ul>
           </div>
@@ -340,7 +340,7 @@ const switchtoarchive= () =>{
         <div className=" row col-12 justify-content-center text-center " >
             <div id="team-user" className="row col-12 justufy-content-center mt-4  " >
                       {chefE.map((user , index)=>(
-                          <div id={user.id}  className="card equser shadow cursor  mr-4 ml-4 mt-2 mb-4" style={{width:150 , height:175}} key={index} onClick={()=>{history.push(`/profile/${user.id}`)}} >
+                          <div id={user.id}  className="card equser shadow cursor border  mr-4 ml-4 mt-2 mb-4" style={{width:150 , height:175}} key={index} onClick={()=>{history.push(`/profile/${user.id}`)}} >
                       
                             <aside className="ribbonchef">{user.user_level}</aside>
                           <div className="card-body justufy-content-center text-break">
@@ -352,7 +352,7 @@ const switchtoarchive= () =>{
                       ))}
 
                       {collab.map((user , index)=>(
-                          <div id={user.id}  className="card equser shadow cursor  mr-4 ml-4 mt-2 mb-4 " style={{width:150, height:175}} key={index} onClick={()=>{history.push(`/profile/${user.id}`)}} >
+                          <div id={user.id}  className="card equser shadow cursor border  mr-4 ml-4 mt-2 mb-4 " style={{width:150, height:175}} key={index} onClick={()=>{history.push(`/profile/${user.id}`)}} >
                           
                       
                           <aside className="ribbon">{user.user_level}</aside>

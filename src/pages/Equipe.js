@@ -40,7 +40,7 @@ function Equipe(props) {
     const [servicename, setservicename] = useState(selectedrow.Service ? selectedrow.Service.Nom_service :"")
   
    
-    
+    const [hovered, sethovered] = useState(false)
     const defaultOptions = {
       loop: true,
       autoplay: true,
@@ -395,7 +395,7 @@ const Suppequipe = async (e)=>{
        
         <div class="breadcrumb-holder container-fluid">
           <ul class="breadcrumb">
-          <li ><a href="home" ><ArrowBackIosIcon /></a></li>
+          <li > <a onMouseEnter={() => sethovered(true)} onMouseLeave={() => sethovered(false)} style={{color : hovered ? "#38D39F" : ""}}  onClick={()=>{ window.history.back()}}  ><ArrowBackIosIcon /></a></li>
           <li class="breadcrumb-item" >Home</li>
             <li class="breadcrumb-item active">Equipe</li>
           </ul>

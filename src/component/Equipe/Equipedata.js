@@ -279,18 +279,18 @@ setTimeout(() => {
              
              <div  className="row col-12 justify-content-around nopad">
            
-                 <div className="card col-4 mt-3 cardstat " style={{width:"30%"}} >
+                 <div className="card col-lg-4 col-12 mt-3 cardstat " style={{width:"30%"}} >
                     <h5 className="card-title mt-3">Requête par employé</h5>
                     <Divider />
                       <div className="card-body">
                         <Bar options={option} data={bardata}  width={50} height={45}/>
                       </div>
-                      <Divider />
-                      dfsfsf
+                      {/* <Divider /> */}
+                     
                       </div>
                 
     
-                      <div className="card col-4 mt-3 cardstat "  style={{width:"30%"}}>
+                      <div className="card col-lg-4 col-12 mt-3 cardstat "  style={{width:"30%"}}>
                     <h5 className="card-title mt-3">top 5 client</h5>
                     <Divider />
                       <div className="card-body">
@@ -299,7 +299,7 @@ setTimeout(() => {
                       </div>
 
              
-               <div className="card col-4 mt-3 cardstat"  style={{width:"30%"}}>
+               <div className="card col-lg-4 col-12 mt-3 cardstat"  style={{width:"30%"}}>
                     <h5 className="card-title mt-3">Requête par origin</h5>
                     <Divider />
                       <div className="card-body">

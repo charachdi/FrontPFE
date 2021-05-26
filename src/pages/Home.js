@@ -13,8 +13,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Api_url from './../component/Api_url'
 import { ToastContainer, toast } from 'react-toastify';
 import Avatar from '@material-ui/core/Avatar';
-
-
 import Lottie from 'react-lottie';
 import Loading from './../images/loading.json'
 

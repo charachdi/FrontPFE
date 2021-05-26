@@ -262,7 +262,7 @@ const [current, setcurrent] = useState("")
           </li>
 
           <li>
-            <a className="text-left hover" href="" onClick={()=>{handelLogout()}}><i class="fas fa-sign-out-alt mr-3" style={{color:'white'}}></i>logout</a>
+            <a className="text-left hover" href="/" onClick={()=>{handelLogout()}}><i class="fas fa-sign-out-alt mr-3" style={{color:'white'}}></i>logout</a>
           </li>
         </ul>
   
