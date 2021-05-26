@@ -22,11 +22,18 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter , MDBCol, MDBFormInline , MDBIcon } from 'mdbreact';
+import * as locales from 'react-date-range/dist/locale';
 import { DateRange } from 'react-date-range';
 import { addDays } from 'date-fns';
 import PlanComment from './../component/PlanComment'
 import Divider from '@material-ui/core/Divider';
 import { useIsFocusVisible } from '@material-ui/core';
+
+
+
+
+
+
 
 
 const BorderLinearProgress = withStyles((theme) => ({
@@ -53,7 +60,11 @@ function UserView(props) {
     const userId =  !props.id ? props.match.params.id : props.id
     const [user, setuser] = useState({})
     const [isloading, setisloading] = useState(true)
-    const [plans, setplans] = useState([])
+
+    const [plans, setplans] = useState([]);
+    const [locale, setLocale] = React.useState('fr');
+
+
     const [Clientsdata, setClientsdata] = useState([])
     const [colors, setcolors] = useState([])
     const [presance, setpresance] = useState([]);
@@ -120,6 +131,11 @@ function UserView(props) {
            setuser(res.data.user)
       }
 
+
+      const nameMapper = {
+        fr: 'French'
+      };
+      
       
       const getclients = async () =>{
         const res = await axios({
@@ -593,6 +609,8 @@ function UserView(props) {
                         records={Clientsdata}
                         columns={column}
                         tHeadClassName ="text-center "
+                        
+                        
                         />
                     
                     </div>
@@ -612,6 +630,7 @@ function UserView(props) {
                       moveRangeOnFirstSelection={false}
                       ranges={presance}
                       rangeColors={colors}
+                      locale={locales[locale]}
                       />
                     </div>
 

@@ -96,7 +96,7 @@ function Action(props) {
                             isloading ? (
                                 <i style={{color:"#2ECD94"}} className=" fas fa-spinner fa-spin fa-2x mt-2"></i>
                             ) : (
-                                <div className="d-flex flex-row mt-2">
+                                <div className="d-flex flex-row mt-2 justify-content-center">
                                 <CheckIcon className="mr-2"  style={{color:"#2ECD94"}}  onClick={()=>{setisloading(!isloading);RHaprovel(true)}}/>
                                 <CloseIcon style={{color:"#ff0000"}} onClick={()=>{setisloading(!isloading);RHaprovel(false) }}/>
                                 </div>

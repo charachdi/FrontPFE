@@ -19,6 +19,7 @@ import UpdateIcon from '@material-ui/icons/Update';
 import CloseIcon from '@material-ui/icons/Close';
 import Button from "@material-ui/core/Button";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import * as locales from 'react-date-range/dist/locale';
 
 function Demande() {
 
@@ -36,7 +37,14 @@ function Demande() {
     }
 ])
 
-   
+const nameMapper = {
+       fr: 'French'
+  };
+  
+
+  const [locale, setLocale] = React.useState('fr');
+
+  
 
     const [selectedrow, setselectedrow] = useState({
         "id": 3,
@@ -107,7 +115,7 @@ function Demande() {
         },
         {
           key: "Startdate",
-          text: "date de début",
+          text: "Date de début",
           sortable : true ,
           className :"table-mid text-center"
         },
@@ -152,7 +160,7 @@ function Demande() {
         },
         {
             key : "Action",
-            text:'Action',
+            text:'Modifier',
             className : "table-mid text-center text-center",
             cell: (demande, index) => {
                 return (
@@ -206,6 +214,17 @@ function Demande() {
         button: {
             excel: false,
             print: false
+        },
+        language: {
+            length_menu: "Afficher  _MENU_ enregistrements par page",
+            filter: "Recherche...",
+            info: "Affiche  _START_ à  _END_ de _TOTAL_ entrées",
+            pagination: {
+                first: "Premier",
+                previous: "Précédent",
+                next: "Suivant",
+                last: "Dernier"
+            }
         }
       }
       const defaultOptions = {
@@ -309,6 +328,7 @@ function Demande() {
                 records={Demande}
                 columns={column}
                 tHeadClassName ="text-center"
+              
                 />
                  </section>
             )
@@ -320,12 +340,12 @@ function Demande() {
       
 
         <MDBModal isOpen={open} toggle={()=>toggle()} size="md" disableBackdrop={true}>
-              <MDBModalHeader toggle={()=>toggle()} className="text-center"></MDBModalHeader>
+              <MDBModalHeader toggle={()=>toggle()} className="text-center">Demander un congé</MDBModalHeader>
               <MDBModalBody>
                   <div className="d-flex justify-content-center">
                   <TextField className="col-6 text-center " id="standard-select-currency"
                         select required size="medium"
-                        label="Type"
+                        label="Type de congé"
                         value={type}
                         onChange={(e)=>{settype(e.target.value)}}>
                         <MenuItem  value={"Conge"}>Congé</MenuItem>
@@ -339,6 +359,7 @@ function Demande() {
                     onChange={item => setRequest([item.selection]) }
                     moveRangeOnFirstSelection={false}
                     ranges={Request}
+                    locale={locales[locale]}
                 /><br />
 
                     <IconButton style={{backgroundColor : "#2ECD94"}} className="mt-5" onClick={()=>{AddRequest()}}>
@@ -350,12 +371,12 @@ function Demande() {
 
                 {/* Update */}
               <MDBModal isOpen={editopen} toggle={()=>edittoggle()} size="md" disableBackdrop={true}>
-              <MDBModalHeader toggle={()=>edittoggle()} className="text-center"></MDBModalHeader>
+              <MDBModalHeader toggle={()=>edittoggle()} className="text-center">Modifier le type ou/et la date du congé</MDBModalHeader>
               <MDBModalBody>
                   <div className="d-flex justify-content-center">
                   <TextField className="col-6 text-center " id="standard-select-currency"
                         select required size="medium"
-                        label="Type"
+                        label="Type de congé"
                         value={type}
                         onChange={(e)=>{settype(e.target.value)}}>
                         <MenuItem  value={"Conge"}>Congé</MenuItem>
@@ -369,7 +390,9 @@ function Demande() {
                     onChange={(item) => setselectedRequest([item.selection])}
                     moveRangeOnFirstSelection={false}
                     ranges={selectedRequest}
-                /><br />
+                    locale={locales[locale]}
+                />
+                <br />
 
                     <IconButton style={{backgroundColor : "#2ECD94"}} className="mt-5" onClick={()=>{updateRequest()}}>
                         <UpdateIcon />

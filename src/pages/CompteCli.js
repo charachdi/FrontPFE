@@ -613,9 +613,7 @@ const addrequte = (req)=>{
               
     <div id="Datatab" className="row col-12 mb-2" style={{display: exportauth ? "block": "none"}}>
     <div id="exportbtn" className="row col-12 justify-content-end" >
-            <IconButton onClick={(e)=>{exportPNG()}} color="primary"  aria-label="upload picture" component="span">
-                  <PhotoCamera style={{color:'#2DCD94'}}/>
-                </IconButton>
+                <Button variant="contained" color="light" onClick={(e)=>{exportPNG()}} style={{color:'#f8f9fe'}}>Exporter sous format png  <PhotoCamera style={{color:'#2DCD94'}} className="ml-3"/></Button>
             </div>
      <Clidata id={client_id}  />
     </div>  

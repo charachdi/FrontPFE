@@ -406,7 +406,7 @@ const switchtoarchive= () =>{
         Télécharger un fichier 
       </Button>
       
-      <Alert severity="error">Seuls les fichiers de type Excel sont supporter!</Alert>
+      
       </div>
 
             
@@ -453,8 +453,9 @@ const switchtoarchive= () =>{
         )
       }
 
-           
+           {/* Modal upload fichier */}
             <MDBModal  isOpen={open} toggle={()=>toggle()} centered={true} fade={true}  size="" >
+            <MDBModalHeader toggle={()=>toggle()} className="text-center">Importer des fichiers Excel</MDBModalHeader>
       <MDBModalBody>
 
 
@@ -469,6 +470,7 @@ const switchtoarchive= () =>{
             isClickToPauseDisabled={true}
           />
           <div className="row col-12 justify-content-center">
+          <Alert severity="error">Seuls les fichiers de type Excel sont supporter!</Alert>
           <label htmlFor="importfile">
                 <IconButton className="ml-4" color="primary"  aria-label="upload picture" component="span">
                   <AttachFileIcon fontSize="large" style={{color:'#2DCD94'}}/>
@@ -489,10 +491,15 @@ const switchtoarchive= () =>{
       
           </div>
           <div className="float-right mt-3">
-          <IconButton  onClick={(e)=>{Importfile(e)}} className="mt-5" color="primary"  aria-label="upload picture" component="span">
+          {/* <Button  onClick={(e)=>{Importfile(e)}} className="mt-5" color="primary" aria-label="upload picture" component="span">
                   <BackupIcon  fontSize="large" style={{color:'#2DCD94'}}/>
-            </IconButton>
+            </Button> */}
         
+            <Button color="primary" className="btn text-capitalize" style={{color:'white'}} variant="contained" color="info"  onClick={()=>Importfile()}>
+              Importer les fichiers 
+              <BackupIcon className="ml-2" fontSize="large" style={{color:'#12b1ab'}}/>
+            </Button>
+
           </div>
 
       </MDBModalBody>

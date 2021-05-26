@@ -28,7 +28,7 @@ function RHdemande() {
     const [column, setcolumn] = useState([
         {
           key: "Employee",
-          text: "Employee",
+          text: "Employé",
           cell: (demande, index) => {
             return (
               <div className="d-flex flex-row">
@@ -102,6 +102,17 @@ function RHdemande() {
         button: {
             excel: false,
             print: false
+        },
+        language: {
+            length_menu: "Afficher  _MENU_ enregistrements par page",
+            filter: "Recherche...",
+            info: "Affiche  _START_ à  _END_ de _TOTAL_ entrées",
+            pagination: {
+                first: "Premier",
+                previous: "Précédent",
+                next: "Suivant",
+                last: "Dernier"
+            }
         }
       }
       const defaultOptions = {
@@ -113,7 +124,7 @@ function RHdemande() {
     return (
         <div>
 
-<header class="page-header">
+            <header class="page-header">
                 <div class="container-fluid">
                     <h2 class="no-margin-bottom">Liste des demandes de congé </h2>
                 </div>
@@ -139,7 +150,8 @@ function RHdemande() {
                 <ReactDatatable
                 config={config}
                 records={demandes}
-                columns={column}/>
+                columns={column}
+                tHeadClassName ="text-center"/>
                 )
             }
           

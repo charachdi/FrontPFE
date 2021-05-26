@@ -102,6 +102,17 @@ function Clients() {
       excel: false,
       print: false,
     },
+    language: {
+        length_menu: "Afficher  _MENU_ enregistrements par page",
+        filter: "Recherche...",
+        info: "Affiche  _START_ à  _END_ de _TOTAL_ entrées",
+        pagination: {
+            first: "Premier",
+            previous: "Précédent",
+            next: "Suivant",
+            last: "Dernier"
+        }
+    }
   };
 
   const [shownrow, setshownrow] = useState([]);
@@ -914,18 +925,11 @@ function Clients() {
             </ul>
           </div>
 
-          <div className="row  justify-content-center">
-            <div className="col-12 text-center">
-              <div className="row col-12 mb-2">
-                <div className="col-12 ">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<AddIcon />}
-                    onClick={() => toggle(!open)}
-                  >
-                    {" "}
-                    Ajouter un nouveau client{" "}
+        
+              <div className="row col-12 mb-2 justify-content-center">
+                <div className="col-4 mb-2 ">
+                  <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={() => toggle(!open)}>
+                    {" "}Ajouter un nouveau client{" "}
                   </Button>
                 </div>
               </div>
@@ -935,8 +939,7 @@ function Clients() {
                 records={clients}
                 columns={column}
               />
-            </div>
-          </div>
+         
         </>
       )}
 
@@ -1147,6 +1150,9 @@ function Clients() {
           </form>
         </MDBModalBody>
       </MDBModal>
+
+
+
       {/* MODAL EDIT */}
       <MDBModal
         isOpen={editopen}
@@ -1403,12 +1409,7 @@ function Clients() {
         </div>
       </MDBModal>
 
-      {/* <div class="container">
-        <mdb-table-editor
-        :data="datatable"
-        striped
-        bordered
-       /> */}
+
     </>
   );
 }

@@ -10,7 +10,7 @@ import $ from 'jquery'
 import Divider from '@material-ui/core/Divider';
 import MenuItem from '@material-ui/core/MenuItem';
 import domtoimage from 'dom-to-image';
-
+import Button from '@material-ui/core/Button';
 import Lottie from 'react-lottie';
 import Chartsloding from './../../images/chartsloding.json'
 import IconButton from '@material-ui/core/IconButton';
@@ -270,8 +270,8 @@ setTimeout(() => {
             isClickToPauseDisabled={true}
           /> : (
             <>
-             <div  className="row col-12 justify-content-end nopad">
-              <IconButton onClick={(e)=>{exportPNG()}}><i class="fas fa-file-export ml-1" style={{color:"#2DCD94"}}></i></IconButton> 
+             <div  className="row col-12 justify-content-end nopad mb-4">
+             <Button variant="contained" color="light" onClick={(e)=>{exportPNG()}} style={{color:'#f8f9fe'}}>Exporter sous format png  <i class="fas fa-file-export ml-1" style={{color:"#2DCD94"}}></i></Button> 
             </div>
             {
               apidata.colture !== undefined ? <Equipeheader data={apidata} />: null
