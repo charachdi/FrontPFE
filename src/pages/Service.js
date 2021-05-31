@@ -332,8 +332,8 @@ const Suppservice = async (e)=>{
        
               <div className="row col-12 mb-2 justify-content-center">
           
-                  <div className="col-4 mb-2"> 
-                    <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={()=>toggle(!open)}> Ajouter un nouveau service </Button> 
+                  <div id="addbtn" className="col-3 mb-2" >  
+                    <button className="btn-add cardstat text-capitalize" onClick={()=>toggle(!open)} style={{width:"100%"}}><i class="fas fa-plus mr-2"></i>Ajouter un nouveau service </button>
                   </div>
              </div>
           
@@ -357,7 +357,7 @@ const Suppservice = async (e)=>{
                       <div className="mb-5">
                         <TextField value={nomservice} onChange={(e)=>{setnomservice(e.target.value)}} id="standard-basic" label="Nom du service" required />
                       </div>
-                      <Button onClick={(e)=>{Addservice(e)}} variant="outlined" class="btn btn-outline-success">
+                      <Button onClick={(e)=>{Addservice(e)}} variant="outlined" class="btn-add cardstat text-capitalize">
                       Ajouter
                       </Button> 
                 </div>
@@ -374,7 +374,7 @@ const Suppservice = async (e)=>{
             <TextField value={selectedrow.Nom_service} onChange={(e)=>{setselectedrow({...selectedrow , Nom_service : e.target.value})}} id="standard-basic" label="Nom du service" />
                     
                     </div>
-                    <Button onClick={(e)=>{updatedservice(e)}} variant="outlined" class="btn btn-outline-success">
+                    <Button onClick={(e)=>{updatedservice(e)}} variant="outlined" class="btn-add cardstat text-capitalize">
                     Modifier
                     </Button> 
               </div>
