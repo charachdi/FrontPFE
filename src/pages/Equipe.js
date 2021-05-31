@@ -27,6 +27,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import Lottie from 'react-lottie';
 import Loading from './../images/loading.json'
+import { Avatar } from '@material-ui/core';
 // import { mdbTableEditor } from 'mdb-table-editor'
 
 
@@ -34,12 +35,26 @@ function Equipe(props) {
     const token = localStorage.getItem('token')
     const [open, setopen] = useState(false)
     const history = useHistory();
+
     const [suppopen, setsuppopen] = useState(false)
     const [editopen, seteditopen] = useState(false)
-    
+    const [primeopen, setprimeopen] = useState(false);
     const [selectedrow, setselectedrow] = useState({id: 26, Nom_equipe: "hhhh", Service: "Telephonie", createdAt: "2021-03-09T15:20:45.000Z", updatedAt: "2021-03-09T15:20:45.000Z"})
     const [services, setservices] = useState([])
     const [servicename, setservicename] = useState(selectedrow.Service ? selectedrow.Service.Nom_service :"")
+    const [primeloading, setprimeloading] = useState(true);
+    const [equipedemande, setequipedemande] = useState({
+      "date": "01/01/1999",
+      "Demandes": [
+          {
+              "userid": 2,
+              "fullname": "Amira KHEZAMI",
+              "profile_img": null,
+              "Prime": 1200,
+              "bonus": 120,
+              "requeteerr": 16
+          }]
+        })
     const [Prime, setPrime] = useState([])
    
     const [hovered, sethovered] = useState(false)
@@ -68,6 +83,8 @@ function Equipe(props) {
 
      
     } 
+
+   
 
     // datatable
     const [loading, setloading] = useState(true)
@@ -103,18 +120,18 @@ function Equipe(props) {
           return equipe.Service.Nom_service
       }
       },
-      {
-        key: "",
-        text: "Member d'equipe",
-        className : "table-mid text-center",
-        cell: (equipe, index) => {
-          return (
-            <IconButton className="float-center mr-2" size="small" aria-label="delete" color="primary" >
-            <GroupIcon /> <span className="ml-2" style={{fontSize:15}}>{equipe.Users.length}</span>
-            </IconButton> 
-          )
-      }
-      },
+      // {
+      //   key: "",
+      //   text: "Member d'equipe",
+      //   className : "table-mid text-center",
+      //   cell: (equipe, index) => {
+      //     return (
+      //       <IconButton className="float-center mr-2" size="small" aria-label="delete" color="primary" >
+      //       <GroupIcon /> <span className="ml-2" style={{fontSize:15}}>{equipe.Users.length}</span>
+      //       </IconButton> 
+      //     )
+      // }
+      // },
       {
         key: "",
         text: "Accorder prime",
@@ -403,7 +420,20 @@ const Suppequipe = async (e)=>{
 }
 
 
-
+const getequipeprime = async (id)=>{
+  const res = await axios({
+    headers: {'Authorization': `Bearer ${token}`},
+    method: 'get',
+    url : `${Api_url}Demande/equipe/prime/${id}`
+  })
+  console.log(res)
+  // setprimeloading(false)
+  if(res.status === 200){
+   
+      setequipedemande(res.data.demandes)
+      console.log(equipedemande)
+  }
+}
 
 
 
@@ -470,7 +500,7 @@ const Suppequipe = async (e)=>{
             <MDBModal isOpen={open} toggle={()=>toggle()}  size="lg" disableBackdrop={true}>
               <MDBModalHeader toggle={()=>toggle()} className="text-center">Ajouter une nouvelle équipe</MDBModalHeader>
               <MDBModalBody>
-              <Alert severity="info" className="mb-3">les deux zones doivent être remplies pour finaliser l'ajout !</Alert>
+              <Alert severity="info" className="mb-3 justify-content-center">les deux zones doivent être remplies pour finaliser l'ajout !</Alert>
               <form className="row col-12 justify-content-center align-middle" >
                     
                     <div className="mb-5 col-12">
@@ -553,7 +583,58 @@ const Suppequipe = async (e)=>{
 
 
   
+                    {/* MODAL prime */}
+                    <MDBModal isOpen={primeopen} toggle={()=>setprimeopen(!primeopen)} size="lg" disableBackdrop={false}>
+              <MDBModalHeader toggle={()=>setprimeopen(!primeopen)} className="text-center sm">Demande Prime</MDBModalHeader>
+                  <MDBModalBody>
+                    
+                      <div className="row col-12 " style={{height : '60vh'}}>
+                              <table className="table table-bordered ">
+            <thead style={{backgroundColor: "#767192" , color : "white"}} >
+                <tr className="text-center">
+                    <th>Employee</th>
+                    <th>Prime</th>
+                    <th>Bonus</th>
+                    <th>Commentaire</th>
+                    
+                </tr>
+            </thead>
+            <tbody className="text-center">
+            {
+                                equipedemande.Demandes.map((dem , index)=>(
+                                      <tr>
+                                      <td className="d-flex flex-row">
+                                        <Avatar src={dem.profile_img ? dem.profile_img : ""} alt={dem.fullname} />
+                                        <span className="mt-2 ml-3">{dem.fullname}</span>
+                                      </td>
+                                      <td>{dem.Prime}</td>
+                                      <td>{dem.bonus}</td>
+                                      <td>{dem.commentaire}</td>
+                   
+                                      </tr>
+                                ))
+                              }
+                  
+            </tbody>
+            
+        </table>
+                              
 
+                            
+                        
+                      </div>
+                      <Alert severity="warning" className="text-center justify-content-center">Warrning</Alert>
+                      <div className="row col-12 justify-content-center">
+                  <button type="submit" className="btn text-capitalize " style={{width:100}} >Valider</button>
+                  </div>
+                </MDBModalBody> 
+              
+             
+                 
+              
+              
+              
+              </MDBModal>
 
          
           </>

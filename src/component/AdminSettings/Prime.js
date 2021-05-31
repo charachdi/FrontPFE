@@ -6,6 +6,7 @@ import axios from 'axios'
 import Divider from '@material-ui/core/Divider';
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter , MDBCol, MDBFormInline , MDBIcon } from 'mdbreact';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
 function Prime() {
@@ -71,7 +72,7 @@ function Prime() {
             <h4>Parametrage des primes</h4>
             <p>Les primes et les bonus doivent être paramétré à l'avance</p>
             <Divider />
-           <TreeView 
+           {/* <TreeView 
            className="mt-2"
         style={{color : "black"}}
       defaultCollapseIcon={<ExpandMoreIcon />}
@@ -109,7 +110,32 @@ function Prime() {
             ))
         }
       </TreeItem>
-    </TreeView>
+    </TreeView> */}
+  <table className="table table-bordered ">
+            <thead style={{backgroundColor: "#767192" , color : "white"}} >
+                <tr className="text-center">
+                    <th>Equipe</th>
+                    <th>Prime</th>
+                    <th>Bonus</th>
+                    <th>Requete</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody className="text-center">
+            {
+                equipes.map((eq, index)=>{
+                    <tr>
+                        <td>e</td>
+                        <td>e</td>
+                        <td>e</td>
+                        <td>e</td>
+                        <td>e</td>
+                    </tr>
+                })
+            }
+            </tbody>
+            </table>
+    
         </div>
       
     )

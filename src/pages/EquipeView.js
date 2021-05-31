@@ -338,7 +338,7 @@ const switchtoarchive= () =>{
 
              
         <div className=" row col-12 justify-content-center text-center " >
-            <div id="team-user" className="row col-12 justufy-content-center mt-4  " >
+            <div id="team-user" className="row col-12 justufy-content-center mt-4  " style={{backgroundColor : "#E9ECEF" , borderRadius : 30}} >
                       {chefE.map((user , index)=>(
                           <div id={user.id}  className="card equser shadow cursor border  mr-4 ml-4 mt-2 mb-4" style={{width:150 , height:175}} key={index} onClick={()=>{history.push(`/profile/${user.id}`)}} >
                       

@@ -1603,7 +1603,8 @@ pre {
   transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   -o-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out; }
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out; 
+}
   @media (prefers-reduced-motion: reduce) {
     .form-control {
       -webkit-transition: none;
@@ -8329,12 +8330,12 @@ a[data-toggle="collapse"] {
 .form-control {
   height: 40px !important;
   background: #fff;
-  color: #000;
+  color: black;
   font-size: 13px;
   border-radius: 4px;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
-  border: transparent; }
+}
   .form-control:focus, .form-control:active {
     border-color: #000; }
   .form-control::-webkit-input-placeholder {
