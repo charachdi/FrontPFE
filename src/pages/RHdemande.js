@@ -18,12 +18,14 @@ import EditIcon from '@material-ui/icons/Edit';
 import UpdateIcon from '@material-ui/icons/Update';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Action from './../component/RH/Action'
+import Alert from '@material-ui/lab/Alert';
 
 function RHdemande() {
 
     const token = localStorage.getItem('token')
     const [isloading, setisloading] = useState(true)
     const [demandes, setdemandes] = useState([])
+   
 
     const [column, setcolumn] = useState([
         {
@@ -51,6 +53,44 @@ function RHdemande() {
           {
             key: "enddate",
             text: "Date de fin", 
+            className :"table-mid text-center ",
+          },
+        {
+            key:"Action",
+            text: "Action",
+            className :"table-mid text-center ",
+
+            cell: (demande, index) => {
+                return (
+                    
+                    <Action  demande={demande} />
+                )
+              }
+
+        }
+    ])
+
+    const [column2, setcolumn2] = useState([
+        {
+          key: "Employee",
+          text: "Employé",
+          cell: (demande, index) => {
+            return (
+              <div className="d-flex flex-row">
+                    <Avatar src={demande.User.user_img} />
+                    <p className="mt-2 ml-4">{demande.User.full_name}</p>
+              </div>
+            )
+          }
+        },
+        {
+            key:"",
+            text: "Prime",
+            className :"table-mid text-center ",
+        },
+        {
+            key: "",
+            text: "Bonus",
             className :"table-mid text-center ",
           },
         {
@@ -126,7 +166,7 @@ function RHdemande() {
 
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom">Liste des demandes de congé </h2>
+                    <h2 class="no-margin-bottom">Liste des demandes </h2>
                 </div>
             </header>
    
@@ -137,6 +177,13 @@ function RHdemande() {
                     <li class="breadcrumb-item active">Demande</li>
                 </ul>
             </div>
+
+            <div className="container-fluid card cardstat mt-3 mb-3">
+                    <h2 class="no-margin-bottom">Liste des demandes de congé</h2>
+ 
+                    <Alert severity="info" className="mb-3">Les demandes de congé doivent être validé par un responsable des ressources humaines pour aboutir.</Alert>
+                </div>
+
             {
                 isloading ? (
                     <Lottie 
@@ -152,6 +199,32 @@ function RHdemande() {
                 records={demandes}
                 columns={column}
                 tHeadClassName ="text-center"/>
+                
+                )
+            }
+<hr/>
+<div className="container-fluid card cardstat mt-3 mb-3">
+                    <h2 class="no-margin-bottom">Liste des demandes de prime</h2>
+ 
+                    <Alert severity="info" className="mb-3">Les demandes de primes doivent être validé par un responsable des ressources humaines pour aboutir.</Alert>
+                </div>
+            {
+                isloading ? (
+                    <Lottie 
+                    options={defaultOptions}
+                    height={"40%"}
+                    width={"40%"}
+                    isClickToPauseDisabled={true}
+                  />
+                  
+                ) : (
+                    
+                <ReactDatatable
+                config={config}
+                records={demandes}
+                columns={column2}
+                tHeadClassName ="text-center"/>
+                
                 )
             }
           

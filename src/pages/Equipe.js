@@ -22,6 +22,8 @@ import { useHistory } from "react-router-dom";
 import ReactDatatable from '@ashvin27/react-datatable';
 import GroupIcon from '@material-ui/icons/Group';
 import Select from '@material-ui/core/Select';
+import CheckIcon from '@material-ui/icons/Check';
+import CloseIcon from '@material-ui/icons/Close';
 
 import Lottie from 'react-lottie';
 import Loading from './../images/loading.json'
@@ -53,6 +55,8 @@ function Equipe(props) {
               "requeteerr": 16
           }]
         })
+    const [Prime, setPrime] = useState([])
+   
     const [hovered, sethovered] = useState(false)
     const defaultOptions = {
       loop: true,
@@ -116,27 +120,49 @@ function Equipe(props) {
           return equipe.Service.Nom_service
       }
       },
+      // {
+      //   key: "",
+      //   text: "Member d'equipe",
+      //   className : "table-mid text-center",
+      //   cell: (equipe, index) => {
+      //     return (
+      //       <IconButton className="float-center mr-2" size="small" aria-label="delete" color="primary" >
+      //       <GroupIcon /> <span className="ml-2" style={{fontSize:15}}>{equipe.Users.length}</span>
+      //       </IconButton> 
+      //     )
+      // }
+      // },
       {
         key: "",
-        text: "Member d'equipe",
+        text: "Accorder prime",
         className : "table-mid text-center",
-        cell: (equipe, index) => {
+        cell: (prime, index) => {
           return (
-            <IconButton className="float-center mr-2" size="small" aria-label="delete" color="primary" >
-            <GroupIcon /> <span className="ml-2" style={{fontSize:15}}>{equipe.Users.length}</span>
-            </IconButton> 
-          )
-      }
-      },
-      {
-        key: "",
-        text: "Demande Prime",
-        className : "table-mid text-center",
-        cell: (equipe, index) => {
-          return (
-            <IconButton className="float-center mr-2" size="small" aria-label="delete" color="primary" onClick={()=>{getequipeprime(equipe.id);setprimeopen(!primeopen)}} >
-            <GroupIcon />
-            </IconButton> 
+            <div className="text-center">
+
+            {
+                prime.waiting ? (
+                   <i style={{color:"#2ECD94"}} className=" fas fa-spinner fa-spin fa-2x mt-2"></i>
+                 
+                ) : (
+
+                   prime.Approved ? (
+                       <IconButton size="small" style={{color:"white" , backgroundColor :"#2ECD94"}}>
+                         <CheckIcon   />
+                       </IconButton>
+
+                   ) : (
+                       <IconButton size="small" style={{color:"white" , backgroundColor :"#ff0000"}}>
+                        <CloseIcon />
+                       </IconButton>
+                   )
+                   
+
+
+                )
+            }
+      
+        </div>
           )
       }
       },
@@ -456,9 +482,8 @@ const getequipeprime = async (id)=>{
               <div className="row col-12 mb-2 justify-content-center">
              
           
-             <div id="addbtn" className="col-4 mb-2" style={{width:"50%"}}> 
-              <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={()=>toggle(!open)}> Ajouter une nouvelle équipe </Button> 
-            
+             <div id="addbtn" className="col-3 mb-2" >  
+            <button className="btn-add cardstat text-capitalize" onClick={()=>toggle(!open)} style={{width:"100%"}}><i class="fas fa-plus mr-2"></i>Ajouter une nouvelle équipe </button>
              </div>
               </div>
 

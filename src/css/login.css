@@ -179,6 +179,23 @@ a:hover{
 	cursor: pointer;
 	transition: .5s;
 }
+.btn-add{
+	display: block;
+	width: 100%;
+	height: 50px;
+	border-radius: 25px;
+	outline: none;
+	border: none;
+	background-image: linear-gradient(90deg, rgba(81,81,187,1) 21%, rgba(153,185,226,1) 100%);
+	background-size: 200%;
+	font-size: 15px;
+	color: #fff;
+	font-family: 'Poppins', sans-serif;
+	text-transform: uppercase;
+	margin: 1rem 0;
+	cursor: pointer;
+	transition: .5s;
+}
 .btn-danger:hover{
 	background-position: right;
 }
