@@ -245,13 +245,13 @@ return (
           isClickToPauseDisabled={true}
         />
       ) : (
-        <div id="account-box" className="row col-12 justify-content-center " >
+        <div id="account-box" className="row col-12 justify-content-center "  >
           <AccountTabs />
-            <div id="user-list" className="col-xl-3  mr-2">
+            <div id="user-list" className="col-xl-3  mr-2" style={{backgroundColor :'#E9ECEF' , borderRadius : 25}}>
             {users.map((user, index) => (
 
 
-                 <div id={user.id}  className="border shadow grow mb-2 mt-2 mr-2 ml-2 user" key={index} onClick={()=>{oneuser(user)}} >
+                 <div id={user.id}  className="border shadow grow mb-2 mt-2 mr-2 ml-2 user" key={index} onClick={()=>{oneuser(user)}} style={{backgroundColor :'white'}}>
                  <div className="card-body d-flex flex-row text-break">
                      <div className="avatar float-left"> <Avatar style={{width:70, height:70}} alt={user.full_name} src={user.user_img} /></div>
                      <div id="user_info" className="ml-2">

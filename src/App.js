@@ -118,7 +118,7 @@ useEffect(() => {
         
           <AdminRoute path='/Equipe/:id' component={EquipeView} exact/>
           <Route path='/profile/:id' component={UserView} exact/>
-          <AdminRoute path='/Client/:id' component={CompteCli} exact/>
+          <Route path='/Client/:id' component={CompteCli} exact/>
           <AdminRoute path='/File/:name/:id' component={FileView} exact/>
           <Route path='/myProfile/:id' component={Profile} exact/>
 
