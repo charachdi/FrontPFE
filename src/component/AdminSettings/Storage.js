@@ -161,8 +161,10 @@ function Storage() {
     return (
         <>
     
-        <div className=" mb-2 mt-2 justify-content-end"> 
-            <Button variant="contained" color="primary" startIcon={<AddIcon />}  onClick={()=>{toggle()}}>Ajouter une base de donnée</Button> 
+        <div className="row mb-2 mt-2 justify-content-center"> 
+        <div id="addbtn" className="col-4 mb-2 " >  
+            <button className="btn-add cardstat text-capitalize" onClick={()=>toggle(!open)} style={{width:"100%"}}><i class="fas fa-plus mr-2"></i>Ajouter une base de donnée</button>
+             </div>
         </div>
         <table className="table table-bordered ">
             <thead style={{backgroundColor: "#767192" , color : "white"}} >
@@ -299,6 +301,8 @@ function Storage() {
                 label="Username"
                 size="small"
                 multiline
+                error
+                required
                 rowsMax={4}
                 value={database.Username}
                 onChange={(e)=>{setdatabase({...database , Username : e.target.value})}}
@@ -309,7 +313,7 @@ function Storage() {
                   <div className="row col-12 justify-content-center">
                   <p className="mt-2 mr-4">Password</p>
                 <TextField
-                
+                required
                 label="Password"
                 size="small"
                 type="password"
@@ -324,7 +328,7 @@ function Storage() {
                   <div className="row col-12 justify-content-center">
                   <p className="mt-2 mr-4">Database</p>
                 <TextField
-                
+                required
                 label="Database"
                 size="small"
                 multiline
@@ -339,7 +343,7 @@ function Storage() {
                   <div className="row col-12 justify-content-center mr-2">
                   <p className="mt-2 mr-4">HostName</p>
                 <TextField
-                
+                required
                 label="Host"
                 size="small"
                 className=""

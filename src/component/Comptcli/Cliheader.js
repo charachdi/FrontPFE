@@ -8,29 +8,15 @@ import './../../css/header.css'
 
 function Cliheader(props) {
   
-    const [cloture, setcloture] = useState(0)
-    const [encours, setencours] = useState(0)
-    const [NEwrequete, setNEwrequete] = useState(0)
+    const [cloture, setcloture] = useState(props.apidata.col)
+    const [encours, setencours] = useState(props.apidata.encours)
+    const [NEwrequete, setNEwrequete] = useState(props.apidata.neww)
     const token = localStorage.getItem('token')
 
+    console.log(props.apidata)
+    useEffect(() => {
 
-useEffect(() => {
-
-    const getclidata = async()=>{
-        const res = await axios({
-            headers: {'Authorization': `Bearer ${token}`},
-            method: 'get',
-            url : `${Api_url}stat/comptcli/header/${props.id}`,
-            });
-            setcloture(res.data.col)
-            setNEwrequete(res.data.neww)
-            setencours(res.data.encours)
-           
-    }
-       
-    getclidata()
-   
-}, [])
+    }, [props.apidata])
 
     
 

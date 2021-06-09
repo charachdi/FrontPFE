@@ -29,7 +29,7 @@ function Clientarchive(props) {
 
     const [loading, setloading] = useState(true)
     const history = useHistory();
-
+    const [archi, setarchi] = useState([]);
 
     useEffect(() => {
         const loading_screen = ()=>{
@@ -40,8 +40,14 @@ function Clientarchive(props) {
             }, 800);
     
         }
+
+        const getarchive = ()=>{
+          setarchi(props.archive)
+        }
+
         loading_screen()
-      }, [])
+        getarchive()
+      }, [props.archive])
 
 
       const [column, setcolumn] = useState([
@@ -136,7 +142,7 @@ function Clientarchive(props) {
           <>      
               <ReactDatatable
                 config={config}
-                records={props.archive}
+                records={archi}
                 columns={column}/>
         </>
     )

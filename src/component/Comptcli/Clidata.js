@@ -15,14 +15,29 @@ import Divider from '@material-ui/core/Divider';
 import Lottie from 'react-lottie';
 import Chartsloding from './../../images/chartsloding.json'
 import IconButton from '@material-ui/core/IconButton';
-
+import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter , MDBCol, MDBFormInline , MDBIcon } from 'mdbreact';
+import * as locales from 'react-date-range/dist/locale';
+import { DateRange } from 'react-date-range';
+import Button from '@material-ui/core/Button';
 
 function Clidata(props) {
     const token = localStorage.getItem('token')
     const [id, setid] = useState(props.id)
     const [loading, setloading] = useState(true)
-    
+    const [clihead, setclihead] = useState([]);
+    const [open, setopen] = useState();
 
+    const toggle = ()=>{
+      setopen(!open)
+    }
+    const [Request, setRequest] = useState([
+      {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: 'selection'
+  }
+  ])
+  const [locale, setLocale] = React.useState('fr');
 //  pie charts
     const [username, setusername] = useState([])
     const [user_value, setuser_value] = useState([])
@@ -99,6 +114,17 @@ function Clidata(props) {
                setLineusers(Line.data.users)
                
         }
+
+        const getclidata = async()=>{
+          const res = await axios({
+              headers: {'Authorization': `Bearer ${token}`},
+              method: 'get',
+              url : `${Api_url}stat/comptcli/header/${props.id}`,
+              });
+              setclihead(res.data)
+              // setclihead({...clihead , cloture : res.data.col , NEwrequete : res.data.neww , encours : res.data.encours})
+      }
+            getclidata()
             loading_screen()
             getpiedata()
             getbardata()
@@ -182,7 +208,66 @@ function Clidata(props) {
       }
       }
 
+      const filter = async ()=>{
+   
+        var start = Request[0].startDate.toLocaleDateString('en-US').split("/")
+       var  end = Request[0].endDate.toLocaleDateString('en-US').split("/")
+       const data = {
+         startdate : `${start[1]}/${start[0]}/${start[2]}`,
+         enddate : `${end[1]}/${end[0]}/${end[2]}`
+       }
+     console.log(data) 
+
+
+     const pie = await axios({
+      headers: {'Authorization': `Bearer ${token}`},
+      method: 'post',
+      url : `${Api_url}stat/comptcli/pie/date/${id}`,
+      data
+      });
+
+    const bar = await axios({
+      headers: {'Authorization': `Bearer ${token}`},
+      method: 'post',
+      url : `${Api_url}stat/comptcli/bar/date/${id}`,
+      data
+      });
+
+    const Oridata = await axios({
+      headers: {'Authorization': `Bearer ${token}`},
+      method: 'post',
+      url : `${Api_url}stat/comptcli/origin/bar/date/${id}`,
+      data
+      });
+        
+    const Line = await axios({
+      headers: {'Authorization': `Bearer ${token}`},
+      method: 'post',
+      url : `${Api_url}stat/comptcli/Line/date/${id}`,
+      data
+      });
       
+    const res = await axios({
+      headers: {'Authorization': `Bearer ${token}`},
+      method: 'post',
+      url : `${Api_url}stat/comptcli/header/date/${props.id}`,
+      data
+      });
+
+      
+      setusername(pie.data.username)
+      setuser_value(pie.data.user_value)
+
+      setdate(bar.data.Trim_date)
+      setdate_value(bar.data.date_value) 
+
+      setorigin(Oridata.data.origin)
+      setorigin_value(Oridata.data.Origine_value)   
+      
+      setLineusers(Line.data.users)
+      setclihead(res.data)
+
+    }
 
 
     return (
@@ -193,13 +278,14 @@ function Clidata(props) {
           Lineusers.length === 0 ? (
             <Lottie 
             options={chartlottie}
-            height={"70%"}
-            width={"70%"}
+            height={"50%"}
+            width={"50%"}
             isClickToPauseDisabled={true}
           />
           ):(
             <>
-            <Cliheader id={id}/>
+             <Button onClick={()=>{toggle()}} ><i class="fas fa-filter"></i></Button>
+            <Cliheader apidata={clihead}/>
 
 
 
@@ -244,7 +330,25 @@ function Clidata(props) {
         }
 
            
-           
+<MDBModal isOpen={open} toggle={()=>toggle()} size="md" disableBackdrop={false}>
+              <MDBModalHeader toggle={()=>toggle()} className="text-center"></MDBModalHeader>
+              <MDBModalBody>
+              <div className="text-center ">
+              <DateRange
+                    className="mt-5"
+                    editableDateInputs={true}
+                    onChange={item => setRequest([item.selection]) }
+                    moveRangeOnFirstSelection={false}
+                    ranges={Request}
+                    locale={locales[locale]}
+                /><br />
+
+                    <IconButton style={{backgroundColor : "#767192"}} className="mt-5" onClick={()=>{filter() ; toggle() ; setLineusers([])}}>
+                    <i class="fas fa-filter"></i>
+                    </IconButton>
+              </div>
+              </MDBModalBody>
+              </MDBModal>
         </div>
     )
 }
