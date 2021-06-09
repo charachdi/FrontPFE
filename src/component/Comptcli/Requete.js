@@ -102,7 +102,7 @@ const [column, setcolumn] = useState([
   },
   {
     key: "Proprietaire_de_la_requete",
-    text: "Proprietaire de la requete",
+    text: "Proprietaire de la requête",
     className: "datatabel Name",
     cell: (req, index) => {
       return (
@@ -121,7 +121,7 @@ const [column, setcolumn] = useState([
   },
   {
     key: "Origine_de_la_requete",
-    text: "Origine de la requete",
+    text: "Origine de la requête",
     className: "datatabel colum",
   },
   {
@@ -216,6 +216,17 @@ const config = {
   button: {
       excel: false,
       print: false
+  },
+  language: {
+      length_menu: "Afficher  _MENU_ enregistrements par page",
+      filter: "Recherche...",
+      info: "Affiche  _START_ à  _END_ de _TOTAL_ entrées",
+      pagination: {
+          first: "Premier",
+          previous: "Précédent",
+          next: "Suivant",
+          last: "Dernier"
+      }
   }
 }
 
@@ -248,8 +259,12 @@ const addrequete = async ()=>{
 
 return (
     <div id='requetetable' className="row col-12 justify-content-center">
+<div className="mt-3 mb-3 col-3">
+<button variant="contained" className="btn-add cardstat text-capitalize" startIcon={<AddIcon />} onClick={()=>setopenadd(!openadd)}>
+    <i class="fas fa-plus mr-2"></i>Ajouter une nouvelle requête
+</button>
 
-<Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={()=>setopenadd(!openadd)}> Ajouter une nouvelle requête </Button> 
+</div>
      <ReactDatatable
                 config={config}
                 records={props.Requetelist}
@@ -279,7 +294,7 @@ return (
                
                 <div className="col-12 mt-4">
                   <div  className="d-flex flex-row">
-                   <span className="mr-4 col-4" style={{fontSize:13}} > Origine de la requete  </span>   <TextField className="col-6" value={reqete.Origine_de_la_requete}   onChange={(e)=>{setreqete({...reqete , Origine_de_la_requete : e.target.value});setdis(false)}}/>
+                   <span className="mr-4 col-4" style={{fontSize:13}} > Origine de la requête  </span>   <TextField className="col-6" value={reqete.Origine_de_la_requete}   onChange={(e)=>{setreqete({...reqete , Origine_de_la_requete : e.target.value});setdis(false)}}/>
                   </div>
                 </div>
 
@@ -305,10 +320,10 @@ return (
 
                 <div className="col-12 mt-4">
                   <div  className="d-flex flex-row">
-                    <span className="mr-4 col-4" > Heure douverture  </span>     
+                    <span className="mr-4 col-4" > Heure d'ouverture  </span>     
                                       <TextField
                                         id="datetime-local"
-                                        label="Next appointment"
+                                        label=""
                                         type="datetime-local"
                                         defaultValue="2017-05-24T10:30"
                                       
@@ -320,16 +335,16 @@ return (
                   {/* <TextField className="col-6" value={reqete.Heure_douverture} onChange={(e)=>{setreqete({...reqete , Heure_douverture : e.target.value});setdis(false)}}/> */}
                 </div>
 
-                <div  className="d-flex flex-row">
-                <span className="mr-4 mt-5" > Type de la demande  </span>    <TextField value={reqete.Type_de_la_demande_RC}  className="col-7 mt-3" id="time" type="text" label="description" multiline={true} variant="outlined" size="small" rows={4} onChange={(e)=>{setreqete({...reqete , Type_de_la_demande_RC : e.target.value});setdis(false)}} />
+                <div  className="d-flex flex-row ml-5">
+                <span className="mr-4 mt-5 ml-4" > Type de la demande  </span>    <TextField value={reqete.Type_de_la_demande_RC}  className="col-7 mt-4 ml-4" id="time" type="text" label="description" multiline={true} variant="outlined" size="small" rows={4} onChange={(e)=>{setreqete({...reqete , Type_de_la_demande_RC : e.target.value});setdis(false)}} />
 
                 </div><br />
 
-
-                <Button onClick={()=>{addrequete()}}   variant="outlined" class="btn btn-outline-success">
+                <div className="row col-12 justify-content-center">
+                <button onClick={()=>{addrequete()}}   variant="outlined" className="btn-add cardstat text-capitalize" style={{width:"40%"}}>
                 Valider
-                 </Button> 
-               
+                 </button> 
+               </div>
 
               </form>
               </MDBModalBody>
@@ -350,19 +365,19 @@ return (
                 </div><br/>
 
 
-                <div  className="d-flex flex-row">
-                <span className="mr-4" > Status  </span>   <TextField value={selectedrow.Statut} onChange={(e)=>{setselectedrow({...selectedrow , Statut : e.target.value});setdis(false)}} />
+                <div  className="d-flex flex-row justify-content-between">
+                <span className="mr-4" > Status  </span>   <TextField value={selectedrow.Statut}   onChange={(e)=>{setselectedrow({...selectedrow , Statut : e.target.value});setdis(false)}} />
                 </div><br />
 
-                <div  className="d-flex flex-row">
-                <span className="mr-4" > Origine de la requete  </span>   <TextField value={selectedrow.Origine_de_la_requete}   onChange={(e)=>{setselectedrow({...selectedrow , Origine_de_la_requete : e.target.value});setdis(false)}}/>
+                <div  className="d-flex flex-row justify-content-between">
+                <span className="mr-4" > Origine de la requête  </span>   <TextField value={selectedrow.Origine_de_la_requete}   onChange={(e)=>{setselectedrow({...selectedrow , Origine_de_la_requete : e.target.value});setdis(false)}}/>
                 </div><br />
 
-                <div  className="d-flex flex-row">
+                <div  className="d-flex flex-row justify-content-between">
                 <span className="mr-4" > Famille de demande  </span>   <TextField value={selectedrow.Famille_de_demande_RC} onChange={(e)=>{setselectedrow({...selectedrow , Famille_de_demande_RC : e.target.value});setdis(false)}}/>
                 </div><br />
 
-                <div  className="d-flex flex-row">
+                <div  className="d-flex flex-row justify-content-between">
                 <span className="mr-4" > Motifs de resiliation  </span>   <TextField value={selectedrow.Motifs_de_resiliation} onChange={(e)=>{setselectedrow({...selectedrow , Motifs_de_resiliation : e.target.value});setdis(false)}}/>
                 </div><br />
 
@@ -370,41 +385,40 @@ return (
                 <span className="mr-4" > Raison sociale du compte  </span>   <TextField value={selectedrow.Raison_sociale_du_compte} />
                 </div><br /> */}
 
-                <div  className="d-flex flex-row">
-                <span className="mr-4 mt-5" > Type de la demande  </span>    <TextField value={selectedrow.Type_de_la_demande_RC}  className="col-7 mt-3" id="time" type="text" label="description" multiline={true} variant="outlined" size="small" rows={4} onChange={(e)=>{setselectedrow({...selectedrow , Type_de_la_demande_RC : e.target.value});setdis(false)}} />
+                <div  className="d-flex flex-row justify-content-between">
+                <span className="mr-4 mt-5" > Type de la demande  </span>    <TextField value={selectedrow.Type_de_la_demande_RC}  className="col-6 mt-3" id="time" type="text" label="" multiline={true} variant="outlined" size="small" rows={4} onChange={(e)=>{setselectedrow({...selectedrow , Type_de_la_demande_RC : e.target.value});setdis(false)}} />
 
                 </div><br />
+                <div className="row col-12 mb-2 justify-content-center">
 
-
-                <Button onClick={()=>{update(selectedrow);}} disabled={dis}  variant="outlined" class="btn ">
-                Modifier
-                 </Button> 
+                    <button onClick={()=>{update(selectedrow);}} disabled={dis}  variant="outlined" className="btn-add cardstat text-capitalize" style={{width:"30%"}}>
+                    Modifier
+                    </button> 
                
-
+              </div>
               </form>
               </MDBModalBody>
               </MDBModal>
+{/* modal supp */}
+
+              
 
 
-              <MDBModal isOpen={deleteopen} toggle={()=>toggledelete()} size="md">
-              <MDBModalBody>
-           <div className="row col-12 justify-content-around">
-
-                    <h4 className='text-center mb-5'>êtes-vous sûr de vouloir supprimer Cette Requete {deleteselcted}</h4>
-
-
-                         <IconButton className="hover" size="medium" style={{backgroundColor : "#ce1126"}} onClick={()=>{props.deletereq(deleteselcted) ; toggledelete()}} >
-                            <DeleteForeverIcon style={{color : "white"}} />
-                        </IconButton>
-                        
-                        <IconButton className="hover" size="medium" style={{backgroundColor : "#303f9f"}} onClick={()=>{toggledelete()}}>
-                            <CloseIcon style={{color : "white"}} />
-                        </IconButton>
-
-                     
-                  </div>
-               
-              </MDBModalBody>
+              <MDBModal isOpen={deleteopen} toggle={()=>toggledelete()} size="lg">
+              <MDBModalHeader toggle={()=>toggledelete()} className="text-center sm">Supprimer la requête</MDBModalHeader>
+                  <MDBModalBody>
+                      <div className="row col-12 ">
+                        <div >
+                          <p>Voulez-vous vraiment supprimer cette requête ?</p>
+                        </div>
+                      </div>
+                </MDBModalBody> 
+                <div>
+              <MDBModalFooter>
+                      <Button color="primary" variant="contained" color="secondary" startIcon={<DeleteIcon />} onClick={()=>{props.deletereq(deleteselcted) ; toggledelete()}}>Supprimer</Button>
+                      <Button color="primary" variant="contained" color="primary"  onClick={()=>{toggledelete()}}>annuler</Button>
+              </MDBModalFooter>
+              </div>
               </MDBModal>
     </div>
 

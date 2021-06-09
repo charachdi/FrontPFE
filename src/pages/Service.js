@@ -324,7 +324,7 @@ const Suppservice = async (e)=>{
         <div class="breadcrumb-holder container-fluid">
           <ul class="breadcrumb">
               <li ><a href="home" ><ArrowBackIosIcon /></a></li>
-              <li class="breadcrumb-item" >Home</li>
+              <li class="breadcrumb-item" >Accueil</li>
               <li class="breadcrumb-item active">Service</li>
           </ul>
         </div>
@@ -357,9 +357,9 @@ const Suppservice = async (e)=>{
                       <div className="mb-5">
                         <TextField value={nomservice} onChange={(e)=>{setnomservice(e.target.value)}} id="standard-basic" label="Nom du service" required />
                       </div>
-                      <Button onClick={(e)=>{Addservice(e)}} variant="outlined" class="btn-add cardstat text-capitalize">
+                      <button onClick={(e)=>{Addservice(e)}} variant="outlined" className="btn-add cardstat text-capitalize">
                       Ajouter
-                      </Button> 
+                      </button> 
                 </div>
               </form>
               </MDBModalBody>

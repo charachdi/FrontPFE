@@ -2,6 +2,7 @@ import React , {useState , useEffect} from 'react'
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import ArchiveIcon from '@material-ui/icons/Archive';
+import Alert from '@material-ui/lab/Alert';
 function Archive(props) {
 
     const [progress, setprogress] = useState(props.prog)
@@ -55,14 +56,17 @@ function Archive(props) {
      
     return (
         <div>
-            <h3>Archive</h3>
-            <div className="row col-12 justify-content-center">
-            <span className="mt-5 ml-2 mr-3">pourcentage minimum de progression à archiver</span>
+           <div className="container-fluid  mt-3 mb-3">
+                    <h2 class="no-margin-bottom text-capitalize">paramétrage de l'archivage</h2>
+                    <Alert severity="info" className="mb-3">L'archivage doit être paramétrer à l'avance .</Alert>
+           </div>
+            <div className="row col-12 justify-content-start">
+            <span className="mt-5 mr-3">pourcentage minimum de progression à atteindre pour pouvoir archiver</span>
            <TextField
            className="mt-4 float-left"
           
           select
-          label="progress"
+          label="Progrès"
           value={progress}
           onChange={(e)=>{setprogress(e.target.value)}}
         >
@@ -80,13 +84,13 @@ function Archive(props) {
         </div>
 
 
-        <div className="row col-12 justify-content-center mt-3">
-            <span className="mt-5 mr-3">nombre minimum de requêtes à archiver</span>
+        <div className="row col-12 justify-content-start mt-3">
+            <span className="mt-5 mr-3">Nombre minimum de requêtes achevé pour pouvoir archiver</span>
            <TextField
            size="small"
            style={{maxWidth:50}}
            className="mt-4 mr-5 float-left"
-          label="requêtes"
+          label="Requêtes"
           value={requetes}
           onChange={(e)=>{setrequetes(e.target.value)}}
         />
@@ -94,7 +98,7 @@ function Archive(props) {
 
         </div>
            <div style={{position:'absolute', bottom:50 , left:'47%'}}>
-           <button type="submit" className="btn text-lowercase mr-5" style={{width:80 , fontSize:12 }} onClick={(e)=>{props.update(progress,requetes)}} >Modifier</button>
+           <button type="submit" className="btn-add cardstat text-capitalize" style={{width:80 , fontSize:12 }} onClick={(e)=>{props.update(progress,requetes)}} >Modifier</button>
 
                </div> 
 

@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ["Select profile image", "personal info"];
+  return ["Sélectionnez l'image de profil", "Informations personnelles"];
 }
 
 function Stepperview() {
@@ -306,7 +306,7 @@ function Stepperview() {
               <div className="mr-4 mt-5">
                 <TextField
                   id="password"
-                  label="password"
+                  label="Mot de passe"
                   onChange={(e) => {
                     setpwd(e.target.value);
                   }}
@@ -338,7 +338,7 @@ function Stepperview() {
                   className="ml-4 mt-4"
                   size="medium"
                   id="address"
-                  label="address"
+                  label="Adresse"
                   variant="outlined"
                   required
                 />
@@ -347,7 +347,7 @@ function Stepperview() {
                 <TextField
                   className="mr-4 mt-4"
                   id="country"
-                  label="country"
+                  label="Pays"
                   variant="outlined"
                 />
                 <TextField
@@ -362,7 +362,7 @@ function Stepperview() {
                 <TextField
                   className="mr-4 mt-4 "
                   id="Website"
-                  label="Website"
+                  label="Site web"
                   placeholder="www.exemple.com"
                   variant="outlined"
                 />
@@ -396,7 +396,7 @@ function Stepperview() {
                 onClick={handleBack}
                 className={classes.button}
               >
-                Back
+                Retour
               </Button>
 
               {activeStep === steps.length - 1 ? (
@@ -407,7 +407,7 @@ function Stepperview() {
                   className={classes.button}
                   style={{ backgroundColor: "#2DCD94" }}
                 >
-                  Finish
+                  Valider
                 </Button>
               ) : (
                 <Button
@@ -419,7 +419,7 @@ function Stepperview() {
                   style={{ backgroundColor: "#2DCD94" }}
                   disabled={false}
                 >
-                  Next
+                  Suivant
                 </Button>
               )}
             </div>

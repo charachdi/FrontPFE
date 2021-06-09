@@ -97,7 +97,7 @@ const [column, setcolumn] = useState([
     },
     {
       key: "prog",
-      text: "Progress",
+      text: "Progrès",
       cell: (cli, index) => {
         return (
           <span className="text-center">
@@ -123,7 +123,7 @@ const [column, setcolumn] = useState([
 
       {
         key: "Requete",
-        text: "Requete",
+        text: "Requête",
         sortable: true,
         cell: (cli, index) => {
           return (
@@ -166,6 +166,17 @@ const [column, setcolumn] = useState([
     button: {
         excel: false,
         print: false
+    },
+    language: {
+        length_menu: "Afficher  _MENU_ enregistrements par page",
+        filter: "Recherche...",
+        info: "Affiche  _START_ à  _END_ de _TOTAL_ entrées",
+        pagination: {
+            first: "Premier",
+            previous: "Précédent",
+            next: "Suivant",
+            last: "Dernier"
+        }
     }
   }
 
@@ -196,13 +207,14 @@ const [column, setcolumn] = useState([
    </ul>
  </div>
 
-                <div className="row col-12 justify-content-end">
+                <div className="row col-12 justify-content-end mb-2">
                 <Alert className="cursor" severity="warning" onClick={(e)=>{history.push("/Requetes")}}>{warningcount}</Alert>
                 </div>
                 <ReactDatatable
                 config={config}
                 records={equipeclient}
                 columns={column}
+                tHeadClassName ="text-center"
                 />
                 </>
               )

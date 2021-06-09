@@ -919,8 +919,8 @@ function Clients() {
           {/* <!-- Breadcrumb--> */}
           <div class="breadcrumb-holder container-fluid">
             <ul class="breadcrumb">
-            <li ><a href="home" ><ArrowBackIosIcon /></a></li>
-          <li class="breadcrumb-item" >Home</li>
+              <li ><a href="home" ><ArrowBackIosIcon /></a></li>
+              <li class="breadcrumb-item" >Accueil</li>
               <li class="breadcrumb-item active">Client</li>
             </ul>
           </div>
@@ -928,9 +928,9 @@ function Clients() {
         
               <div className="row col-12 mb-2 justify-content-center">
                 <div className="col-4 mb-2 ">
-                  <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={() => toggle(!open)}>
-                    {" "}Ajouter un nouveau client{" "}
-                  </Button>
+                  <button variant="contained" className="btn-add cardstat text-capitalize" startIcon={<AddIcon />} onClick={() => toggle(!open)}>
+                  <i class="fas fa-plus mr-2"></i>Ajouter un nouveau client
+                  </button>
                 </div>
               </div>
 
@@ -952,8 +952,9 @@ function Clients() {
       >
         <MDBModalHeader
           toggle={() => toggle()}
-          className="text-center"
-        ></MDBModalHeader>
+          className="text-center">
+            Ajouter un nouveau client
+          </MDBModalHeader>
         <MDBModalBody>
           <form className="row col-12 justify-content-center align-middle">
             <div className="col-12 mt-2">
@@ -979,19 +980,7 @@ function Clients() {
                   </IconButton>
                 </label>
                 <br />
-                <i
-                  class="fas fa-arrow-up cursor fa-2x mr-3 mb-2"
-                  onClick={() => {
-                    up();
-                  }}
-                ></i>
-                <br />
-                <i
-                  class="fas fa-arrow-down cursor fa-2x mr-3"
-                  onClick={() => {
-                    down();
-                  }}
-                ></i>
+               
               </div>
               <div className="d-flex justify-content-center ">
                 <div className="profile-header-cover-modal">
@@ -1070,7 +1059,7 @@ function Clients() {
                     className="col-12 mt-2"
                     id="time"
                     type="text"
-                    label="description"
+                    label="Description du client"
                     multiline={true}
                     variant="outlined"
                     size="small"
@@ -1108,7 +1097,7 @@ function Clients() {
                     required
                     variant="outlined"
                     size="small"
-                    label="equipe"
+                    label="Equipe"
                     value={EquipeId}
                     onChange={(e) => {
                       setEquipeId(e.target.value);
@@ -1123,7 +1112,7 @@ function Clients() {
                   </TextField>
                 </div>
 
-                <div className="col-4">
+                <div className="col-5">
                   <TwitterPicker
                     color={"black"}
                     onChangeComplete={(color) => {
@@ -1135,15 +1124,9 @@ function Clients() {
                 </div>
 
                 <div className="row col-12 justify-content-center">
-                  <Button
-                    onClick={(e) => {
-                      Addclient(e);
-                    }}
-                    variant="outlined"
-                    class="btn btn-outline-success col-3 mb-5"
-                  >
+                  <button onClick={(e) => {Addclient(e);}} variant="outlined" className="btn-add cardstat text-capitalize" style={{width:"40%"}} >
                     Ajouter
-                  </Button>
+                  </button>
                 </div>
               </div>
             </section>
@@ -1269,7 +1252,7 @@ function Clients() {
                     className="col-12 mt-3"
                     id="time"
                     type="text"
-                    label="description"
+                    label="description du client "
                     multiline={true}
                     variant="outlined"
                     size="small"
@@ -1351,15 +1334,14 @@ function Clients() {
                 </div>
 
                 <div className="row col-12 justify-content-center">
-                  <Button
+                  <button
                     onClick={(e) => {
                       updatedclient(e);
                     }}
                     variant="outlined"
-                    class="btn btn-outline-success"
-                  >
+                    className="btn-add cardstat text-capitalize" style={{width:"40%"}}>
                     Modifier
-                  </Button>
+                  </button>
                 </div>
               </div>
             </section>

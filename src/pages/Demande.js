@@ -297,7 +297,7 @@ const nameMapper = {
             <div class="breadcrumb-holder container-fluid">
                 <ul class="breadcrumb">
                 <li ><a href="home" ><ArrowBackIosIcon /></a></li>
-                <li class="breadcrumb-item" >Home</li>
+                <li class="breadcrumb-item" >Accueil</li>
                     <li class="breadcrumb-item active">Congé</li>
                 </ul>
             </div>
@@ -318,8 +318,8 @@ const nameMapper = {
                     <div className="row col-12 justify-content-center">
                    
 
-                    <div className="col-4 mb-2"> 
-                    <Button variant="contained" color="primary" startIcon={<AddIcon />}  onClick={()=>{toggle()}}> Demander un congé </Button> 
+                    <div className="col-3 mb-2"> 
+                    <button variant="contained" className="btn-add cardstat text-capitalize" style={{width:"100%"}}  onClick={()=>{toggle()}}> <i class="fas fa-plus mr-2"></i>Demander un congé </button> 
                     </div>
                     </div>
                
@@ -352,7 +352,7 @@ const nameMapper = {
                     </TextField><br/>
                   </div>
             
-              <div className="text-center ">
+              <div className="text-center justify-content-center">
               <DateRange
                     className="mt-5"
                     editableDateInputs={true}
@@ -361,10 +361,13 @@ const nameMapper = {
                     ranges={Request}
                     locale={locales[locale]}
                 /><br />
-
-                    <IconButton style={{backgroundColor : "#2ECD94"}} className="mt-5" onClick={()=>{AddRequest()}}>
-                        <AddIcon />
-                    </IconButton>
+                <div className="row  justify-content-center col-12">
+                <div className="col-6">
+                <button onClick={()=>{AddRequest()}}  className="btn-add cardstat text-capitalize" style={{width:"100%"}} >
+                    Valider
+                </button>
+                </div>
+              </div>
               </div>
               </MDBModalBody>
               </MDBModal>
@@ -393,10 +396,13 @@ const nameMapper = {
                     locale={locales[locale]}
                 />
                 <br />
-
-                    <IconButton style={{backgroundColor : "#2ECD94"}} className="mt-5" onClick={()=>{updateRequest()}}>
-                        <UpdateIcon />
-                    </IconButton>
+                    <div className="row  justify-content-center col-12">
+                <div className="col-6">
+                <button onClick={()=>{updateRequest()}} className="btn-add cardstat text-capitalize" style={{width:"100%"}} >
+                    Modifier
+                </button>
+                </div>
+              </div>
               </div>
               </MDBModalBody>
               </MDBModal>

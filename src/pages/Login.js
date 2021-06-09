@@ -7,13 +7,24 @@ import { useDispatch } from "react-redux";
 import { setLoginStatus } from "./../redux/actions/authAction";
 import apiurl from "./../component/Api_url";
 import { useHistory } from "react-router-dom";
-import wave from "./../images/wave.png";
+import wave from "./../images/bg-01.jpg";
 import etai from "./../images/etai.png";
 import avatar from "./../images/avatar.svg";
 import $ from "jquery";
 import Stepper from "./Stepperview";
 import Popover from "@material-ui/core/Popover";
 import { ToastContainer, toast } from "react-toastify";
+import "./../images/icons/favicon.ico";
+import "./../vendor/bootstrap/css/bootstrap.min.css";
+import "./../fonts/font-awesome-4.7.0/css/font-awesome.min.css";
+import "./../fonts/iconic/css/material-design-iconic-font.min.css";
+import "./../vendor/css-hamburgers/hamburgers.min.css";
+import "./../vendor/animsition/css/animsition.min.css";
+import "./../vendor/select2/select2.min.css";
+import "./../vendor/daterangepicker/daterangepicker.css";
+import "./../vendor/animate/animate.css";
+import "./../css/util.css";
+import "./../css/main.css";
 
 
 function Login() {
@@ -159,7 +170,7 @@ function Login() {
         draggable
         pauseOnHover
       />
-      <img className="wave" src={wave} />
+      {/* <img className="wave" src={wave} />
       
       <div className="container " style={{ height: "80vh" }}>
         <div className="img">
@@ -245,8 +256,53 @@ function Login() {
             />
           </form>
         </div>
-      </div>
-     
+      </div> */}
+<div class="limiter">
+		<div class="container-login100" >
+			<div class="wrap-login100">
+				<form class="login100-form validate-form">
+					<span class="login100-form-logo">
+						<i class="zmdi zmdi-landscape"></i>
+					</span>
+
+					<span class="login100-form-title p-b-34 p-t-27">
+						Log in
+					</span>
+
+					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+						<input class="input100" type="text" name="username" placeholder="Username"/>
+						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input class="input100" type="password" name="pass" placeholder="Password"/>
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+					</div>
+
+					<div class="contact100-form-checkbox">
+						<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me" />
+						<label class="label-checkbox100" for="ckb1">
+							Remember me
+						</label>
+					</div>
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Login
+						</button>
+					</div>
+
+			
+				</form>
+			</div>
+		</div>
+	</div>
+	
+
+	<div id="dropDownSelect1"></div>
+
+
+
     </>
   );
 }

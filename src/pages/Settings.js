@@ -34,7 +34,7 @@ function Settings() {
         <div class="breadcrumb-holder container-fluid">
           <ul class="breadcrumb">
           <li ><a href="home" ><ArrowBackIosIcon /></a></li>
-                <li class="breadcrumb-item" >Home</li>
+                <li class="breadcrumb-item" >Accueil</li>
             <li class="breadcrumb-item active">Paramèters</li>
           </ul>
         </div>

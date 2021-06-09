@@ -289,13 +289,16 @@ function Attendance (props) {
         <div class="breadcrumb-holder container-fluid">
           <ul class="breadcrumb">
           <li ><a href="home" ><ArrowBackIosIcon /></a></li>
-          <li class="breadcrumb-item" >Home</li>
+          <li class="breadcrumb-item" >Accueil</li>
             <li class="breadcrumb-item active">Présence</li>
           </ul>
         </div>
 
-      <div className="row  justify-content-center">
-          <div className="col-12 text-center">
+      <div className="row col-12 justify-content-center ">
+          
+            
+            <div className="text-center d-flex flex-row">
+            <p className="mt-3 mr-5">Choisir une date </p>
           <TextField
           id="date"
           label="date"

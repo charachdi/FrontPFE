@@ -552,7 +552,7 @@ const addrequte = (req)=>{
  {/* <!-- Breadcrumb--> */}
  <div className="breadcrumb-holder container-fluid">
    <ul className="breadcrumb">
-     <li className="breadcrumb-item"><a href="home" onClick={()=>{history.push("/home")}}>Home</a></li>
+     <li className="breadcrumb-item"><a href="home" onClick={()=>{history.push("/home")}}>Accueil</a></li>
      <li className="breadcrumb-item active">Clients</li>
      <li className="breadcrumb-item active">{client.Nom_compteCli}</li>
    </ul>
@@ -613,7 +613,8 @@ const addrequte = (req)=>{
               
     <div id="Datatab" className="row col-12 mb-2" style={{display: exportauth ? "block": "none"}}>
     <div id="exportbtn" className="row col-12 justify-content-end" >
-                <Button variant="contained" color="light" onClick={(e)=>{exportPNG()}} style={{color:'#f8f9fe'}}>Exporter sous format png  <PhotoCamera style={{color:'#2DCD94'}} className="ml-3"/></Button>
+    <button className="btn-export cardstat text-capitalize" onClick={(e)=>{exportPNG()}} style={{width:"20%"}} >Exporter sous format png  <i class="fas fa-file-export ml-1" style={{color:"#2DCD94"}}></i></button>
+                
             </div>
      <Clidata id={client_id}  />
     </div>  
@@ -702,12 +703,14 @@ const addrequte = (req)=>{
                
                
                 </div>
-
                 <div className="row col-12 justify-content-center">
-                <Button onClick={(e)=>{updatedclient(e)}}  variant="outlined" class="btn btn-outline-success">
-                      Modifier
-                      </Button> 
+                  <button onClick={(e) => {updatedclient(e);}} variant="outlined" className="btn-add cardstat text-capitalize" style={{width:"40%"}}>
+                    Modifier
+                  </button>
                 </div>
+
+
+
               </div>
             
             </section>

@@ -348,7 +348,7 @@ const handelchangebanned = async()=>{
            <br/>
         
            <div className="row col-12 justify-content-center mt-1">
-              <button type="submit" className="btn  mr-5 text-capitalize col-3" style={{width:70 , fontSize:12 ,display: selected.id === ""  ? "none" : "block"}} onClick={(e)=>{update(e)}}>Valider les modifications</button>
+              <button type="submit" className="btn-add cardstat text-capitalize mr-3" style={{width:'25%' , fontSize:12 ,display: selected.id === ""  ? "none" : "block"}} onClick={(e)=>{update(e)}}>Valider les modifications</button>
               <button type="submit" className="btn-danger text-capitalize col-3" style={{width:70 , fontSize:12 ,display: selected.id === ""  ? "none" : "block"}} onClick={(e)=>{deleteUs(e)}}>Supprimer l'utilisateur</button>
             </div>
         </div>

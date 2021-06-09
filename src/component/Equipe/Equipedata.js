@@ -249,8 +249,9 @@ const exportPNG = ()=>{
 setTimeout(() => {
   domtoimage.toJpeg(document.getElementById('Equipedata'), { quality: 1 })
   .then(function (dataUrl) {
+      
       var link = document.createElement('a');
-      link.download = 'Data.jpeg';
+      link.download =  `${props.eqname}/${new Date().toLocaleDateString("en-US")}`;
       link.href = dataUrl;
       link.click();
   });
@@ -270,8 +271,8 @@ setTimeout(() => {
             isClickToPauseDisabled={true}
           /> : (
             <>
-             <div  className="row col-12 justify-content-end nopad mb-4">
-             <Button variant="contained" color="light" onClick={(e)=>{exportPNG()}} style={{color:'#f8f9fe'}}>Exporter sous format png  <i class="fas fa-file-export ml-1" style={{color:"#2DCD94"}}></i></Button> 
+             <div  className="row col-12 justify-content-end  mb-4">
+             <button className="btn-export cardstat text-capitalize" onClick={(e)=>{exportPNG()}} style={{width:"20%"}} >Exporter sous format png  <i class="fas fa-file-export ml-1" style={{color:"#2DCD94"}}></i></button> 
             </div>
             {
               apidata.colture !== undefined ? <Equipeheader data={apidata} />: null
