@@ -313,7 +313,7 @@ return (
               <br />
               <div className="row" >
                <TextField
-                className="float-left ml-5 mt-3 col-5 "
+                className="float-left ml-5 mt-3 col-5"
                 id="role"
                 variant="outlined" 
                 select
@@ -386,14 +386,14 @@ return (
                 </TextField>
                 ): null
               }
-
+{/* Collaborateur Collaborateur*/}
               {
-                level === "Chef équipe"  ? (
-                    level === "Collaborateur" ? (
+                level === "Chef equipe"  ? (
+               
                       <TextField
                       disabled={eqdisabled}
                       style={{width:250}}
-                      className="float-center mt-3 col-6"
+                      className="float-right ml-4 mt-3 col-5"
                       id="equipe"
                       select
                       variant="outlined" 
@@ -410,8 +410,34 @@ return (
                       } 
                      
                       
-                    </TextField>
-                    ) : null
+                </TextField>
+                ) : null
+              }
+
+              {
+                level === "Collaborateur"  ? (
+               
+                      <TextField
+                      disabled={eqdisabled}
+                      style={{width:250}}
+                      className="float-right ml-4 mt-3 col-5"
+                      id="equipe"
+                      select
+                      variant="outlined" 
+                      size="small"
+                      label="equipe"
+                      helperText="Sélectionner une équipe"
+                      value={usereq}
+                      onChange={(e)=>{setusereq(e.target.value)}}
+                    >
+                      {
+                        equipe.map((equ , index) =>(
+                          <MenuItem key={index} value={equ.id}>{equ.Nom_equipe}</MenuItem>
+                        ))
+                      } 
+                     
+                      
+                </TextField>
                 ) : null
               }
               </div>

@@ -4,6 +4,7 @@ import $ from 'jquery'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Api_url from './../component/Api_url'
 import Avatar from '@material-ui/core/Avatar';
+import Visibility from '@material-ui/icons/Visibility';
 import { useHistory } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
@@ -25,7 +26,14 @@ import Loading from './../images/loading.json'
 import Import from './../images/import.json'
 import Fileempty from './../images/fileempty.json'
 import {socket} from './../Socket/Socket'
+import ReactDatatable from '@ashvin27/react-datatable';
 
+
+
+import Archiveprogress from './../component/Table/Archiveprogress'
+import Colture from './../component/Table/Colture'
+import Archive from './../component/Table/Archive'
+import Cours from './../images/Cours'
 
 function EquipeView(props) {
 
@@ -52,7 +60,7 @@ function EquipeView(props) {
       //Here we broadcast it out to all other sockets EXCLUDING the socket which sent us the data
     setfiles([...files , data.file])
     });
-
+    const [activetab, setactivetab] = useState(0);
 
     const defaultOptions = {
       loop: true,
@@ -189,7 +197,7 @@ if(res.status === 200){
 
    comptecli.splice(targetIndex, 1);
   //  Client_archive.push(res.data.cli)
-  setClient_archive([...Client_archive , res.data.cli ])
+  setClient_archive([res.data.cli , ...Client_archive])
 
 
 }
@@ -218,8 +226,90 @@ if (res.status === 200){
 }
 }
 
+const [column, setcolumn] = useState([
+  {
+    key: "name",
+    text: "",
+    cell: (client, index) => {
+      return (
+        <>
+            <div className="d-flex flex-row"> <Avatar src={client.Clientimg ? client.Clientimg.img_profile : "aaa"} style={{width: 40, height : 40}} /> 
+            <p className="mt-1 ml-4">{client.Nom_compteCli}</p> </div>
+         </>
+      );
+  }
+  },
+  {
+    key: "prog",
+    text: "Progress",
+    cell: (cli, index) => {
+      return (
+        <>
+        <Archiveprogress client={cli} ar={props.archive}/>
+         </>
+      );
+  }
+  },
 
+  {
+    key: "Clôturé",
+    text: "Clôturé",
+    sortable: true,
+    cell: (cli, index) => {
+      return (
+        <>
+       <Colture client={cli}/>
+         </>
+      );
+  }
+  },
+  {
+    key: "cours",
+    text: "En cours",
+    sortable: true,
+    cell: (cli, index) => {
+      return <Cours client={cli}/>
+  }
+  },
 
+  {
+    key: "Requete",
+    text: "Requete",
+    sortable: true,
+    cell: (cli, index) => {
+      return (
+        <>
+       {cli.Requetes.length}
+         </>
+      );
+  }
+  },
+  {
+    key: "Action",
+    text: "Action",
+    cell: (cli, index) => {
+      return (
+        <>
+        <IconButton size="small" aria-label="delete" color="primary" onClick={()=>{history.push(`/client/${cli.id}`)}} style={{color :"#388e3c"}}>
+          <Visibility />
+        </IconButton>    
+         </>
+      );
+  }
+  },
+   
+])
+const config = {
+  page_size: 10,
+  length_menu: [10, 20, 50],
+  show_filter: true,
+  show_pagination: true,
+  pagination: 'advance',
+  button: {
+      excel: false,
+      print: false
+  }
+}
 
 
 const switchtodata = () =>{
@@ -380,21 +470,14 @@ const switchtoarchive= () =>{
                   {
                     isadmin ?  <li onClick={()=>{switchtosetting()}}className="nav-item"><span id="setting" href="#" className="nav-link cursor" data-toggle="tab"><i className="fas fa-cog"></i></span></li> : null
                   }
-                 
-                
                 </ul>   
-                  
             </div>
-       
-          
     </div>
     <div className="row col-12 justify-content-center text-center mt-3"style={{ backgroundColor : '#FAFAFA'}}>
 
       
         
           <>
-          
-
         <div id="Equipedata" className="row col-12 mb-5" style={{minHeight:500 , backgroundColor : '#FAFAFA'}}>
         <Equipedata equipeid={equipe_id} eqname={equipe.Nom_equipe}/>
         </div>  
@@ -441,6 +524,7 @@ const switchtoarchive= () =>{
 
         <div id="Clientarchive" style={{display:"none" , width:"100%" , minHeight:500 ,}}>
         <Clientarchive  archive={Client_archive}/>
+
         </div>
         </>
 

@@ -14,6 +14,10 @@ import Button from '@material-ui/core/Button';
 import Lottie from 'react-lottie';
 import Chartsloding from './../../images/chartsloding.json'
 import IconButton from '@material-ui/core/IconButton';
+import { DateRange } from 'react-date-range';
+import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter , MDBCol, MDBFormInline , MDBIcon } from 'mdbreact';
+import * as locales from 'react-date-range/dist/locale';
+import AddIcon from '@material-ui/icons/Add';
 
 function Equipedata(props) {
 
@@ -21,7 +25,19 @@ function Equipedata(props) {
   const [equipe_id, setequipe_id] = useState(props.equipeid)
   const [apidata, setapidata] = useState([])
 
+  const [open, setopen] = useState();
 
+  const toggle = ()=>{
+    setopen(!open)
+  }
+  const [Request, setRequest] = useState([
+    {
+    startDate: new Date(),
+    endDate: new Date(),
+    key: 'selection'
+}
+])
+const [locale, setLocale] = React.useState('fr');
   //bar charts
   const [usersname, setusersname] = useState([])
   const [reqnum, setreqnum] = useState([])
@@ -242,6 +258,77 @@ const option = {
 }
 }
 
+const filter = async ()=>{
+   
+   var start = Request[0].startDate.toLocaleDateString('en-US').split("/")
+  var  end = Request[0].endDate.toLocaleDateString('en-US').split("/")
+  const data = {
+    startdate : `${start[1]}/${start[0]}/${start[2]}`,
+    enddate : `${end[1]}/${end[0]}/${end[2]}`
+  }
+console.log(data)
+    const getclidatastat =async()=>{
+      const res = await axios({
+        headers: {'Authorization': `Bearer ${token}`},
+        method: 'post',
+        url : `${Api_url}stat/stat/pie/date/${equipe_id}`,
+        data
+        });
+  
+        const bar = await axios({
+          headers: {'Authorization': `Bearer ${token}`},
+          method: 'post',
+          url : `${Api_url}stat/bar/date/${equipe_id}`,
+          data
+          });
+         
+  
+        const Line = await axios({
+          headers: {'Authorization': `Bearer ${token}`},
+          method: 'post',
+          url : `${Api_url}stat/line/date/${equipe_id}`,
+          data
+          });
+     
+         const Oridata = await axios({
+          headers: {'Authorization': `Bearer ${token}`},
+          method: 'post',
+          url : `${Api_url}stat/equipe/origin/bar/date/${equipe_id}`,
+          data
+          });
+      
+        setcliname(res.data.cliname)
+        setclilength(res.data.clilength)
+  
+  
+        setreqnum(bar.data.requetes)
+        setusersname(bar.data.users)
+  
+  
+        setdate_req(Line.data.Trim_date)
+        setdate_value(Line.data.date_value)
+  
+        setorigin_req(Oridata.data.origin)
+        setorigin_value(Oridata.data.Origine_value)
+  
+      
+      
+     }
+     const getequipedata = async() =>{
+      const res = await axios({
+        headers: {'Authorization': `Bearer ${token}`},
+        method: 'post',
+        url : `${Api_url}stat/requets/date/${equipe_id}`,
+        data
+        });
+        setapidata(res.data)
+       
+     }
+
+     getclidatastat()
+     getequipedata()
+}
+
 
 const exportPNG = ()=>{
   console.log("png")
@@ -272,6 +359,7 @@ setTimeout(() => {
           /> : (
             <>
              <div  className="row col-12 justify-content-end  mb-4">
+             <Button onClick={()=>{toggle()}} ><i class="fas fa-filter"></i></Button>
              <button className="btn-export cardstat text-capitalize" onClick={(e)=>{exportPNG()}} style={{width:"20%"}} >Exporter sous format png  <i class="fas fa-file-export ml-1" style={{color:"#2DCD94"}}></i></button> 
             </div>
             {
@@ -323,7 +411,26 @@ setTimeout(() => {
             </>
           )
         }
-       
+        <MDBModal isOpen={open} toggle={()=>toggle()} size="md" disableBackdrop={false}>
+              <MDBModalHeader toggle={()=>toggle()} className="text-center"></MDBModalHeader>
+              <MDBModalBody>
+              <div className="text-center ">
+              <DateRange
+                    className="mt-5"
+                    editableDateInputs={true}
+                    onChange={item => setRequest([item.selection]) }
+                    moveRangeOnFirstSelection={false}
+                    ranges={Request}
+                    locale={locales[locale]}
+                /><br />
+
+                    <IconButton style={{backgroundColor : "#767192"}} className="mt-5" onClick={()=>{filter() ; toggle() ; setcliname([])}}>
+                    <i class="fas fa-filter"></i>
+                    </IconButton>
+              </div>
+              </MDBModalBody>
+              </MDBModal>
+
 </>
         
     )

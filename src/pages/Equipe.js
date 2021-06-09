@@ -1,5 +1,6 @@
 import React , {useState , useEffect} from 'react'
 import Table from 'react-bootstrap/Table'
+import ReplayIcon from '@material-ui/icons/Replay';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -24,7 +25,8 @@ import GroupIcon from '@material-ui/icons/Group';
 import Select from '@material-ui/core/Select';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
-
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import Lottie from 'react-lottie';
 import Loading from './../images/loading.json'
 import { Avatar } from '@material-ui/core';
@@ -35,7 +37,7 @@ function Equipe(props) {
     const token = localStorage.getItem('token')
     const [open, setopen] = useState(false)
     const history = useHistory();
-
+    const [primecheck, setprimecheck] = useState(false);
     const [suppopen, setsuppopen] = useState(false)
     const [editopen, seteditopen] = useState(false)
     const [primeopen, setprimeopen] = useState(false);
@@ -44,17 +46,31 @@ function Equipe(props) {
     const [servicename, setservicename] = useState(selectedrow.Service ? selectedrow.Service.Nom_service :"")
     const [primeloading, setprimeloading] = useState(true);
     const [equipedemande, setequipedemande] = useState({
-      "date": "01/01/1999",
-      "Demandes": [
+      "M": "01",
+      "Y": "01",
+      "SPrimes": [
           {
-              "userid": 2,
-              "fullname": "Amira KHEZAMI",
-              "profile_img": null,
-              "Prime": 1200,
-              "bonus": 120,
-              "requeteerr": 16
-          }]
-        })
+              "Bonus": 1200,
+              "Prime": 12000,
+              "Comment": "commentaire",
+              "User": {
+                  "id": 2,
+                  "full_name": "Amira KHEZAMI",
+                  "user_img": null
+              }
+          },
+          {
+              "Bonus": 1200,
+              "Prime": 12000,
+              "Comment": "commentaire",
+              "User": {
+                  "id": 4,
+                  "full_name": "Talel Tazni",
+                  "user_img": "http://localhost:3001/userimg/1622299199511.jpg"
+              }
+          }
+      ]
+  })
     const [Prime, setPrime] = useState([])
    
     const [hovered, sethovered] = useState(false)
@@ -120,49 +136,40 @@ function Equipe(props) {
           return equipe.Service.Nom_service
       }
       },
-      // {
-      //   key: "",
-      //   text: "Member d'equipe",
-      //   className : "table-mid text-center",
-      //   cell: (equipe, index) => {
-      //     return (
-      //       <IconButton className="float-center mr-2" size="small" aria-label="delete" color="primary" >
-      //       <GroupIcon /> <span className="ml-2" style={{fontSize:15}}>{equipe.Users.length}</span>
-      //       </IconButton> 
-      //     )
-      // }
-      // },
+      {
+        key: "",
+        text: "Member d'equipe",
+        className : "table-mid text-center",
+        cell: (equipe, index) => {
+          return (
+            <IconButton className="float-center mr-2" size="small" aria-label="delete" color="primary" >
+            <GroupIcon /> <span className="ml-2" style={{fontSize:15}}>{equipe.Users.length}</span>
+            </IconButton> 
+          )
+      }
+      },
       {
         key: "",
         text: "Accorder prime",
         className : "table-mid text-center",
-        cell: (prime, index) => {
+        cell: (equipe, index) => {
           return (
             <div className="text-center">
 
-            {
-                prime.waiting ? (
-                   <i style={{color:"#2ECD94"}} className=" fas fa-spinner fa-spin fa-2x mt-2"></i>
-                 
-                ) : (
-
-                   prime.Approved ? (
-                       <IconButton size="small" style={{color:"white" , backgroundColor :"#2ECD94"}}>
-                         <CheckIcon   />
-                       </IconButton>
-
-                   ) : (
-                       <IconButton size="small" style={{color:"white" , backgroundColor :"#ff0000"}}>
-                        <CloseIcon />
-                       </IconButton>
-                   )
-                   
+              {
+                  equipe.Primes[0] ? (
+                    <IconButton size="small" className="float-center mr-3" aria-label="eye" style={{color :"#388e3c"}} onClick={(e)=>{ setequipedemande(equipe.Primes[0]) ; setprimeopen(!primeopen)}} >
+                    <Visibility />
+                    </IconButton> 
+                  ) : (
+                    <IconButton className="float-center mr-3" disabled={equipe.Users.length === 0 ? true : false} size="small" aria-label="delete" color="primary" onClick={()=>{getequipeprime(equipe.id); setprimeopen(!primeopen)}}>
+                    <EditIcon />
+                    </IconButton>
+                  )
+              }
 
 
-                )
-            }
-      
-        </div>
+            </div>
           )
       }
       },
@@ -226,6 +233,7 @@ function Equipe(props) {
         url : `${Api_url}equipe/`,  
         });
         setequipes(res.data)
+        console.log(res)
      
        
     }
@@ -309,9 +317,6 @@ function Equipe(props) {
 
               setnomequipe("")
               setservice("")
-
-
-            
         }
         else {
           toast.error('error', {
@@ -421,23 +426,42 @@ const Suppequipe = async (e)=>{
 
 
 const getequipeprime = async (id)=>{
-  // const res = await axios({
-  //   headers: {'Authorization': `Bearer ${token}`},
-  //   method: 'get',
-  //   url : `${Api_url}Demande/equipe/prime/${id}`
-  // })
-  // console.log(res)
-  // // setprimeloading(false)
-  // if(res.status === 200){
-   
-  //     setequipedemande(res.data.demandes)
-  //     console.log(equipedemande)
-  // }
+  const res = await axios({
+    headers: {'Authorization': `Bearer ${token}`},
+    method: 'get',
+    url : `${Api_url}Demande/equipe/prime/${id}`
+  })
+ 
+  setequipedemande(res.data.demandes)
+  console.log(equipedemande)
 }
 
 
 
-
+const createPrime = async ()=>{
+  const data = {
+    Prime : {
+        eqId :equipedemande.eqid,
+        M: equipedemande.M,
+        Y: equipedemande.Y,
+    },
+    Sprime : equipedemande.SPrimes
+  }
+  
+  const res = await axios({
+    headers: {'Authorization': `Bearer ${token}`},
+    method: 'post',
+    url : `${Api_url}Demande/equipe/prime`,
+    data
+  })
+  setprimeopen(!primeopen)
+  setequipes(
+    equipes.map(item => 
+        item.id === res.data.eq.id 
+        ? res.data.eq 
+        : item 
+))
+}
 
     return (
       <>
@@ -588,9 +612,9 @@ const getequipeprime = async (id)=>{
               <MDBModalHeader toggle={()=>setprimeopen(!primeopen)} className="text-center sm">Demande Prime</MDBModalHeader>
                   <MDBModalBody>
                     
-                      <div className="row col-12 " style={{height : '60vh'}}>
-                              <table className="table table-bordered ">
-            <thead style={{backgroundColor: "#767192" , color : "white"}} >
+                      <div className="row col-12 ">
+                              <table className="table  ">
+            <thead style={{backgroundColor: "#E9ECEF" , color : "black"}} >
                 <tr className="text-center">
                     <th>Employee</th>
                     <th>Prime</th>
@@ -601,18 +625,20 @@ const getequipeprime = async (id)=>{
             </thead>
             <tbody className="text-center">
             {
-                                equipedemande.Demandes.map((dem , index)=>(
-                                      <tr>
-                                      <td className="d-flex flex-row">
-                                        <Avatar src={dem.profile_img ? dem.profile_img : ""} alt={dem.fullname} />
-                                        <span className="mt-2 ml-3">{dem.fullname}</span>
-                                      </td>
-                                      <td>{dem.Prime}</td>
-                                      <td>{dem.bonus}</td>
-                                      <td>{dem.commentaire}</td>
-                   
-                                      </tr>
-                                ))
+                equipedemande.SPrimes.map((dem , index)=>(
+                  <tr>
+                  <td className="d-flex flex-row">
+                    <Avatar src={dem.User ? dem.User.user_img : ""} alt={dem.User ? dem.User.full_name : ""} style={{width : 50 , height : 50}}/>
+                    <span className="mt-2 ml-3">{dem.User ? dem.User.full_name : ""}</span>
+                  </td>
+                  <td >{dem.Prime}</td>
+                  <td>{dem.Bonus}</td>
+                  <td>{dem.Comment}</td>
+
+                  </tr>
+            ))
+             
+                               
                               }
                   
             </tbody>
@@ -623,10 +649,52 @@ const getequipeprime = async (id)=>{
                             
                         
                       </div>
-                      <Alert severity="warning" className="text-center justify-content-center">Warrning</Alert>
-                      <div className="row col-12 justify-content-center">
-                  <button type="submit" className="btn text-capitalize " style={{width:100}} >Valider</button>
-                  </div>
+                     {
+                       equipedemande.New ? (
+                        <div className="d-flex justify-content-center">
+                        {/* <Alert severity="success" className="text-center  mr-4">votre demande sera traitée</Alert> */}
+                        <div className="row col-12 justify-content-center">
+                            <button  className="btn-add cardstat text-capitalize"  onClick={()=>createPrime()} style={{width:"30%" }}>Valider</button>
+                        </div> 
+                       </div>
+                       
+                       ) : (
+                        <div className="row col-12 justify-content-center">
+                        {
+                          equipedemande.waiting ? (
+                            <div className="d-flex justify-content-center">
+                            <Alert severity="info" className="text-center mr-4">votre demande sera traitée</Alert>
+                            <i style={{color:"#2ECD94"}} className=" fas fa-spinner fa-spin fa-2x mt-1"></i>
+                           </div>
+                          ) : (
+                           equipedemande.Approved ? (
+                              <div className="d-flex justify-content-center">
+                              <Alert severity="success" className="text-center  mr-4">votre demande a été acceptée</Alert>
+                             <IconButton size="small" className="float-center" style={{color:"white" , backgroundColor :"#2ECD94" , width : 50 , height : 50}}>
+                               <CheckIcon />
+                             </IconButton>
+                             </div>
+                         ) : (
+                           <>
+                          <div className="d-flex justify-content-center">
+                          <Alert severity="error" className="text-center mr-4">votre demande a été refusée</Alert>
+                             <IconButton size="medium" style={{color:"white" , backgroundColor :"#ff0000"}}>
+                              <CloseIcon />
+                             </IconButton>
+                           
+                             </div><br />
+                             <IconButton size="medium" className="ml-5" style={{color:"white" , backgroundColor :"#f2c857"}}>
+                              <ReplayIcon />
+                             </IconButton>
+                          </>
+                         )
+                          )
+                        }
+                        </div>
+   
+                       )
+                     }
+                     
                 </MDBModalBody> 
               
              

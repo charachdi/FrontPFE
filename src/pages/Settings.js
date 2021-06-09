@@ -66,7 +66,7 @@ function Settings() {
         </ListItem>
       </List>
         </div>
-          <div className="border cardstat ml-3 col-8 justify-content-center">
+          <div className="ml-3 col-8 justify-content-center">
          {
              selectedIndex === 0 ? (
                  <Storage />
