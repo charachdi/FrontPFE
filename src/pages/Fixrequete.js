@@ -14,7 +14,7 @@ import Progressuser from './../component/Table/Progressuser'
 import Colture from './../component/Table/Colture'
 import Visibility from '@material-ui/icons/Visibility';
 import IconButton from '@material-ui/core/IconButton';
-import Alert from '@material-ui/lab/Alert';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 import { ToastContainer, toast } from 'react-toastify';
@@ -30,6 +30,7 @@ function Fixrequete() {
     const [loding, setloding] = useState(true)
     const [Requetes, setRequetes] = useState([])
     const [open, setopen] = useState(false)
+    const [hovered, sethovered] = useState(false)
     const [selectedrow, setselectedrow] = useState({
       "id": 1,
       "Proprietaire_de_la_requete": "Amira KHEZAMI",
@@ -96,11 +97,7 @@ function Fixrequete() {
 
 
           const [column, setcolumn] = useState([
-            {
-              key: "Numero_de_la_requete",
-              text: "#",
-              className:"datatabel",
-            },
+           
             {
               key: "Proprietaire_de_la_requete",
               text: "Proprietaire de la requete",
@@ -185,6 +182,17 @@ function Fixrequete() {
             button: {
                 excel: false,
                 print: false
+            },
+            language: {
+                length_menu: "Afficher  _MENU_ enregistrements par page",
+                filter: "Recherche...",
+                info: "Affiche  _START_ à  _END_ de _TOTAL_ entrées",
+                pagination: {
+                    first: "Premier",
+                    previous: "Précédent",
+                    next: "Suivant",
+                    last: "Dernier"
+                }
             }
           }
 
@@ -270,12 +278,29 @@ function Fixrequete() {
       width={"40%"}
     />
             ) :(
-              
+              <>
+              <header class="page-header">
+                <div class="container-fluid">
+                  <h2 class="no-margin-bottom">Liste des requêtes à corrigés</h2>
+                </div>
+              </header>
+       
+              <div class="breadcrumb-holder container-fluid">
+                <ul class="breadcrumb">
+                  <li > <a onMouseEnter={() => sethovered(true)} onMouseLeave={() => sethovered(false)} style={{color : hovered ? "#38D39F" : ""}}  onClick={()=>{ window.history.back()}}  ><ArrowBackIosIcon /></a></li>
+                  <li class="breadcrumb-item" >Home</li>
+                  <li class="breadcrumb-item active">Clients</li>
+                </ul>
+              </div>
+
+
               <ReactDatatable
               config={config}
               records={Requetes}
               columns={column}
+              tHeadClassName ="text-center text-samlll"
               />
+              </>
             )
         }
              

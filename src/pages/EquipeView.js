@@ -479,15 +479,15 @@ const switchtoarchive= () =>{
         
           <>
         <div id="Equipedata" className="row col-12 mb-5" style={{minHeight:500 , backgroundColor : '#FAFAFA'}}>
-        <Equipedata equipeid={equipe_id} />
+        <Equipedata equipeid={equipe_id} eqname={equipe.Nom_equipe}/>
         </div>  
         
         <div id="Fileview" className="" style={{display:"none" , minHeight:600}} >
         <div className="">
         
-        <Button variant="contained" className="  mb-3 mt-3" color="primary" onClick={(e)=>{toggle()}} startIcon={<CloudUploadIcon />}>
+        <button className="btn-add cardstat text-capitalize" color="primary" onClick={(e)=>{toggle()}} startIcon={<CloudUploadIcon />}>
         Télécharger un fichier 
-      </Button>
+      </button>
       
       
       </div>
@@ -549,8 +549,8 @@ const switchtoarchive= () =>{
          
             <Lottie 
             options={importlotti}
-            height={"80%"}
-            width={"80%"}
+            height={"60%"}
+            width={"60%"}
             isClickToPauseDisabled={true}
           />
           <div className="row col-12 justify-content-center">
@@ -562,7 +562,7 @@ const switchtoarchive= () =>{
               </label>
           </div>
 
-           <div className="mt-5" style={{minHeight : 60}}>
+           <div >
            {
           file.name !== "" ? (
             <div  className="d-flex flex-row">
@@ -574,15 +574,15 @@ const switchtoarchive= () =>{
           </div> 
       
           </div>
-          <div className="float-right mt-3">
+          <div className="row justify-content-center mt-3 col-12">
           {/* <Button  onClick={(e)=>{Importfile(e)}} className="mt-5" color="primary" aria-label="upload picture" component="span">
                   <BackupIcon  fontSize="large" style={{color:'#2DCD94'}}/>
             </Button> */}
         
-            <Button color="primary" className="btn text-capitalize" style={{color:'white'}} variant="contained" color="info"  onClick={()=>Importfile()}>
+            <button color="primary" className="btn-export cardstat text-capitalize col-7" style={{width:"100%"}} style={{color:'white'}} variant="contained" color="info"  onClick={()=>Importfile()}>
               Importer les fichiers 
               <BackupIcon className="ml-2" fontSize="large" style={{color:'#12b1ab'}}/>
-            </Button>
+            </button>
 
           </div>
 

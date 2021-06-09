@@ -132,7 +132,7 @@ function Permission(props) {
      }
     }
     return (
-        <div className=" row col-12 ">
+        <div className=" row col-12 mt-3">
             <div class="cards-container row col-12 justify-content-center">
         {/* {
             Auths.map((auth , index)=>(
@@ -196,9 +196,9 @@ function Permission(props) {
                     <tr>
                         <th style={{width:50}}></th>
                         <th style={{width:50}}>Lire</th>
-                        <th style={{width:50}}>Ecrir</th>
-                        <th style={{width:50}}>importer</th>
-                        <th style={{width:50}}>exporter</th>
+                        <th style={{width:50}}>Ecrire</th>
+                        <th style={{width:50}}>Supprimer</th>
+                        <th style={{width:50}}>Exporter</th>
                       </tr>
                     </thead>
                     <tbody id="equipe-body">

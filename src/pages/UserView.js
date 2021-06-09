@@ -27,8 +27,8 @@ import { DateRange } from 'react-date-range';
 import { addDays } from 'date-fns';
 import PlanComment from './../component/PlanComment'
 import Divider from '@material-ui/core/Divider';
-import { useIsFocusVisible } from '@material-ui/core';
-
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import Alert from '@material-ui/lab/Alert';
 
 
 
@@ -316,7 +316,7 @@ function UserView(props) {
     const [plan, setplan] = useState([
       {
         key: "Text",
-        text: "",
+        text: "Erreur commise",
         className : "text-center",
         cell: (plan, index) => {
           return (
@@ -446,6 +446,17 @@ function UserView(props) {
       button: {
           excel: false,
           print: false
+      },
+      language: {
+          length_menu: "Afficher  _MENU_ enregistrements par page",
+          filter: "Recherche...",
+          info: "Affiche  _START_ à  _END_ de _TOTAL_ entrées",
+          pagination: {
+              first: "Premier",
+              previous: "Précédent",
+              next: "Suivant",
+              last: "Dernier"
+          }
       }
     }
     const configplan = {
@@ -457,6 +468,17 @@ function UserView(props) {
       button: {
           excel: false,
           print: false
+      },
+      language: {
+          length_menu: "Afficher  _MENU_ enregistrements par page",
+          filter: "Recherche...",
+          info: "Affiche  _START_ à  _END_ de _TOTAL_ entrées",
+          pagination: {
+              first: "Premier",
+              previous: "Précédent",
+              next: "Suivant",
+              last: "Dernier"
+          }
       }
     }
 
@@ -519,44 +541,48 @@ function UserView(props) {
               <>
                 <div className="row col-12 justify-content-center  mb-5">
 
-                    <div className="d-flex flex-column mt-3 mb-3 text-center">
-                    <Avatar src={user.user_img} className="mx-auto"  style={{width : 150 , height:150}}/>
-                      <h2>{user.full_name}</h2>
+                    <div className="row d-flex flex-column mt-3 mb-3 text-center">
+                    <Avatar src={user.user_img} className="mx-auto "  style={{width : 150 , height:150}}/>
+                      <h2 className="text-capitalize">{user.full_name}</h2>
                     </div>
                     {
                       localuser.user_level === "admin" ? (
-                      <IconButton className="mb-3" style={{position : 'absolute', right :20 , top :150 , color : "#38D39F"}} onClick={()=>{toggle()}} >
-                    <i class="fas fa-comment-dots fa-1x"></i>
-                      </IconButton>
+                      <button className="row mb-3 btn-danger cardstat text-capitalize" style={{position : 'absolute', right :20 , top :150 ,width:'17%'}} onClick={()=>{toggle()}} >
+                         Signaler une erreur <ErrorOutlineIcon/>
+                      </button>
                       ) : null
                     }
 
                     {
                       localuser.user_level === "Chef Service" ? (
-                      <IconButton className="mb-3" style={{position : 'absolute', right :20 , top :150 , color : "#38D39F"}} onClick={()=>{toggle()}} >
-                    <i class="fas fa-comment-dots fa-1x"></i>
-                      </IconButton>
+                      <button className="row mb-3 btn-danger cardstat text-capitalize" style={{position : 'absolute', right :20 , top :150 ,width:'17%'}} onClick={()=>{toggle()}} >
+                        Signaler une erreur <ErrorOutlineIcon/>
+                      </button>
                       ) : null
                     }
                     
                     {
                       userId === `${localuser.id}` ? (
-                        <IconButton style={{position : 'absolute', right :20 , bottom :70}} onClick={()=>{props.toggle()}}>
+                        <IconButton style={{position : 'absolute', right :20 }} onClick={()=>{props.toggle()}}>
                         <EditIcon />
                       </IconButton>
                       ) : null
                     }
           
-                <Divider className="col-12 mb-3"/>
+                <Divider className="col-12 mb-3 mt-3"/>
                   <div className="row col-12 ">
                   <ul className="row col-12 justify-content-start" style={{listStyle: "none"}}>
+                  <div class="container-fluid">
+                    <h2 class="no-margin-bottom text-center">Les erreurs commises ce mois-ci</h2>
+                    <Alert severity="warning" >Si vous avez plus de trois erreurs par mois, Vous allez perdre votre bonus !</Alert>
+                </div>
                   {
-                  plans.map((plan , index)=>(
-                    <li className="col-4 my-3 text-start" key={index}>
-                      <small><i class="fas fa-circle mr-2 mt-2" style={{fontSize : 5}}></i>{plan.Text}</small>
-                    </li>
-                  ))
-                }
+                      plans.map((plan , index)=>(
+                        <li className="col-4 my-3 text-start" key={index}>
+                          <small><i class="fas fa-circle mr-2 mt-2" style={{fontSize : 5}}></i>{plan.Text}</small>
+                        </li>
+                      ))
+                  }
                   </ul>
                   </div>
                 
@@ -566,7 +592,9 @@ function UserView(props) {
                 <div className="col-12">
                  
                     <div className="row col-12 justify-content-around nopad ">
-                   
+                    <Divider className="col-12 mb-3 mt-3"/>
+
+                    <h2 className="col-12 text-center">Les statistiques de l'employé</h2>
                     {/* SHOW DATA PROFILE */}
                   
                   
@@ -649,15 +677,13 @@ function UserView(props) {
           }
 
         <MDBModal isOpen={open} toggle={()=>toggle()}  size="lg" disableBackdrop={false} >
-              <MDBModalHeader toggle={()=>toggle()} className="text-center"></MDBModalHeader>
+              <MDBModalHeader toggle={()=>toggle()} className="text-capitalize">plan d'accompagnement</MDBModalHeader>
               <MDBModalBody className="">
-           
-
-               
+           <Alert severity="warning" >Plus de trois erreurs par mois, l'employé perdra son bonus !</Alert>
                 <div className="row col-12 justify-content-center ml-1"  >
                  <a id="back" className="mr-auto p-2" onMouseEnter={() => sethovered(true)} onMouseLeave={() => sethovered(false)} style={{color : hovered ? "#38D39F" : "" , display : 'none'}}  onClick={()=>{ switchtotable()}}  ><ArrowBackIosIcon /></a>
-
-                <button id="addbtn" type="submit" className="btn text-capitalize ml-auto p-2 mr-5" style={{width:100}} onClick={()=>{switchtoadd()}}>Ajouter<i class="fas fa-plus fa-1x ml-2"></i></button>
+                
+                <button id="addbtn" type="submit" className="btn-danger cardstat text-capitalize ml-auto p-2 mr-5" style={{width:160}} onClick={()=>{switchtoadd()}}>signaler une erreur</button>
                 </div>
            <div className=" col-12 justify-content-center">
 
@@ -672,22 +698,22 @@ function UserView(props) {
                    
 
 
-                        <div id="planadd"  className="row col-12 justify-content-center mb-4" style={{display : 'none' , height : '70vh'}}>
+                        <div id="planadd"  className="row col-12 justify-content-center mb-4" style={{display : 'none' , height : '50vh'}}>
                          
                            <TextField
                               id="outlined-multiline-static"
-                              label="Multiline"
+                              label="Ajouter un commentaire"
                               multiline
                               value={plancomm}
                               rows={4}
                               onChange={(e)=>{setplancomm(e.target.value)}}
-                              className="col-6 text-center mt-5"
+                              className="col-6 xl text-center mt-5"
                               defaultValue="Default Value"
                               variant="outlined"
                             />
                       
                           <div className="row col-12 justify-content-center">
-                          <button  type="submit" className="btn text-capitalize " style={{width:100}} onClick={()=>{Addplan()}} >Valider</button>
+                          <button  type="submit" className="btn-add cardstat text-capitalize " style={{width:100}} onClick={()=>{Addplan()}} >Valider</button>
 
                           </div>
 

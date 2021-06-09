@@ -497,7 +497,7 @@ const createPrime = async ()=>{
         <div class="breadcrumb-holder container-fluid">
           <ul class="breadcrumb">
           <li > <a onMouseEnter={() => sethovered(true)} onMouseLeave={() => sethovered(false)} style={{color : hovered ? "#38D39F" : ""}}  onClick={()=>{ window.history.back()}}  ><ArrowBackIosIcon /></a></li>
-          <li class="breadcrumb-item" >Home</li>
+          <li class="breadcrumb-item" >Accueil</li>
             <li class="breadcrumb-item active">Equipe</li>
           </ul>
         </div>
@@ -541,10 +541,10 @@ const createPrime = async ()=>{
 
                             
                     </div>
-                    <div className=" col-7">
-                    <Button onClick={(e)=>{Addequipe(e)}} variant="outlined" class="btn btn-outline-success text-capitalize">
+                    <div className=" col-4">
+                    <button onClick={(e)=>{Addequipe(e)}} variant="outlined" className="btn-add cardstat text-capitalize">
                     Ajouter
-                    </Button> 
+                    </button> 
                     </div>
               </form>
               </MDBModalBody>
@@ -577,10 +577,10 @@ const createPrime = async ()=>{
                             }
                     </TextField>
                 </div>
-                <div className=" col-7 ">
-                        <Button onClick={(e)=>{updatedequipe(e)}} variant="outlined" class="btn btn-outline-success text-capitalize">
+                <div className=" col-4 ">
+                        <button onClick={(e)=>{updatedequipe(e)}} variant="outlined" className="btn-add cardstat text-capitalize">
                           Modifier
-                        </Button> 
+                        </button> 
                 </div>
            </form>
               </MDBModalBody>

@@ -75,7 +75,7 @@ props.updatear(id)
     },
     {
       key: "prog",
-      text: "Progress",
+      text: "Progrès",
       cell: (cli, index) => {
         return (
           <>
@@ -108,7 +108,7 @@ props.updatear(id)
 
     {
       key: "Requete",
-      text: "Requete",
+      text: "Requête",
       sortable: true,
       cell: (cli, index) => {
         return (
@@ -142,6 +142,17 @@ props.updatear(id)
     button: {
         excel: false,
         print: false
+    },
+    language: {
+        length_menu: "Afficher  _MENU_ enregistrements par page",
+        filter: "Recherche...",
+        info: "Affiche  _START_ à  _END_ de _TOTAL_ entrées",
+        pagination: {
+            first: "Premier",
+            previous: "Précédent",
+            next: "Suivant",
+            last: "Dernier"
+        }
     }
   }
 
