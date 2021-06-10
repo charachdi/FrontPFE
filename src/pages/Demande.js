@@ -20,6 +20,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Button from "@material-ui/core/Button";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import * as locales from 'react-date-range/dist/locale';
+import Alert from '@material-ui/lab/Alert';
 
 function Demande() {
 
@@ -29,6 +30,7 @@ function Demande() {
     const [open, setopen] = useState(false)
     const [editopen, seteditopen] = useState(false)
     const [Demande, setDemande] = useState([])
+    const [prime, setprime] = useState([]);
     const [Request, setRequest] = useState([
         {
         startDate: new Date(),
@@ -179,7 +181,86 @@ const nameMapper = {
     }
     ])
 
-  
+    // Full texts	
+    // id
+    // date
+    // Bonus
+    // Prime
+    // Comment
+    const [column2, setcolumn2] = useState([
+        {
+          key: "Employee",
+          text: "Employé",
+          cell: (demande, index) => {
+            return (
+              <div className="d-flex flex-row">
+                    <Avatar src={demande.User.user_img} />
+                    <p className="mt-2 ml-4">{demande.User.full_name}</p>
+              </div>
+            )
+          }
+        },
+        {
+          key: "Type",
+          text: "Type",
+          className :"table-mid text-center ",
+          cell: (demande, index) => {
+            return (
+              "Prime"
+            )
+          }
+        },
+        {
+          key: "Bonus",
+          text: "Bonus",
+          className :"table-mid text-center"
+        },
+        {
+          key: "Prime",
+          text: "Prime", 
+          className :"table-mid text-center"
+        },
+        {
+            key: "Comment",
+            text: "Comment", 
+            className :"table-mid text-center"
+          },
+         {
+          key: "Approved",
+          text: "Approuvé", 
+          className : "table-mid text-center",
+           cell: (demande, index) => {
+            return (
+             <div className="text-center">
+
+                 {
+                     demande.waiting ? (
+                        <i style={{color:"#2ECD94"}} className=" fas fa-spinner fa-spin fa-2x mt-2"></i>
+                      
+                     ) : (
+
+                        demande.Approved ? (
+                            <IconButton size="small" style={{color:"white" , backgroundColor :"#2ECD94"}}>
+                              <CheckIcon   />
+                            </IconButton>
+    
+                        ) : (
+                            <IconButton size="small" style={{color:"white" , backgroundColor :"#ff0000"}}>
+                             <CloseIcon />
+                            </IconButton>
+                        )
+                        
+
+
+                     )
+                 }
+           
+             </div>
+            )
+          }
+        },
+        
+    ])
     useEffect(() => {
        const loding = ()=>{
         setisloading(true)
@@ -201,9 +282,22 @@ const nameMapper = {
         
        }
 
+       const getallprime = async()=>{
+        const res = await axios({
+            headers: {'Authorization': `Bearer ${token}`},
+            method: 'get',
+            url : `${Api_url}Demande/sprime/${user.id}`,
+        })
+        if(res.status === 200){
+            setprime(res.data.prime)
+        }
+        
+       }
+
 
        loding()
        getalldemande()
+       getallprime()
     }, [])
     const config = {
         page_size: 10,
@@ -290,7 +384,7 @@ const nameMapper = {
 
 <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom">Liste des demandes de congés</h2>
+                    <h2 class="no-margin-bottom">Liste des demandes</h2>
                 </div>
             </header>
    
@@ -298,7 +392,7 @@ const nameMapper = {
                 <ul class="breadcrumb">
                 <li ><a href="home" ><ArrowBackIosIcon /></a></li>
                 <li class="breadcrumb-item" >Accueil</li>
-                    <li class="breadcrumb-item active">Congé</li>
+                    <li class="breadcrumb-item active">demandes</li>
                 </ul>
             </div>
         {
@@ -322,7 +416,9 @@ const nameMapper = {
                     <button variant="contained" className="btn-add cardstat text-capitalize" style={{width:"100%"}}  onClick={()=>{toggle()}}> <i class="fas fa-plus mr-2"></i>Demander un congé </button> 
                     </div>
                     </div>
-               
+                    <h4 class="no-margin-bottom">Liste des demandes de congé</h4>
+                    <Alert severity="info" className="mb-3">Les demandes de congé doivent être validé par un responsable des ressources humaines pour aboutir.</Alert>
+              
                 <ReactDatatable
                 config={config}
                 records={Demande}
@@ -330,6 +426,18 @@ const nameMapper = {
                 tHeadClassName ="text-center"
               
                 />
+
+               
+                <h4 class="no-margin-bottom mt-4">Liste des demandes de prime</h4>
+                <Alert severity="info" className="mb-3">Les demandes de primes doivent être validé par un responsable des ressources humaines pour aboutir.</Alert>
+
+               <ReactDatatable
+               config={config}
+               records={prime}
+               columns={column2}
+               tHeadClassName ="text-center"
+             
+               />
                  </section>
             )
         }

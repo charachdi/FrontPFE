@@ -51,8 +51,8 @@ useEffect(() => {
                 <div className="card-body">
                   <div className="row">
                     <div className="col">
-                      <h5 className="card-title text-capitalize text-muted mb-0" style={{fontsize:8}}>Clôturé</h5>
-                      <span className="h2 font-weight-bold mb-0">{cloture}</span>
+                      <p className="card-title text-capitalize text-muted mb-0" style={{fontsize:8}}>Clôturé</p>
+                      <span className="h4 font-weight-bold mb-0">{cloture}</span>
                     </div>
                     <div className="col-auto">
                       <div className="icon icon-shape bg-success text-white rounded-circle shadow">
@@ -73,8 +73,8 @@ useEffect(() => {
                 <div className="card-body">
                   <div className="row">
                     <div className="col">
-                      <h5 className="card-title text-capitalize text-muted mb-0">En cours</h5>
-                      <span className="h2 font-weight-bold mb-0">{encours}</span>
+                      <p className="card-title text-capitalize text-muted mb-0">En cours</p>
+                      <span className="h4 font-weight-bold mb-0">{encours}</span>
                     </div>
                     <div className="col-auto">
                       <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -95,8 +95,8 @@ useEffect(() => {
                 <div className="card-body">
                   <div className="row">
                     <div className="col">
-                      <h5 className="card-title text-capitalize  text-muted mb-0" style={{fontSize : 12}} >retour client / interne</h5>
-                      <span className="h2 font-weight-bold mb-0">{retourcli + attinter}</span>
+                      <p className="card-title text-capitalize  text-muted mb-0" style={{fontSize : 12}} >retour client / interne</p>
+                      <span className="h4 font-weight-bold mb-0">{retourcli + attinter}</span>
                     </div>
                     <div className="col-auto">
                       <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -118,7 +118,7 @@ useEffect(() => {
                 <div className="card-body">
                   <div className="row">
                     <div className="col">
-                      <h5 className="card-title text-capitalize text-muted mb-0">interne</h5>
+                      <p className="card-title text-capitalize text-muted mb-0">interne</p>
                       <span className="h2 font-weight-bold mb-0">{attinter}</span>
                     </div>
                     <div className="col-auto">
@@ -141,8 +141,8 @@ useEffect(() => {
                 <div className="card-body">
                   <div className="row">
                     <div className="col">
-                      <h5 className="card-title text-capitalize text-muted mb-0">Nouveau</h5>
-                      <span className="h2 font-weight-bold mb-0">{NEwrequete}</span>
+                      <p className="card-title text-capitalize text-muted mb-0">Nouveau</p>
+                      <span className="h4 font-weight-bold mb-0">{NEwrequete}</span>
                     </div>
                     <div className="col-auto">
                       <div className="icon icon-shape bg-info text-white rounded-circle shadow">

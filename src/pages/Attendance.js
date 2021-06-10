@@ -117,6 +117,7 @@ function Attendance (props) {
       M :result[1] ,
       d :result[2] ,
     }
+    console.log(date)
     if(parseInt(result[1]) < 9 ){
       date.M =  result[1].substring(1)
     }
@@ -134,11 +135,9 @@ function Attendance (props) {
           console.log(res)
          
           if(res.status === 200){
-            
-         await   setusers(res.data.user)
+          console.log(res)
+         setusers(res.data.user)
             changestat(res.data.user)
-
-
             setTimeout(() => {
               setfilterloading(false)
             }, 2000);
@@ -146,9 +145,6 @@ function Attendance (props) {
 
           }
       }
-
-
-
 
        const changestat = (data)=>{
         const changeddata = {

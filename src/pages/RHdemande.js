@@ -255,7 +255,7 @@ function RHdemande() {
                   />
                 ) : (
                     <>
-              <h2 class="no-margin-bottom">Liste des demandes de congé</h2>
+              <h4 class="no-margin-bottom">Liste des demandes de congé</h4>
     <Alert severity="info" className="mb-3">Les demandes de congé doivent être validé par un responsable des ressources humaines pour aboutir.</Alert>
                 <ReactDatatable
                 config={config}
@@ -263,7 +263,7 @@ function RHdemande() {
                 columns={column}
                 tHeadClassName ="text-center"/>
 <hr />
-<h2 class="no-margin-bottom mt-4">Liste des demandes de prime</h2>
+<h4 class="no-margin-bottom mt-4">Liste des demandes de prime</h4>
  
  <Alert severity="info" className="mb-3">Les demandes de primes doivent être validé par un responsable des ressources humaines pour aboutir.</Alert>
 

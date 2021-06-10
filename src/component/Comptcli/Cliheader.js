@@ -16,7 +16,7 @@ function Cliheader(props) {
     console.log(props.apidata)
     useEffect(() => {
 
-    }, [props.apidata])
+    }, [])
 
     
 
@@ -41,13 +41,13 @@ function Cliheader(props) {
         </div> */}
 
         {/* :----------------------------En cours--------------------------------- */}
-        <div class="col-xl-3 col-lg-3">
-              <div class="card card-stats mb-4 mb-xl-0 border">
+        <div class="col-xl-3 col-lg-3 ">
+              <div class="card card-stats mb-4 mb-xl-0 border cardstat">
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
-                      <h5 class="card-title text-capitalize text-muted mb-0" style={{fontsize:8}}>Clôturé</h5>
-                      <span class="h2 font-weight-bold mb-0">{cloture}</span>
+                      <p class="card-title text-capitalize text-muted mb-0" style={{fontsize:8}}>Clôturé</p>
+                      <span class="h4 font-weight-bold mb-0">{props.apidata.col}</span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-success text-white rounded-circle shadow">
@@ -64,12 +64,12 @@ function Cliheader(props) {
             </div>
         {/* :----------------------------En cours--------------------------------- */}
         <div class="col-xl-3 col-lg-3">
-              <div class="card card-stats mb-4 mb-xl-0 border">
+              <div class="card card-stats mb-4 mb-xl-0 border cardstat">
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
-                      <h5 class="card-title text-capitalize text-muted mb-0">En cours</h5>
-                      <span class="h2 font-weight-bold mb-0">{encours}</span>
+                      <p class="card-title text-capitalize text-muted mb-0">En cours</p>
+                      <span class="h4 font-weight-bold mb-0">{props.apidata.encours}</span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -87,12 +87,12 @@ function Cliheader(props) {
 
             {/* :----------------------------Nouveau--------------------------------- */}
         <div class="col-xl-3 col-lg-3">
-              <div class="card card-stats mb-4 mb-xl-0 border">
+              <div class="card card-stats mb-4 mb-xl-0 border cardstat">
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
-                      <h5 class="card-title text-capitalize text-muted mb-0">Nouveau</h5>
-                      <span class="h2 font-weight-bold mb-0">{NEwrequete}</span>
+                      <p class="card-title text-capitalize text-muted mb-0">Nouveau</p>
+                      <span class="h4 font-weight-bold mb-0">{props.apidata.neww}</span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-info text-white rounded-circle shadow">

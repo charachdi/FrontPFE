@@ -82,6 +82,7 @@ function Service(props) {
       {
         key: "Nom_service",
         text: "Service",
+        className : "text-center"
       },
   
       {

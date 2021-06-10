@@ -18,6 +18,7 @@ import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Lottie from 'react-lottie';
 import Loading from './../images/loading.json'
+import chartsloding from './../images/chartsloding.json'
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -63,7 +64,14 @@ function UserView(props) {
 
     const [plans, setplans] = useState([]);
     const [locale, setLocale] = React.useState('fr');
-
+    const [Request, setRequest] = useState([
+      {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: 'selection'
+  }
+  ])
+  const [colors2, setcolors2] = useState(['#32B66A'])
 
     const [Clientsdata, setClientsdata] = useState([])
     const [colors, setcolors] = useState([])
@@ -94,11 +102,14 @@ function UserView(props) {
 
 
   const [open, setopen] = useState(false)
+  const [open2, setopen2] = useState(false)
 
   const toggle = () =>{
     setopen(!open)
   }
-
+  const toggle2 = () =>{
+    setopen2(!open2)
+  }
   const deleteplan = async (id)=>{
     const res = await axios({
       headers: {'Authorization': `Bearer ${token}`},
@@ -259,6 +270,12 @@ function UserView(props) {
       loop: true,
       autoplay: true,
       animationData: Loading,
+    };
+
+    const statOptions = {
+      loop: true,
+      autoplay: true,
+      animationData: chartsloding,
     };
 
     const bardata = {
@@ -525,6 +542,50 @@ function UserView(props) {
 
       }
     }
+
+
+    const filter = async () =>{
+      var start = Request[0].startDate.toLocaleDateString('en-US').split("/")
+      var  end = Request[0].endDate.toLocaleDateString('en-US').split("/")
+      const data = {
+        startdate : `${start[1]}/${start[0]}/${start[2]}`,
+        enddate : `${end[1]}/${end[0]}/${end[2]}`
+      }
+     
+        const Line = await axios({
+          headers: { Authorization: `Bearer ${token}` },
+          method: "post",
+          url: `${Api_url}user/stat/line/date/${userId}`,
+          data
+        });
+      
+    
+        const Pie = await axios({
+          headers: { Authorization: `Bearer ${token}` },
+          method: "post",
+          url: `${Api_url}user/stat/pie/date/${userId}`,
+          data
+        });
+      
+      
+        const Bar = await axios({
+          headers: { Authorization: `Bearer ${token}` },
+          method: "post",
+          url: `${Api_url}user/stat/bar/date/${userId}`,
+          data
+        });
+
+          setdate(Line.data.date)
+          setdate_value(Line.data.value)
+
+          setclients(Pie.data.client)
+          setclients_value(Pie.data.value)
+
+          setOrgine(Bar.data.Origine)
+          setOrigine_value(Bar.data.value)
+        
+      
+    }
         
     return (
         <div className="row col-12 justify-content-center " style={{height:"90vh"}}>
@@ -538,16 +599,18 @@ function UserView(props) {
             isClickToPauseDisabled={true}
           />
             ) : (
+
+          
               <>
                 <div className="row col-12 justify-content-center  mb-5">
 
                     <div className="row d-flex flex-column mt-3 mb-3 text-center">
                     <Avatar src={user.user_img} className="mx-auto "  style={{width : 150 , height:150}}/>
-                      <h2 className="text-capitalize">{user.full_name}</h2>
+                      <h4 className="text-capitalize">{user.full_name}</h4>
                     </div>
                     {
                       localuser.user_level === "admin" ? (
-                      <button className="row mb-3 btn-danger cardstat text-capitalize" style={{position : 'absolute', right :20 , top :150 ,width:'17%'}} onClick={()=>{toggle()}} >
+                      <button className=" btn-danger cardstat text-capitalize" style={{position : 'absolute', right :20 , top :150 ,width:'17%'}} onClick={()=>{toggle()}} >
                          Signaler une erreur <ErrorOutlineIcon/>
                       </button>
                       ) : null
@@ -555,7 +618,7 @@ function UserView(props) {
 
                     {
                       localuser.user_level === "Chef Service" ? (
-                      <button className="row mb-3 btn-danger cardstat text-capitalize" style={{position : 'absolute', right :20 , top :150 ,width:'17%'}} onClick={()=>{toggle()}} >
+                      <button className=" btn-danger cardstat text-capitalize" style={{position : 'absolute', right :20 , top :150 ,width:'17%'}} onClick={()=>{toggle()}} >
                         Signaler une erreur <ErrorOutlineIcon/>
                       </button>
                       ) : null
@@ -588,90 +651,95 @@ function UserView(props) {
                 
               
                   </div>
-                 
-                <div className="col-12">
-                 
-                    <div className="row col-12 justify-content-around nopad ">
-                    <Divider className="col-12 mb-3 mt-3"/>
-
-                    <h2 className="col-12 text-center">Les statistiques de l'employé</h2>
-                    {/* SHOW DATA PROFILE */}
-                  
-                  
-                    <div className="card col-4 mt-3 cardstat" >
-                    <h5 className="card-title mt-3 text-center">Requête de l'employé</h5>
-                    <Divider />
-                      <div className="card-body">
-                      <Line  data={linedata} options={baroption} width={10} height={8}/>
-                      </div>
-                      </div>
-                  
-                  
-                  
-                      <div className="card col-4 mt-3 cardstat " >
-                    <h5 className="card-title mt-3 text-center">Requête par client</h5>
-                    <Divider />
-                      <div className="card-body">
-                      <Pie  data={piedata} width={10} options={pieoption} height={8}/>
-                      </div>
-                      </div>
-
-
-                      <div className="card col-4 mt-3 cardstat " >
-                    <h5 className="card-title mt-3 text-center">Origin des requêtes</h5>
-                    <Divider />
-                      <div className="card-body">
-                      <Bar  data={bardata} options={baroption} width={10} height={8}/>
-                      </div>
-                      </div>
-                    
-
-
-                      </div>
-              
-                      <div className="row col-12 justify-content-around nopad ">
-
-                    <div className="col-8 mt-5 mb-5">
-                    <ReactDatatable
-                        config={config}
-                        records={Clientsdata}
-                        columns={column}
-                        tHeadClassName ="text-center "
-                        
-                        
+                 {
+                       date.length === 0 ? (
+                        <Lottie 
+                        options={statOptions}
+                          height={"70%"}
+                          width={"70%"}
+                          isClickToPauseDisabled={true}
                         />
-                    
-                    </div>
- 
-                    
+                       ) : (
+                        <div className="col-12">
+                        <div className="row col-12 justify-content-around nopad ">
+                        <Divider className="col-12 mb-3 mt-3"/>
+                        <button className="btn-Filter cardstat mr-5" onClick={()=>{toggle2()}} style={{width:"6%"}}><i class="fas fa-filter"></i><small  className="text-capitalize">filter</small></button>
 
-
-                    <div className=" col-4 mt-5 justify-content-center  ">
-                    <h5 className="card-title text-center">Présance de l'employé</h5>
-                    <Divider style={{width:329}} className=" ml-4 "/>
-                    <DateRange
-                      className="cardstat ml-4"
-                      editableDateInputs={false}
-                      showSelectionPreview={false}
-                      showDateDisplay={false}
-                      onChange={item => setState([item.selection])}
-                      moveRangeOnFirstSelection={false}
-                      ranges={presance}
-                      rangeColors={colors}
-                      locale={locales[locale]}
-                      />
-                    </div>
-
-                    </div>
-                    
-                   
-                   
-                    
-             
-            
-              
+                        <h4 className="col-12 text-center">Les statistiques de l'employé</h4>
+                        {/* SHOW DATA PROFILE */}
+                      
+                      
+                        <div className="card col-4 mt-3 cardstat" >
+                        <p className="card-title mt-3 text-center">Requête de l'employé</p>
+                        <Divider />
+                          <div className="card-body">
+                          <Line  data={linedata} options={baroption} width={10} height={8}/>
+                          </div>
+                          </div>
+                      
+                      
+                      
+                          <div className="card col-4 mt-3 cardstat " >
+                        <p className="card-title mt-3 text-center">Requête par client</p>
+                        <Divider />
+                          <div className="card-body">
+                          <Pie  data={piedata} width={10} options={pieoption} height={8}/>
+                          </div>
+                          </div>
     
-            </div>
+    
+                          <div className="card col-4 mt-3 cardstat " >
+                        <p className="card-title mt-3 text-center">Origin des requêtes</p>
+                        <Divider />
+                          <div className="card-body">
+                          <Bar  data={bardata} options={baroption} width={10} height={8}/>
+                          </div>
+                          </div>
+                        
+    
+    
+                          </div>
+                  
+                          <div className="row col-12 justify-content-around nopad ">
+    
+                        <div className="col-8 mt-5 mb-5">
+                        <ReactDatatable
+                            config={config}
+                            records={Clientsdata}
+                            columns={column}
+                            tHeadClassName ="text-center"
+                            
+                            
+                            />
+                        
+                        </div>
+     
+                        
+    
+    
+                        <div className=" col-4 mt-5 justify-content-center  ">
+                        <p className="card-title text-center">Présance de l'employé</p>
+                        <Divider style={{width:329}} className=" ml-4 "/>
+                        <DateRange
+                          className="cardstat ml-4"
+                          editableDateInputs={false}
+                          showSelectionPreview={false}
+                          showDateDisplay={false}
+                          onChange={item => setState([item.selection])}
+                          moveRangeOnFirstSelection={false}
+                          ranges={presance}
+                          rangeColors={colors}
+                          locale={locales[locale]}
+                          />
+                        </div>
+    
+                        </div>
+                        
+        
+                </div>
+                       )
+                 }
+                
             </>
             )
           }
@@ -722,6 +790,27 @@ function UserView(props) {
          
               </MDBModalBody>
               </MDBModal>    
+
+              <MDBModal isOpen={open2} toggle={()=>toggle2()} size="md" disableBackdrop={false}>
+              <MDBModalHeader toggle={()=>toggle2()} className="text-center"></MDBModalHeader>
+              <MDBModalBody>
+              <div className="text-center ">
+              <DateRange
+                    className="mt-5"
+                    editableDateInputs={true}
+                    onChange={item => setRequest([item.selection]) }
+                    moveRangeOnFirstSelection={false}
+                    ranges={Request}
+                    rangeColors={colors2}
+                    locale={locales[locale]}
+                /><br />
+
+                    <IconButton style={{backgroundColor : "#32B66A"}} className="mt-5" onClick={()=>{filter() ; toggle2() ; setdate([])}}>
+                    <i class="fas fa-filter" style={{color : "white"}}></i>
+                    </IconButton>
+              </div>
+              </MDBModalBody>
+              </MDBModal>
        </div>
     )
 }

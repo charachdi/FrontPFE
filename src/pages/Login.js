@@ -15,7 +15,7 @@ import Stepper from "./Stepperview";
 import Popover from "@material-ui/core/Popover";
 import { ToastContainer, toast } from "react-toastify";
 import "./../images/icons/favicon.ico";
-import "./../vendor/bootstrap/css/bootstrap.min.css";
+// import "./../vendor/bootstrap/css/bootstrap.min.css";
 import "./../fonts/font-awesome-4.7.0/css/font-awesome.min.css";
 import "./../fonts/iconic/css/material-design-iconic-font.min.css";
 import "./../vendor/css-hamburgers/hamburgers.min.css";
@@ -270,12 +270,12 @@ function Login() {
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
-						<input class="input100" type="text" name="username" placeholder="Username"/>
+						<input class="input100" type="text" name="username" placeholder="Username" onChange={(e)=>{setemail(e.target.value)}}/>
 						<span class="focus-input100" data-placeholder="&#xf207;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" placeholder="Password"/>
+						<input class="input100" type="password" name="pass" placeholder="Password" onChange={(e)=>{setpwd(e.target.value)}}/>
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
 
@@ -287,7 +287,9 @@ function Login() {
 					</div>
 
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
+						<button class="login100-form-btn"  onClick={(e) => {
+                handellogin(e);
+              }}>
 							Login
 						</button>
 					</div>
