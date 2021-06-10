@@ -15,14 +15,7 @@ import Stepper from "./Stepperview";
 import Popover from "@material-ui/core/Popover";
 import { ToastContainer, toast } from "react-toastify";
 import "./../images/icons/favicon.ico";
-// import "./../vendor/bootstrap/css/bootstrap.min.css";
-import "./../fonts/font-awesome-4.7.0/css/font-awesome.min.css";
 import "./../fonts/iconic/css/material-design-iconic-font.min.css";
-import "./../vendor/css-hamburgers/hamburgers.min.css";
-import "./../vendor/animsition/css/animsition.min.css";
-import "./../vendor/select2/select2.min.css";
-import "./../vendor/daterangepicker/daterangepicker.css";
-import "./../vendor/animate/animate.css";
 import "./../css/util.css";
 import "./../css/main.css";
 
@@ -170,7 +163,7 @@ function Login() {
         draggable
         pauseOnHover
       />
-      {/* <img className="wave" src={wave} />
+      {/* <img className="wave" />
       
       <div className="container " style={{ height: "80vh" }}>
         <div className="img">
@@ -258,38 +251,57 @@ function Login() {
         </div>
       </div> */}
 <div class="limiter">
-		<div class="container-login100" >
-			<div class="wrap-login100">
+		<div class="container-login100" style={{backgroundImage: `url(${wave})`  }}>
+    
+			<div class="wrap-login100 mt-5">
 				<form class="login100-form validate-form">
 					<span class="login100-form-logo">
-						<i class="zmdi zmdi-landscape"></i>
+          <img src={etai} style={{width:"100px", height:"125px",marginTop:22 }} />
 					</span>
 
 					<span class="login100-form-title p-b-34 p-t-27">
-						Log in
+						Bienvenue
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
-						<input class="input100" type="text" name="username" placeholder="Username" onChange={(e)=>{setemail(e.target.value)}}/>
+						<input class="input100" type="text" name="username" placeholder="Email" value={email}
+                  onChange={(e) => {
+                    changeemail(e.target.value);
+                  }}
+                  aria-describedby={emailpopopen ? "email" : undefined}
+                  onClick={(e) => {
+                    setAnchorEl(e.currentTarget);
+                  }}
+                  required/>
 						<span class="focus-input100" data-placeholder="&#xf207;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" placeholder="Password" onChange={(e)=>{setpwd(e.target.value)}}/>
+						<input class="input100" type="password" name="pass" placeholder="Mot de passe" value={pwd}
+                  onChange={(e) => {
+                    changepwd(e.target.value);
+                  }}
+                  aria-describedby={pwdpopopen ? "pwd" : undefined}
+                  onClick={(e) => {
+                    setAnchorEl(e.currentTarget);
+                  }}
+                  required/>
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
 
-					<div class="contact100-form-checkbox">
+					{/* <div class="contact100-form-checkbox">
 						<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me" />
 						<label class="label-checkbox100" for="ckb1">
-							Remember me
+							Se souvenir de moi
 						</label>
-					</div>
+					</div> */}
 
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn"  onClick={(e) => {
+						<button class="login100-form-btn"value="Login"
+              onClick={(e) => {
                 handellogin(e);
-              }}>
+              }}
+              disabled={disabled} >
 							Login
 						</button>
 					</div>
