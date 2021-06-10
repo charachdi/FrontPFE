@@ -15,10 +15,7 @@ import Stepper from "./Stepperview";
 import Popover from "@material-ui/core/Popover";
 import { ToastContainer, toast } from "react-toastify";
 import "./../images/icons/favicon.ico";
-
-
 import "./../fonts/iconic/css/material-design-iconic-font.min.css";
-
 import "./../css/util.css";
 import "./../css/main.css";
 

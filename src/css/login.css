@@ -214,10 +214,30 @@ a:hover{
 	transition: .5s;
 }
 
+.btn-Filter{
+	display: block;
+	width: 100%;
+	height: 50px;
+	border-radius: 50%;
+	outline: none;
+	border: none;
+	background-image: linear-gradient(90deg, rgb(45, 167, 106) 21%, rgb(52, 189, 105) 100%);
+	background-size: 200%;
+	font-size: 15px;
+	color: #fff;
+	font-family: 'Poppins', sans-serif;
+	text-transform: uppercase;
+	margin: 1rem 0;
+	cursor: pointer;
+	transition: .5s;
+}
+
 .btn-danger:hover{
 	background-position: right;
 }
-
+.btn-Filter:hover{
+	background-position: right;
+}
 
 .btn{
 	display: block;

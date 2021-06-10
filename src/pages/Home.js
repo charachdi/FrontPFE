@@ -15,7 +15,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import Avatar from '@material-ui/core/Avatar';
 import Lottie from 'react-lottie';
 import Loading from './../images/loading.json'
-
+import etai from './../images/etai.png'
 
 
 function Home() {
@@ -287,13 +287,13 @@ return (
             <div id="add-account" className="city" >
             <form className="row col-12 justify-content-center align-middle" autoComplete={"off"}>
               <div className="mt-5 text-center">
-              <img className="mb-5" src={avatar} style={{width:100 , height:100}} />
+              <img className="mb-2" src={etai} style={{width:150 , height:150 , borderRadius : "50%" , border : 'black'}} />
               <hr />
               <br />
               <div className="row" >
-              <TextField variant="outlined"   value={email} onChange={(e)=>{setemail(e.target.value)}} className="float-left ml-5 mr-4 col-5" label="Email" id="standard-size-small" type="email" style={{width:250}}  size="small" required/>
+              <TextField variant="outlined"   value={email} onChange={(e)=>{setemail(e.target.value)}} className="float-left  col-5" label="Email" id="standard-size-small" type="email" style={{width:250}}  size="small" required/>
               <TextField
-                  className=" col-5 float-right"
+                  className="mx-auto col-5 float-right"
                   style={{width:250}}
                   variant="outlined" 
                   id="domaine"
@@ -313,7 +313,7 @@ return (
               <br />
               <div className="row" >
                <TextField
-                className="float-left ml-5 mt-3 col-5"
+                className="float-center  mt-3 col-11"
                 id="role"
                 variant="outlined" 
                 select
@@ -367,7 +367,7 @@ return (
                 level === "Chef Service" ? (
                   <TextField
                   variant="outlined" 
-                  className=" float-right ml-4 mt-3 col-5"
+                  className=" mt-3 col-11"
                   id="Service"
                   select
                   size="small"
@@ -393,7 +393,7 @@ return (
                       <TextField
                       disabled={eqdisabled}
                       style={{width:250}}
-                      className="float-right ml-4 mt-3 col-5"
+                      className="mt-3 col-11"
                       id="equipe"
                       select
                       variant="outlined" 
@@ -420,7 +420,7 @@ return (
                       <TextField
                       disabled={eqdisabled}
                       style={{width:250}}
-                      className="float-right ml-4 mt-3 col-5"
+                      className=" mt-3 col-11"
                       id="equipe"
                       select
                       variant="outlined" 
@@ -440,6 +440,9 @@ return (
                 </TextField>
                 ) : null
               }
+
+            <TextField variant="outlined"   value={fullname} onChange={(e)=>{setfullname(e.target.value)}} className="mt-3 col-11" label="Nom et Prénom" id="standard-size-small" type="text"   size="small" required/>
+
               </div>
              
               {/* {
@@ -490,11 +493,10 @@ return (
              
             */}
 
-            <TextField variant="outlined"   value={fullname} onChange={(e)=>{setfullname(e.target.value)}} className="mt-5 col-8" label="Nom et Prénom" id="standard-size-small" type="text"   size="small" required/>
 
 
               <div className="row justify-content-center mt-4">
-              <button type="submit" className="btn text-capitalize" style={{width:100}}  onClick={(e)=>{Adduser(e)}}>Valider</button>
+              <button type="submit" className="btn-add text-capitalize" style={{width:100}}  onClick={(e)=>{Adduser(e)}}>Valider</button>
               </div>
               </div>
 

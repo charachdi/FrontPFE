@@ -153,7 +153,7 @@ function Clientarchive(props) {
           <>      
               <ReactDatatable
                 config={config}
-                records={archi}
+                records={props.archive}
                 columns={column}/>
         </>
     )

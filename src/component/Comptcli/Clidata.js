@@ -7,6 +7,8 @@ import { Line } from 'react-chartjs-2';
 import Equipeheader from './../../component/Equipe/Equipeheader'
 import axios from 'axios'
 import $ from 'jquery'
+import Tooltip from '@material-ui/core/Tooltip';
+import CloseIcon from '@material-ui/icons/Close';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import domtoimage from 'dom-to-image';
@@ -26,6 +28,7 @@ function Clidata(props) {
     const [loading, setloading] = useState(true)
     const [clihead, setclihead] = useState([]);
     const [open, setopen] = useState();
+    const [filteron, setfilteron] = useState(false);
 
     const toggle = ()=>{
       setopen(!open)
@@ -38,6 +41,8 @@ function Clidata(props) {
   }
   ])
   const [locale, setLocale] = React.useState('fr');
+  const [colors, setcolors] = useState(['#32B66A'])
+
 //  pie charts
     const [username, setusername] = useState([])
     const [user_value, setuser_value] = useState([])
@@ -209,14 +214,14 @@ function Clidata(props) {
       }
 
       const filter = async ()=>{
-   
+        setfilteron(true)
         var start = Request[0].startDate.toLocaleDateString('en-US').split("/")
        var  end = Request[0].endDate.toLocaleDateString('en-US').split("/")
        const data = {
          startdate : `${start[1]}/${start[0]}/${start[2]}`,
          enddate : `${end[1]}/${end[0]}/${end[2]}`
        }
-     console.log(data) 
+     
 
 
      const pie = await axios({
@@ -269,6 +274,83 @@ function Clidata(props) {
 
     }
 
+    const exportPNG = ()=>{
+      console.log("png")
+      // Equipedata
+    setTimeout(() => {
+      domtoimage.toJpeg(document.getElementById('Datatab'), { quality: 1 })
+      .then(function (dataUrl) {
+          var link = document.createElement('a');
+          link.download = 'Data.jpeg';
+          link.href = dataUrl;
+          link.click();
+      });
+    }, 2000);
+     
+    }
+
+
+    const Resetfilter = async ()=>{
+        setfilteron(false)
+        
+        const pie = await axios({
+          headers: {'Authorization': `Bearer ${token}`},
+          method: 'get',
+          url : `${Api_url}stat/comptcli/pie/${id}`,
+          });
+    
+        const bar = await axios({
+          headers: {'Authorization': `Bearer ${token}`},
+          method: 'get',
+          url : `${Api_url}stat/comptcli/bar/${id}`,
+          });
+    
+        const Oridata = await axios({
+          headers: {'Authorization': `Bearer ${token}`},
+          method: 'get',
+          url : `${Api_url}stat/comptcli/origin/bar/${id}`,
+          });
+            
+        const Line = await axios({
+          headers: {'Authorization': `Bearer ${token}`},
+          method: 'get',
+          url : `${Api_url}stat/comptcli/Line/${id}`,
+          });
+          
+        const res = await axios({
+          headers: {'Authorization': `Bearer ${token}`},
+          method: 'get',
+          url : `${Api_url}stat/comptcli/header/${props.id}`,
+          });
+    
+          
+          setusername(pie.data.username)
+          setuser_value(pie.data.user_value)
+    
+          setdate(bar.data.Trim_date)
+          setdate_value(bar.data.date_value) 
+    
+          setorigin(Oridata.data.origin)
+          setorigin_value(Oridata.data.Origine_value)   
+          
+          setLineusers(Line.data.users)
+          setclihead(res.data)
+    
+    }
+
+    const exportexcel = async()=>{
+      const res = await axios({
+        headers: {'Authorization': `Bearer ${token}`},
+        method: 'get',
+        url : `${Api_url}Import/export/excel/${id}`,
+        });
+        console.log(res)
+        var link = document.createElement('a');
+        link.download = res.data.clientname;
+        link.href = res.data.link;
+        link.click();
+        
+    }
 
     return (
         <div className="row col-12 justify-content-center mt-4" style={{backgroundColor:'#FAFAFA'}}>
@@ -284,13 +366,20 @@ function Clidata(props) {
           />
           ):(
             <>
-             <Button onClick={()=>{toggle()}} ><i class="fas fa-filter"></i></Button>
+        <div id="exportbtn" className="row col-12 justify-content-end mb-4" >
+           
+            <button className="btn-Filter cardstat mr-1" onClick={()=>{toggle()}} style={{width:50 , height : 50}}><i class="fas fa-filter"></i><small  className="text-capitalize">filter</small></button>
+            {filteron ? (  <button className="btn-Filter cardstat mr-2"  style={{width:50 , height : 50}}><Tooltip title="supprimer le filtre"><IconButton aria-label="delete" onClick={()=>{Resetfilter();setLineusers([])}}><CloseIcon style={{color : "white"}}/></IconButton></Tooltip></button>): null }
+           <button className="btn-export cardstat text-capitalize mr-2" onClick={(e)=>{exportPNG()}} style={{width:"5%"}} ><i class="far fa-file-image fa-2x" style={{color:"#28A745"}}></i></button>
+           <button className="btn-export cardstat text-capitalize" onClick={(e)=>{exportexcel()}} style={{width:"5%"}} ><i class="fas fa-file-csv fa-2x" style={{color:"#28A745"}}></i></button>
+
+            </div>
             <Cliheader apidata={clihead}/>
 
 
 
             <div className="card col-4 mt-3 cardstat "  style={{width:"30%"}}>
-                <h5 className="card-title mt-3">Nombre de requête par jour</h5>
+                <p className="card-title mt-3">Nombre de requête par jour</p>
               <Divider />
                 <div className="card-body">
                     <Bar data={bardata} width={30}  height={20}/>
@@ -298,7 +387,7 @@ function Clidata(props) {
             </div>
 
             <div className="card col-4 mt-3 cardstat "  style={{width:"30%"}}>
-                <h5 className="card-title mt-3">Total de requêtes par collaborateurs</h5>
+                <p className="card-title mt-3">Total de requêtes par collaborateurs</p>
               <Divider />
                 <div className="card-body">
                 <Pie data={piedata} options={pieoption}  width={30}  height={20} />
@@ -307,7 +396,7 @@ function Clidata(props) {
 
 
             <div className="card col-4 mt-3 cardstat "  style={{width:"30%"}}>
-                <h5 className="card-title mt-3">Origin des requêtes</h5>
+                <p className="card-title mt-3">Origin des requêtes</p>
               <Divider />
                 <div className="card-body">
                 <Bar data={bardataorigin} width={30}  height={20}/>
@@ -317,7 +406,7 @@ function Clidata(props) {
 
           
             <div className="card col-12 mt-3 cardstat " >
-                <h5 className="card-title mt-3">Total de requête par jour et par collaborateur</h5>
+                <p className="card-title mt-3">Total de requête par jour et par collaborateur</p>
               <Divider />
                 <div className="card-body">
                 <Line data={linedata} options={lineoption}  width={160}  height={50} />
@@ -340,11 +429,13 @@ function Clidata(props) {
                     onChange={item => setRequest([item.selection]) }
                     moveRangeOnFirstSelection={false}
                     ranges={Request}
+                    rangeColors={colors}
                     locale={locales[locale]}
                 /><br />
 
-                    <IconButton style={{backgroundColor : "#767192"}} className="mt-5" onClick={()=>{filter() ; toggle() ; setLineusers([])}}>
-                    <i class="fas fa-filter"></i>
+
+                    <IconButton style={{backgroundColor : "#32B66A"}} className="mt-5" onClick={()=>{filter() ; toggle() ; setLineusers([])}}>
+                    <i class="fas fa-filter" style={{color : "white"}}></i>
                     </IconButton>
               </div>
               </MDBModalBody>

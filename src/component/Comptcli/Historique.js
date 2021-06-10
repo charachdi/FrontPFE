@@ -25,6 +25,7 @@ function Historique(props) {
 
     const toggle = () =>{
       setopen(!open)
+      console.log(selectedrow)
     }
     useEffect(() => {
         const gethis = async()=>{
@@ -71,10 +72,11 @@ function Historique(props) {
         {
           key: "Action",
           text: "Action",
+          className : "text-center",
           cell: (his, index) => {
             return (
               <>
-                          <IconButton onClick={()=>{setselectedrow(his);setopen(!open)}} size="small" className="float-right mr-3" aria-label="eye"  style={{color :"#388e3c"}} >
+                          <IconButton onClick={()=>{setselectedrow(his);setopen(!open)}} size="small" className="" aria-label="eye"  style={{color :"#388e3c"}} >
                           <Visibility />
                           </IconButton> 
                           
@@ -113,7 +115,9 @@ function Historique(props) {
              <ReactDatatable
               config={config}
               records={Historique}
-              columns={column}/>
+              columns={column}
+              tHeadClassName ="text-center"
+              />
           
 
           

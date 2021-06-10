@@ -259,19 +259,44 @@ const [current, setcurrent] = useState("")
               null
             )
           }
-        <li>
+
+          {
+            current !== "admin" ? (
+              <li>
               <a className="text-left hover" onClick={()=>{history.push("/Demande")}}><i class="fas fa-clipboard-list mr-3"></i>Demande</a>
           </li>
+            ) : (
+              null
+            )
+          }
 
+          {
+            current === "admin" ? (
+         
           <li className="d-flex flex-row">
             <StyledBadge  badgeContent={4} color="error">
               <a className="text-left hover" onClick={()=>{history.push("/Demandes")}}><i class="fas fa-clipboard-list mr-3"></i>RH</a>
             </StyledBadge >
           </li>
+            ) : (
+              null
+            )
+          }
 
-          <li>
+          {
+            current === "admin" ? (
+              <li>
             <a className="text-left hover"  onClick={()=>{history.push("/Settings")}}><i class="fas fa-cog mr-2"></i>Paramètre</a>
           </li>
+            ) : (
+              null
+            )
+          }
+       
+
+         
+
+         
 
           <li>
             <a className="text-left hover" href="/" onClick={()=>{handelLogout()}}><i class="fas fa-sign-out-alt mr-3" style={{color:'white'}}></i>logout</a>

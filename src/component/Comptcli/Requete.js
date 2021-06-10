@@ -14,6 +14,8 @@ import AddIcon from '@material-ui/icons/Add';
 import Api_url from './../../component/Api_url';
 import axios from 'axios'
 import DatePicker from 'react-datepicker'
+import MenuItem from '@material-ui/core/MenuItem';
+
 
 
 function Requete(props) {
@@ -275,7 +277,7 @@ return (
 
 
                   {/* MODAL add */}
-            <MDBModal isOpen={openadd} toggle={()=>setopenadd(!openadd)} size="lg">
+            <MDBModal isOpen={openadd} toggle={()=>setopenadd(!openadd)} size="lg" disableBackdrop={true}>
               <MDBModalHeader toggle={()=>setopenadd(!openadd)} className="text-center">Ajouter une nouvelle requête</MDBModalHeader>
               <MDBModalBody>
               <form className="col-12 " >
@@ -288,13 +290,22 @@ return (
 
                 <div className="col-12">
                   <div  className="d-flex flex-row">
-                   <span className="mr-4 col-4" style={{fontSize:13}} > Status  </span>   <TextField className="col-6" value={reqete.Statut} onChange={(e)=>{setreqete({...reqete , Statut : e.target.value});setdis(false)}} />
+                   <span className="mr-4 col-4" style={{fontSize:13}} > Status  </span>   <TextField className="col-6" select value={reqete.Statut} onChange={(e)=>{setreqete({...reqete , Statut : e.target.value});setdis(false)}} >
+                   <MenuItem  value={"Clôturé"}>Clôturé</MenuItem>
+                   <MenuItem  value={"En attente interne"}>En attente interne	</MenuItem>
+                   <MenuItem  value={"En Cours"}>En Cours</MenuItem>
+                   <MenuItem  value={"Nouveau"}>Nouveau</MenuItem>
+                   </TextField>
                   </div>
                 </div>
                
                 <div className="col-12 mt-4">
                   <div  className="d-flex flex-row">
-                   <span className="mr-4 col-4" style={{fontSize:13}} > Origine de la requête  </span>   <TextField className="col-6" value={reqete.Origine_de_la_requete}   onChange={(e)=>{setreqete({...reqete , Origine_de_la_requete : e.target.value});setdis(false)}}/>
+                   <span className="mr-4 col-4" style={{fontSize:13}} > Origine de la requête  </span>   <TextField className="col-6" select value={reqete.Origine_de_la_requete}   onChange={(e)=>{setreqete({...reqete , Origine_de_la_requete : e.target.value});setdis(false)}}>
+                   <MenuItem  value={"Téléphone"}>Téléphone</MenuItem>
+                   <MenuItem  value={"Adresse e-mail"}>Adresse e-mail</MenuItem>
+                   <MenuItem  value={"Courrier postal"}>Courrier postal</MenuItem>
+                   </TextField>
                   </div>
                 </div>
 
@@ -353,10 +364,10 @@ return (
 
               {/* update  */}
 
-              <MDBModal isOpen={open} toggle={()=>toggle()} size="md">
+              <MDBModal isOpen={open} toggle={()=>toggle()} size="lg">
               <MDBModalHeader toggle={()=>toggle()} className="text-center">Modifier les données de la requête</MDBModalHeader>
               <MDBModalBody>
-              <form className="col-12 " >
+              <div className="col-12 " >
                 <div className="d-flex flex-row col-12 justify-content-center mb-3">
                   <Avatar src={selectedrow.User ? selectedrow.User.user_img : ""}/>
                   <span className="mt-2 ml-3">
@@ -366,19 +377,28 @@ return (
 
 
                 <div  className="d-flex flex-row justify-content-between">
-                <span className="mr-4" > Status  </span>   <TextField value={selectedrow.Statut}   onChange={(e)=>{setselectedrow({...selectedrow , Statut : e.target.value});setdis(false)}} />
+                <span className="mr-4 col-4" > Status  </span>   <TextField className="col-6" value={selectedrow.Statut} select   onChange={(e)=>{setselectedrow({...selectedrow , Statut : e.target.value});setdis(false)}} >
+                    <MenuItem  value={"Clôturé"}>Clôturé</MenuItem>
+                   <MenuItem  value={"En attente interne"}>En attente interne	</MenuItem>
+                   <MenuItem  value={"En Cours"}>En Cours</MenuItem>
+                   <MenuItem  value={"Nouveau"}>Nouveau</MenuItem>
+                </TextField>
                 </div><br />
 
                 <div  className="d-flex flex-row justify-content-between">
-                <span className="mr-4" > Origine de la requête  </span>   <TextField value={selectedrow.Origine_de_la_requete}   onChange={(e)=>{setselectedrow({...selectedrow , Origine_de_la_requete : e.target.value});setdis(false)}}/>
+                <span className="mr-4 col-4" > Origine de la requête  </span>   <TextField className="col-6" value={selectedrow.Origine_de_la_requete} select  onChange={(e)=>{setselectedrow({...selectedrow , Origine_de_la_requete : e.target.value});setdis(false)}} >
+                  <MenuItem  value={"Téléphone"}>Téléphone</MenuItem>
+                   <MenuItem  value={"Adresse e-mail"}>Adresse e-mail</MenuItem>
+                   <MenuItem  value={"Courrier postal"}>Courrier postal</MenuItem>
+                </TextField>
                 </div><br />
 
                 <div  className="d-flex flex-row justify-content-between">
-                <span className="mr-4" > Famille de demande  </span>   <TextField value={selectedrow.Famille_de_demande_RC} onChange={(e)=>{setselectedrow({...selectedrow , Famille_de_demande_RC : e.target.value});setdis(false)}}/>
+                <span className="mr-4 col-4" > Famille de demande  </span>   <TextField className="col-6" value={selectedrow.Famille_de_demande_RC} onChange={(e)=>{setselectedrow({...selectedrow , Famille_de_demande_RC : e.target.value});setdis(false)}}/>
                 </div><br />
 
                 <div  className="d-flex flex-row justify-content-between">
-                <span className="mr-4" > Motifs de resiliation  </span>   <TextField value={selectedrow.Motifs_de_resiliation} onChange={(e)=>{setselectedrow({...selectedrow , Motifs_de_resiliation : e.target.value});setdis(false)}}/>
+                <span className="mr-4 col-4" > Motifs de resiliation  </span>   <TextField className="col-6" value={selectedrow.Motifs_de_resiliation} onChange={(e)=>{setselectedrow({...selectedrow , Motifs_de_resiliation : e.target.value});setdis(false)}}/>
                 </div><br />
 
                 {/* <div  className="d-flex flex-row">
@@ -386,7 +406,7 @@ return (
                 </div><br /> */}
 
                 <div  className="d-flex flex-row justify-content-between">
-                <span className="mr-4 mt-5" > Type de la demande  </span>    <TextField value={selectedrow.Type_de_la_demande_RC}  className="col-6 mt-3" id="time" type="text" label="" multiline={true} variant="outlined" size="small" rows={4} onChange={(e)=>{setselectedrow({...selectedrow , Type_de_la_demande_RC : e.target.value});setdis(false)}} />
+                <span className="mr-4 mt-5 col-4" > Type de la demande  </span>    <TextField className="col-6 text-center" value={selectedrow.Type_de_la_demande_RC}  className="col-6 mt-3" id="time" type="text" label="" multiline={true} variant="outlined" size="small" rows={4} onChange={(e)=>{setselectedrow({...selectedrow , Type_de_la_demande_RC : e.target.value});setdis(false)}} />
 
                 </div><br />
                 <div className="row col-12 mb-2 justify-content-center">
@@ -396,7 +416,7 @@ return (
                     </button> 
                
               </div>
-              </form>
+              </div>
               </MDBModalBody>
               </MDBModal>
 {/* modal supp */}

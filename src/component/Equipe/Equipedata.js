@@ -6,7 +6,9 @@ import { Bar } from 'react-chartjs-2';
 import { Line } from 'react-chartjs-2';
 import Equipeheader from './../../component/Equipe/Equipeheader'
 import axios from 'axios'
+import CloseIcon from '@material-ui/icons/Close';
 import $ from 'jquery'
+import Tooltip from '@material-ui/core/Tooltip';
 import Divider from '@material-ui/core/Divider';
 import MenuItem from '@material-ui/core/MenuItem';
 import domtoimage from 'dom-to-image';
@@ -24,7 +26,7 @@ function Equipedata(props) {
   const token = localStorage.getItem('token')
   const [equipe_id, setequipe_id] = useState(props.equipeid)
   const [apidata, setapidata] = useState([])
-
+  const [filteron, setfilteron] = useState(false);
   const [open, setopen] = useState();
 
   const toggle = ()=>{
@@ -38,6 +40,7 @@ function Equipedata(props) {
 }
 ])
 const [locale, setLocale] = React.useState('fr');
+const [colors, setcolors] = useState(['#32B66A'])
   //bar charts
   const [usersname, setusersname] = useState([])
   const [reqnum, setreqnum] = useState([])
@@ -259,7 +262,7 @@ const option = {
 }
 
 const filter = async ()=>{
-   
+   setfilteron(true)
    var start = Request[0].startDate.toLocaleDateString('en-US').split("/")
   var  end = Request[0].endDate.toLocaleDateString('en-US').split("/")
   const data = {
@@ -345,7 +348,62 @@ setTimeout(() => {
 }, 2000);
  
 }
+const Resetfilter = async ()=>{
+  setcliname([])
+  setfilteron(false)
+  const getclidatastat = async()=>{
+    const res = await axios({
+      headers: {'Authorization': `Bearer ${token}`},
+      method: 'get',
+      url : `${Api_url}stat/stat/pie/${equipe_id}`,
+      });
 
+      const bar = await axios({
+        headers: {'Authorization': `Bearer ${token}`},
+        method: 'get',
+        url : `${Api_url}stat/bar/${equipe_id}`,
+        });
+       
+
+      const Line = await axios({
+        headers: {'Authorization': `Bearer ${token}`},
+        method: 'get',
+        url : `${Api_url}stat/line/${equipe_id}`,
+        });
+   
+       const Oridata = await axios({
+        headers: {'Authorization': `Bearer ${token}`},
+        method: 'get',
+        url : `${Api_url}stat/equipe/origin/bar/${equipe_id}`,
+        });
+
+        const res2 = await axios({
+          headers: {'Authorization': `Bearer ${token}`},
+          method: 'get',
+          url : `${Api_url}stat/requets/${equipe_id}`,
+          });
+          
+      setapidata(res2.data)
+
+      setcliname(res.data.cliname)
+      setclilength(res.data.clilength)
+
+
+      setreqnum(bar.data.requetes)
+      setusersname(bar.data.users)
+
+
+      setdate_req(Line.data.Trim_date)
+      setdate_value(Line.data.date_value)
+
+      setorigin_req(Oridata.data.origin)
+      setorigin_value(Oridata.data.Origine_value)
+
+    
+    
+   }
+   getclidatastat()
+}
       
     return (
 <>
@@ -357,10 +415,11 @@ setTimeout(() => {
             width={"65%"}
             isClickToPauseDisabled={true}
           /> : (
-            <>
+             <>
              <div  className="row col-12 justify-content-end  mb-4">
-             <Button onClick={()=>{toggle()}} ><i class="fas fa-filter"></i></Button>
-             <button className="btn-export cardstat text-capitalize" onClick={(e)=>{exportPNG()}} style={{width:"6%"}} >png<i class="fas fa-file-export ml-1" style={{color:"#2DCD94"}}></i></button> 
+             <button className="btn-Filter cardstat mr-1"  style={{width:50 , height : 50}}> <div onClick={()=>{toggle()}}><i class="fas fa-filter "></i><small  className="text-capitalize">filter</small></div></button>
+             {filteron ? (  <button className="btn-Filter cardstat mr-2"  style={{width:50 , height : 50}}><Tooltip title="supprimer le filtre"><IconButton aria-label="delete" onClick={()=>{Resetfilter()}}><CloseIcon style={{color : "white"}}/></IconButton></Tooltip></button>): null }
+             <button className="btn-export cardstat text-capitalize" onClick={(e)=>{exportPNG()}} style={{width:"20%"}} >Exporter sous format png  <i class="fas fa-file-export ml-1" style={{color:"#2DCD94"}}></i></button> 
             </div>
             {
               apidata.colture !== undefined ? <Equipeheader data={apidata} />: null
@@ -369,7 +428,7 @@ setTimeout(() => {
              <div  className="row col-12 justify-content-around nopad">
            
                  <div className="card col-lg-4 col-12 mt-3 cardstat " style={{width:"30%"}} >
-                    <h5 className="card-title mt-3">Requête par employé</h5>
+                    <p className="card-title mt-3">Requête par employé</p>
                     <Divider />
                       <div className="card-body">
                         <Bar options={option} data={bardata}  width={50} height={45}/>
@@ -380,7 +439,7 @@ setTimeout(() => {
                 
     
                       <div className="card col-lg-4 col-12 mt-3 cardstat "  style={{width:"30%"}}>
-                    <h5 className="card-title mt-3">top 5 client</h5>
+                    <p className="card-title mt-3">top 5 client</p>
                     <Divider />
                       <div className="card-body">
                         <Pie data={piedata} options={option2} width={50} height={45}/>
@@ -389,7 +448,7 @@ setTimeout(() => {
 
              
                <div className="card col-lg-4 col-12 mt-3 cardstat"  style={{width:"30%"}}>
-                    <h5 className="card-title mt-3">Requête par origin</h5>
+                    <p className="card-title mt-3">Requête par origin</p>
                     <Divider />
                       <div className="card-body">
                       <Bar options={baroptionorigin} data={bardataorigin}  width={50} height={45}/>
@@ -399,7 +458,7 @@ setTimeout(() => {
 
              
                     <div className="card col-12 mt-3 cardstat" >
-                    <h5 className="card-title mt-3">Requête par date</h5>
+                    <p className="card-title mt-3">Requête par date</p>
                     <Divider />
                       <div className="card-body">
                       <Line options={option}  data={linedata} width={50} height={13}/>
@@ -421,11 +480,12 @@ setTimeout(() => {
                     onChange={item => setRequest([item.selection]) }
                     moveRangeOnFirstSelection={false}
                     ranges={Request}
+                    rangeColors={colors}
                     locale={locales[locale]}
                 /><br />
 
-                    <IconButton style={{backgroundColor : "#767192"}} className="mt-5" onClick={()=>{filter() ; toggle() ; setcliname([])}}>
-                    <i class="fas fa-filter"></i>
+                    <IconButton style={{backgroundColor : "#32B66A"}} className="mt-5" onClick={()=>{filter() ; toggle() ; setcliname([])}}>
+                    <i class="fas fa-filter" style={{color : "white"}}></i>
                     </IconButton>
               </div>
               </MDBModalBody>

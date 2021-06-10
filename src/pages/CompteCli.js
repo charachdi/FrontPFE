@@ -213,20 +213,7 @@ const switchtohist = () =>{
   
 }
 
-const exportPNG = ()=>{
-  console.log("png")
-  // Equipedata
-setTimeout(() => {
-  domtoimage.toJpeg(document.getElementById('Datatab'), { quality: 1 })
-  .then(function (dataUrl) {
-      var link = document.createElement('a');
-      link.download = 'Data.jpeg';
-      link.href = dataUrl;
-      link.click();
-  });
-}, 2000);
- 
-}
+
 
 const deleterequete = async (id)=>{
 const res = await axios({
@@ -612,10 +599,7 @@ const addrequte = (req)=>{
            
               
     <div id="Datatab" className="row col-12 mb-2" style={{display: exportauth ? "block": "none"}}>
-    <div id="exportbtn" className="row col-12 justify-content-end" >
-    <button className="btn-export cardstat text-capitalize" onClick={(e)=>{exportPNG()}} style={{width:"20%"}} >Exporter sous format png  <i class="fas fa-file-export ml-1" style={{color:"#2DCD94"}}></i></button>
-                
-            </div>
+   
      <Clidata id={client_id}  />
     </div>  
 
