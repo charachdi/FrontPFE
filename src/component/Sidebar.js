@@ -12,9 +12,19 @@ import Api_url from './../component/Api_url'
 import SettingsIcon from '@material-ui/icons/Settings';
 import { ToastContainer, toast } from 'react-toastify';
 import {socket} from './../Socket/Socket'
-
-
+import Badge from '@material-ui/core/Badge';
+import { withStyles } from '@material-ui/core/styles';
 import Editrequete from './../component/Notification/Editrequete'
+
+
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    right: -25,
+    top: 15,
+    padding: '0 4px',
+  },
+}))(Badge);
+
 
 function Sidebar(props) {
 
@@ -253,8 +263,10 @@ const [current, setcurrent] = useState("")
               <a className="text-left hover" onClick={()=>{history.push("/Demande")}}><i class="fas fa-clipboard-list mr-3"></i>Demande</a>
           </li>
 
-          <li>
+          <li className="d-flex flex-row">
+            <StyledBadge  badgeContent={4} color="error">
               <a className="text-left hover" onClick={()=>{history.push("/Demandes")}}><i class="fas fa-clipboard-list mr-3"></i>RH</a>
+            </StyledBadge >
           </li>
 
           <li>

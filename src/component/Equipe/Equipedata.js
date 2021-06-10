@@ -360,7 +360,7 @@ setTimeout(() => {
             <>
              <div  className="row col-12 justify-content-end  mb-4">
              <Button onClick={()=>{toggle()}} ><i class="fas fa-filter"></i></Button>
-             <button className="btn-export cardstat text-capitalize" onClick={(e)=>{exportPNG()}} style={{width:"20%"}} >Exporter sous format png  <i class="fas fa-file-export ml-1" style={{color:"#2DCD94"}}></i></button> 
+             <button className="btn-export cardstat text-capitalize" onClick={(e)=>{exportPNG()}} style={{width:"6%"}} >png<i class="fas fa-file-export ml-1" style={{color:"#2DCD94"}}></i></button> 
             </div>
             {
               apidata.colture !== undefined ? <Equipeheader data={apidata} />: null
