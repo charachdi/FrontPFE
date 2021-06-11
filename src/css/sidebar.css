@@ -8198,11 +8198,17 @@ h1, h2, h3, h4, h5,
   cursor: pointer;
 }
 
+/* 
+background: rgb(0,0,0);
+background: -moz-linear-gradient(87deg, rgba(0,0,0,1) 0%, rgba(118,113,146,1) 43%);
+background: -webkit-linear-gradient(87deg, rgba(0,0,0,1) 0%, rgba(118,113,146,1) 43%);
+background: linear-gradient(87deg, rgba(0,0,0,1) 0%, rgba(118,113,146,1) 43%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#767192",GradientType=1); */
 #sidebar {
   z-index: 10000;
   width: 170px;
   max-width: 170px;
-  background: #767192;
+  background-image: linear-gradient(0deg, rgba(77,79,120,1) 0%, rgba(118,113,146,1) 40%);
   color: #fff;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;

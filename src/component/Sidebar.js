@@ -28,7 +28,7 @@ const StyledBadge = withStyles((theme) => ({
 
 function Sidebar(props) {
 
-
+  const [count, setcount] = useState(0);
   const history = useHistory();
   const dispatch = useDispatch();
   const token = localStorage.getItem('token')
@@ -38,12 +38,22 @@ function Sidebar(props) {
 
   const [Serviceroom, setServiceroom] = useState("0")
 
-  
+  const [active, setactive] = useState(0);
   
  
 
 const [current, setcurrent] = useState("")
   useEffect(() => {
+
+    const Rhcount = async ()=>{
+      const res = await axios({
+        headers: {'Authorization': `Bearer ${token}`},
+        method: 'get',
+        url : `${Api_url}Demande/RH/count`,  
+        });
+
+        setcount(res.data.count)
+    }
    
     const info = async() =>{
       const user = JSON.parse(localStorage.getItem('user')) ;
@@ -98,7 +108,7 @@ const [current, setcurrent] = useState("")
       info()
     }
     socketon()
-    
+    Rhcount()
   }, [])
   
   
@@ -116,7 +126,7 @@ const [current, setcurrent] = useState("")
 
     return (
        
-      <nav id="sidebar">
+      <nav id="sidebar" className="cardstat">
         {/* <ToastContainer
       position="bottom-right"
       autoClose={5000}
@@ -147,7 +157,7 @@ const [current, setcurrent] = useState("")
           </li>
           {
             current === "admin" ? (
-              <li className="">
+              <li className={active === 0 ? 'active' : null} onClick={()=>{setactive(0)}}>
               <a className="text-left hover" onClick={()=>{history.push("/home")}}><i className="fas fa-user-friends mr-3"></i>Comptes</a>
             </li>
             ) : (
@@ -157,7 +167,7 @@ const [current, setcurrent] = useState("")
 
         {
             current === "Chef Service" ? (
-              <li className="">
+              <li className={active === 0 ? 'active' : null} onClick={()=>{setactive(0)}}>
               <a className="text-left hover" onClick={()=>{history.push("/home")}}><i className="fas fa-user-friends mr-3"></i>Comptes</a>
             </li>
             ) : (
@@ -167,7 +177,7 @@ const [current, setcurrent] = useState("")
 
 {
             current === "admin" ? (
-              <li>
+              <li className={active === 1 ? 'active' : null} onClick={()=>{setactive(1)}}>
               <a className="text-left hover" onClick={()=>{history.push("/equipe")}}><span className="fa fa-user mr-3"></span>Equipes</a>
           </li>
             ) : (
@@ -177,7 +187,7 @@ const [current, setcurrent] = useState("")
 
         {
             current === "Chef Service" ? (
-              <li>
+              <li className={active === 1 ? 'active' : null} onClick={()=>{setactive(1)}}>
               <a className="text-left hover" onClick={()=>{history.push("/equipe")}}><span className="fa fa-user mr-3"></span>Equipes</a>
           </li>
             ) : (
@@ -188,7 +198,7 @@ const [current, setcurrent] = useState("")
 
 {
             current === "admin" ? (
-              <li>
+              <li className={active === 2 ? 'active' : null} onClick={()=>{setactive(2)}}>
               <a className="text-left hover" onClick={()=>{history.push("/service")}}><span className="fa fa-cogs mr-2"></span> Services</a>
             </li>
             ) : (
@@ -202,7 +212,7 @@ const [current, setcurrent] = useState("")
 
 {
             current === "admin" ? (
-              <li>
+              <li className={active === 3 ? 'active' : null} onClick={()=>{setactive(3)}}>
               <a className="text-left hover"  onClick={()=>{history.push("/client")}}><span className="fa fa-sticky-note mr-3"></span>Clients</a>
             </li>
             ) : (
@@ -212,7 +222,7 @@ const [current, setcurrent] = useState("")
 
         {
             current === "Chef Service" ? (
-              <li>
+              <li className={active === 3 ? 'active' : null} onClick={()=>{setactive(3)}}>
               <a className="text-left hover"  onClick={()=>{history.push("/client")}}><span className="fa fa-sticky-note mr-3"></span>Clients</a>
             </li>
             ) : (
@@ -225,7 +235,7 @@ const [current, setcurrent] = useState("")
         {
             current === "Collaborateur" ? (
            
-              <li>
+              <li className={active === 4 ? 'active' : null} onClick={()=>{setactive(4)}}>
               <a className="text-left hover" onClick={()=>{history.push("/Compteclient")}}><span className="fa fa-suitcase mr-3"></span>Compte</a>
             </li>
             ) : null
@@ -233,7 +243,7 @@ const [current, setcurrent] = useState("")
 
           {
             current === "Chef equipe" ? (
-              <li>
+              <li className={active === 4 ? 'active' : null} onClick={()=>{setactive(4)}}>
               <a className="text-left hover" onClick={()=>{history.push("/Compteclient")}}><span className="fa fa-suitcase mr-3"></span>Compte</a>
             </li>
             ) : null
@@ -242,7 +252,7 @@ const [current, setcurrent] = useState("")
 
          {
             current === "admin" ? (
-              <li>
+              <li className={active === 5 ? 'active' : null} onClick={()=>{setactive(5)}}>
               <a className="text-left hover" onClick={()=>{history.push("/Attendance")}}><i class="fas fa-clipboard-list mr-3"></i>Présence</a>
           </li>
             ) : (
@@ -252,7 +262,7 @@ const [current, setcurrent] = useState("")
 
         {
             current === "Chef Service" ? (
-              <li>
+              <li className={active === 5 ? 'active' : null} onClick={()=>{setactive(5)}}>
               <a className="text-left hover" onClick={()=>{history.push("/Attendance")}}><i class="fas fa-clipboard-list mr-3"></i>Présence</a>
           </li>
             ) : (
@@ -262,7 +272,7 @@ const [current, setcurrent] = useState("")
 
           {
             current !== "admin" ? (
-              <li>
+              <li className={active === 6 ? 'active' : null} onClick={()=>{setactive(6)}}>
               <a className="text-left hover" onClick={()=>{history.push("/Demande")}}><i class="fas fa-clipboard-list mr-3"></i>Demande</a>
           </li>
             ) : (
@@ -273,10 +283,9 @@ const [current, setcurrent] = useState("")
           {
             current === "admin" ? (
          
-          <li className="d-flex flex-row">
-            <StyledBadge  badgeContent={4} color="error">
+          <li className={active === 7 ? "d-flex flex-row active" : "d-flex flex-row"} onClick={()=>{setactive(7)}}>
               <a className="text-left hover" onClick={()=>{history.push("/Demandes")}}><i class="fas fa-clipboard-list mr-3"></i>RH</a>
-            </StyledBadge >
+              <StyledBadge  badgeContent={count} color="error" />
           </li>
             ) : (
               null
@@ -285,7 +294,7 @@ const [current, setcurrent] = useState("")
 
           {
             current === "admin" ? (
-              <li>
+              <li className={active === 8 ? "active" : null} onClick={()=>{setactive(8)}}>
             <a className="text-left hover"  onClick={()=>{history.push("/Settings")}}><i class="fas fa-cog mr-2"></i>Paramètre</a>
           </li>
             ) : (
@@ -309,7 +318,7 @@ const [current, setcurrent] = useState("")
   
       </div>
 
-
+{/* ////////////////////////////////////// */}
       <div id="smallicon" className="p-4 ">
       
         <ul className="list-unstyled components mb-5">

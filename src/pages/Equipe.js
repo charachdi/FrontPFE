@@ -495,7 +495,7 @@ const createPrime = async ()=>{
         </header>
        
         <div class="breadcrumb-holder container-fluid">
-          <ul class="breadcrumb">
+          <ul class="breadcrumb cardstat">
           <li > <a onMouseEnter={() => sethovered(true)} onMouseLeave={() => sethovered(false)} style={{color : hovered ? "#38D39F" : ""}}  onClick={()=>{ window.history.back()}}  ><ArrowBackIosIcon /></a></li>
           <li class="breadcrumb-item" >Accueil</li>
             <li class="breadcrumb-item active">Equipe</li>

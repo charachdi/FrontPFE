@@ -323,7 +323,7 @@ const Suppservice = async (e)=>{
         </header>
         {/* <!-- Breadcrumb--> */}
         <div class="breadcrumb-holder container-fluid">
-          <ul class="breadcrumb">
+          <ul class="breadcrumb cardstat">
               <li ><a href="home" ><ArrowBackIosIcon /></a></li>
               <li class="breadcrumb-item" >Accueil</li>
               <li class="breadcrumb-item active">Service</li>
@@ -342,7 +342,7 @@ const Suppservice = async (e)=>{
                     config={config}
                     records={services}
                     columns={column}
-                    tHeadClassName ="text-center"
+                    tHeadClassName ="text-center "
                     />
               
                
