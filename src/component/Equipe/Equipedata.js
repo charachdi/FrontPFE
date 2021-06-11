@@ -181,6 +181,7 @@ const [colors, setcolors] = useState(['#32B66A'])
 
     const bardataorigin = {
       labels: origin_req,
+      
       datasets: [{
         
         data: origin_value,
@@ -199,7 +200,7 @@ const [colors, setcolors] = useState(['#32B66A'])
       legend: {
         display: false,
         position : 'top',
-    }
+    },
     }
 
 const linedata = {

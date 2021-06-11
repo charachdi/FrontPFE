@@ -418,19 +418,19 @@ const switchtoarchive= () =>{
             </div>
           </header> 
           {/* <!-- Breadcrumb--> */}
-          <div className="breadcrumb-holder container-fluid">
-            <ul className="breadcrumb">
-            <li ><a href="home" ><ArrowBackIosIcon /></a></li>
-          <li class="breadcrumb-item" >Equipe</li>
+          <div className="breadcrumb-holder container-fluid ">
+            <ul className="breadcrumb cardstat">
+            <li className="cardstat" ><a href="home" ><ArrowBackIosIcon /></a></li>
+          <li className="breadcrumb-item" >Equipe</li>
               <li className="breadcrumb-item active">{equipe.Nom_equipe}</li>
             </ul>
           </div>
 
              
-        <div className=" row col-12 justify-content-center text-center " >
-            <div id="team-user" className="row col-12 justufy-content-center mt-4  " style={{backgroundColor : "#E9ECEF" , borderRadius : 30}} >
+        <div className=" row col-12 justify-content-center text-center  "  >
+            <div id="team-user" className="row col-12 justufy-content-center mt-4 cardstat " style={{backgroundColor : "#E9ECEF" , borderRadius : 30}} >
                       {chefE.map((user , index)=>(
-                          <div id={user.id}  className="card equser shadow cursor border  mr-4 ml-4 mt-2 mb-4" style={{width:150 , height:175}} key={index} onClick={()=>{history.push(`/profile/${user.id}`)}} >
+                          <div id={user.id}  className="card equser cursor border cardstat mr-4 ml-4 mt-2 mb-4" style={{width:150 , height:175 , borderTopLeftRadius : 50, borderTopRightRadius : 50}} key={index} onClick={()=>{history.push(`/profile/${user.id}`)}} >
                       
                             <aside className="ribbonchef">{user.user_level}</aside>
                           <div className="card-body justufy-content-center text-break">
@@ -442,7 +442,7 @@ const switchtoarchive= () =>{
                       ))}
 
                       {collab.map((user , index)=>(
-                          <div id={user.id}  className="card equser shadow cursor border  mr-4 ml-4 mt-2 mb-4 " style={{width:150, height:175}} key={index} onClick={()=>{history.push(`/profile/${user.id}`)}} >
+                          <div id={user.id}  className="card equser cardstat cursor border  mr-4 ml-4 mt-2 mb-4 " style={{width:150, height:175 , borderTopLeftRadius : 50, borderTopRightRadius : 50}} key={index} onClick={()=>{history.push(`/profile/${user.id}`)}} >
                           
                       
                           <aside className="ribbon">{user.user_level}</aside>
@@ -462,13 +462,13 @@ const switchtoarchive= () =>{
          </div>
         
          <div className="row col-12 justify-content-center text-center" >
-                <ul className="profile-header-tab nav nav-tabs  mt-4 mb-4" style={{backgroundColor:"#E9ECEF"}}>
-                  <li onClick={()=>{switchtodata()}} className="nav-item"><span id="dattab" href="#" className="nav-link active show cursor" data-toggle="tab">Data</span></li>
-                  <li onClick={()=>{switchtocompte()}} className="nav-item"><span id="listcompt" href="#" className="nav-link cursor" data-toggle="tab">Compte</span></li>
-                  <li onClick={()=>{switchtofile()}} className="nav-item"><span id="filetab" href="#" className="nav-link cursor" data-toggle="tab">Fichier</span></li>
-                  <li onClick={()=>{switchtoarchive()}}  className="nav-item"><span id="archivetab" href="#" className="nav-link cursor" data-toggle="tab">Archive</span></li>
+                <ul className="profile-header-tab nav nav-tabs  mt-4 mb-4 cardstat" style={{backgroundColor:"#E9ECEF" , borderRadius : 15}}>
+                  <li onClick={()=>{switchtodata()}} className="nav-item" ><span id="dattab" href="#" className="nav-link active show cursor" style={{borderRadius : 15}} data-toggle="tab">Data</span></li>
+                  <li onClick={()=>{switchtocompte()}} className="nav-item"><span id="listcompt" href="#" className="nav-link cursor" style={{borderRadius : 15}} data-toggle="tab">Compte</span></li>
+                  <li onClick={()=>{switchtofile()}} className="nav-item"><span id="filetab" href="#" className="nav-link cursor" style={{borderRadius : 15}} data-toggle="tab">Fichier</span></li>
+                  <li onClick={()=>{switchtoarchive()}}  className="nav-item"><span id="archivetab" href="#" className="nav-link cursor" style={{borderRadius : 15}} data-toggle="tab">Archive</span></li>
                   {
-                    isadmin ?  <li onClick={()=>{switchtosetting()}}className="nav-item"><span id="setting" href="#" className="nav-link cursor" data-toggle="tab"><i className="fas fa-cog"></i></span></li> : null
+                    isadmin ?  <li onClick={()=>{switchtosetting()}}className="nav-item"><span id="setting" href="#" className="nav-link cursor" style={{borderRadius : 15}} data-toggle="tab"><i className="fas fa-cog"></i></span></li> : null
                   }
                 </ul>   
             </div>
@@ -483,9 +483,9 @@ const switchtoarchive= () =>{
         </div>  
         
         <div id="Fileview" className="" style={{display:"none" , minHeight:600}} >
-        <div className="">
+        <div className="row col-12 justify-content-center"  >
         
-        <button className="btn-add cardstat text-capitalize" color="primary" onClick={(e)=>{toggle()}} startIcon={<CloudUploadIcon />}>
+        <button className="btn-add cardstat text-capitalize" style={{width : "45%"}} color="primary" onClick={(e)=>{toggle()}} startIcon={<CloudUploadIcon />}>
         Télécharger un fichier 
       </button>
       

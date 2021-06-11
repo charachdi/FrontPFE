@@ -251,7 +251,7 @@ return (
             {users.map((user, index) => (
 
 
-                 <div id={user.id}  className="border shadow grow mb-2 mt-2 mr-2 ml-2 user" key={index} onClick={()=>{oneuser(user)}} style={{backgroundColor :'white'}}>
+                 <div id={user.id}  className="border  grow mb-2 mt-2 mr-2 ml-2 user cardstat" key={index} onClick={()=>{oneuser(user)}} style={{backgroundColor :'white' , borderRadius : 30}}>
                  <div className="card-body d-flex flex-row text-break">
                      <div className="avatar float-left"> <Avatar style={{width:70, height:70}} alt={user.full_name} src={user.user_img} /></div>
                      <div id="user_info" className="ml-2">

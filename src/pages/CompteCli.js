@@ -518,7 +518,7 @@ const addrequte = (req)=>{
 
     return (
       <>
-      <div className="comptecli">
+      <div className="comptecli" style={{backgroundColor : "#F8F9FE"}}>
           
       
      
@@ -538,7 +538,7 @@ const addrequte = (req)=>{
  </header>
  {/* <!-- Breadcrumb--> */}
  <div className="breadcrumb-holder container-fluid">
-   <ul className="breadcrumb">
+   <ul className="breadcrumb cardstat">
      <li className="breadcrumb-item"><a href="home" onClick={()=>{history.push("/home")}}>Accueil</a></li>
      <li className="breadcrumb-item active">Clients</li>
      <li className="breadcrumb-item active">{client.Nom_compteCli}</li>
@@ -547,8 +547,8 @@ const addrequte = (req)=>{
 
 
 
-<div className="row  justify-content-center">
-   <div  className="col-12 text-center">
+<div className="row  justify-content-center" style={{backgroundColor :"#F8F9FE"}}>
+   <div  className="col-12 text-center" style={{backgroundColor : "#F8F9FE"}} >
    
 
 {/* Profile client */}
@@ -581,24 +581,24 @@ const addrequte = (req)=>{
        </div>
    </div>
 
-<ul id="navheader" className="profile-header-tab nav nav-tabs row col-12 mb-4 justify-content-center">
+<ul id="navheader" className="profile-header-tab nav nav-tabs row col-12 mb-4 justify-content-center ">
    
-   <li onClick={(e)=>{switchtodata()}} className="nav-item" style={{display: exportauth ? "block": "none"}}><span id="databtn"  className="nav-link cursor active" data-toggle="tab">DATA</span></li>
+   <li onClick={(e)=>{switchtodata()}} className="nav-item" style={{display: exportauth ? "block": "none"}}><span id="databtn"  className="nav-link cursor active" style={{borderRadius : 15}} data-toggle="tab">DATA</span></li>
    
-   <li onClick={(e)=>{switchtoreq()}} className="nav-item"><span  id="reqbtn"  className="nav-link cursor" data-toggle="tab">Requetes</span></li>
+   <li onClick={(e)=>{switchtoreq()}} className="nav-item"><span  id="reqbtn"  className="nav-link cursor" style={{borderRadius : 15}} data-toggle="tab">Requetes</span></li>
    {
-     isadchef ?  <li onClick={(e)=>{switchtoper()}} className="nav-item"><span  id="perbtn"  className="nav-link cursor" data-toggle="tab">Permission</span></li> : null
+     isadchef ?  <li onClick={(e)=>{switchtoper()}} className="nav-item"><span  id="perbtn"  className="nav-link cursor" style={{borderRadius : 15}} data-toggle="tab">Permission</span></li> : null
    }
 
     {
-     isadchef ?  <li onClick={(e)=>{switchtohist()}} className="nav-item"><span  id="hisbtn"  className="nav-link cursor" data-toggle="tab">historique</span></li> : null
+     isadchef ?  <li onClick={(e)=>{switchtohist()}} className="nav-item"><span  id="hisbtn"  className="nav-link cursor" style={{borderRadius : 15}} data-toggle="tab">historique</span></li> : null
    }
   
 </ul>
 </div>
            
               
-    <div id="Datatab" className="row col-12 mb-2" style={{display: exportauth ? "block": "none"}}>
+    <div id="Datatab" className="row col-12 mb-2" style={{display: exportauth ? "block": "none" , backgroundColor :"#F8F9FE"}}>
    
      <Clidata id={client_id}  />
     </div>  

@@ -918,7 +918,7 @@ function Clients() {
           </header>
           {/* <!-- Breadcrumb--> */}
           <div class="breadcrumb-holder container-fluid">
-            <ul class="breadcrumb">
+            <ul class="breadcrumb cardstat">
               <li ><a href="home" ><ArrowBackIosIcon /></a></li>
               <li class="breadcrumb-item" >Accueil</li>
               <li class="breadcrumb-item active">Client</li>

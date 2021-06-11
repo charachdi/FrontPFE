@@ -250,7 +250,7 @@ body{
     color: white;
     background-size: 200% 200%;
     transition: background-position 0.5s cubic-bezier(0.25, 0.1, 0.19, 1.19); 
-    background-image: linear-gradient(to right, #babebd 50% ,  white 0%);
+    background-image: linear-gradient(to right, #626085 50% ,  white 0%);
     background-position: left;
     animation: slide-left .5s ;
   

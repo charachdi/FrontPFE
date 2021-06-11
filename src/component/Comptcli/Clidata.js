@@ -339,18 +339,41 @@ function Clidata(props) {
     }
 
     const exportexcel = async()=>{
-      const res = await axios({
-        headers: {'Authorization': `Bearer ${token}`},
-        method: 'get',
-        url : `${Api_url}Import/export/excel/${id}`,
-        });
-        console.log(res)
-        var link = document.createElement('a');
-        link.download = res.data.clientname;
-        link.href = res.data.link;
-        link.click();
-        
-    }
+      var start = Request[0].startDate.toLocaleDateString('en-US').split("/")
+      var  end = Request[0].endDate.toLocaleDateString('en-US').split("/")
+      const data = {
+        startdate : `${start[1]}/${start[0]}/${start[2]}`,
+        enddate : `${end[1]}/${end[0]}/${end[2]}`
+      }
+
+      if(filteron){
+        const res = await axios({
+          headers: {'Authorization': `Bearer ${token}`},
+          method: 'post',
+          url : `${Api_url}Import/export/excel/date/${id}`,
+          data
+          });
+          console.log(res)
+          var link = document.createElement('a');
+          link.download = res.data.clientname;
+          link.href = res.data.link;
+          link.click();
+          
+      }else{
+        const res = await axios({
+          headers: {'Authorization': `Bearer ${token}`},
+          method: 'get',
+          url : `${Api_url}Import/export/excel/${id}`,
+          });
+          console.log(res)
+          var link = document.createElement('a');
+          link.download = res.data.clientname;
+          link.href = res.data.link;
+          link.click();
+          
+      }
+      }
+     
 
     return (
         <div className="row col-12 justify-content-center mt-4" style={{backgroundColor:'#FAFAFA'}}>
