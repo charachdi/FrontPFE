@@ -2,6 +2,7 @@ import React , {useState , useEffect} from 'react'
 import { BrowserRouter as Router, Route, Switch , useRouteMatch } from 'react-router-dom';
 import './App.css';
 import $ from 'jquery'
+import 'chartjs-plugin-datalabels';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './function'

@@ -135,7 +135,13 @@ const [colors, setcolors] = useState(['#32B66A'])
         'rgb(218, 92, 250)',
         'rgb(43, 200, 145)'
       ],
-      hoverOffset: 4
+      hoverOffset: 4,
+      plugins: {
+        datalabels: {
+           display: false,
+           color: 'white'
+        }
+     }
     }]
   };
 
@@ -234,10 +240,47 @@ const linedata = {
 
 
 const option2 = {
+  plugins: {
+    datalabels: {
+        formatter: (value, ctx) => {
+
+            let datasets = ctx.chart.data.datasets;
+            let sum = 0;
+            let percentage = 0
+            if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+                
+                datasets.map(dataset => {
+                    sum += dataset.data[ctx.dataIndex];
+                });
+                 percentage  = Math.round((value / sum) * 100) + '%';
+                return percentage;
+            } else {
+                return percentage;
+            }
+        },
+        color: '#fff',
+             }
+},
   legend: {
     display: true,
     position : 'bottom',
-}
+},
+tooltips: {
+  callbacks: {
+    label: function(tooltipItem, data) {
+      var dataset = data.datasets[tooltipItem.datasetIndex];
+      var meta = dataset._meta[Object.keys(dataset._meta)[0]];
+      var total = meta.total;
+      var currentValue = dataset.data[tooltipItem.index];
+      var percentage = parseFloat((currentValue/total*100).toFixed(1));
+      return currentValue + ' (' + percentage + '%)';
+    },
+    title: function(tooltipItem, data) {
+      return data.labels[tooltipItem[0].index];
+    }
+  }
+},
+
 }
 
 const option = {
@@ -405,6 +448,24 @@ const Resetfilter = async ()=>{
    }
    getclidatastat()
 }
+
+
+const plugins = [{
+  beforeDraw: function(chart) {
+   var width = chart.width,
+       height = chart.height,
+       ctx = chart.ctx;
+       ctx.restore();
+       var fontSize = (height / 160).toFixed(2);
+       ctx.font = fontSize + "em sans-serif";
+       ctx.textBaseline = "top";
+       var text = "Foo-bar",
+       textX = Math.round((width - ctx.measureText(text).width) / 2),
+       textY = height / 2;
+       ctx.fillText(text, textX, textY);
+       ctx.save();
+  } 
+}]
       
     return (
 <>
@@ -420,7 +481,7 @@ const Resetfilter = async ()=>{
              <div  className="row col-12 justify-content-end  mb-4">
              <button className="btn-Filter cardstat mr-1"  style={{width:50 , height : 50}}> <div onClick={()=>{toggle()}}><i class="fas fa-filter "></i><small  className="text-capitalize">filter</small></div></button>
              {filteron ? (  <button className="btn-Filter cardstat mr-2"  style={{width:50 , height : 50}}><Tooltip title="supprimer le filtre"><IconButton aria-label="delete" onClick={()=>{Resetfilter()}}><CloseIcon style={{color : "white"}}/></IconButton></Tooltip></button>): null }
-             <button className="btn-export cardstat text-capitalize" onClick={(e)=>{exportPNG()}} style={{width:"20%"}} >Exporter sous format png  <i class="fas fa-file-export ml-1" style={{color:"#2DCD94"}}></i></button> 
+             <button className="btn-export cardstat text-capitalize" onClick={(e)=>{exportPNG()}} style={{width:"5%"}} ><i class="fas fa-file-export fa-2x ml-1" style={{color:"#2DCD94"}}></i></button> 
             </div>
             {
               apidata.colture !== undefined ? <Equipeheader data={apidata} />: null
@@ -443,7 +504,7 @@ const Resetfilter = async ()=>{
                     <p className="card-title mt-3">top 5 client</p>
                     <Divider />
                       <div className="card-body">
-                        <Pie data={piedata} options={option2} width={50} height={45}/>
+                        <Pie data={piedata} options={option2} width={50} plugins={plugins} height={45}/>
                       </div>
                       </div>
 

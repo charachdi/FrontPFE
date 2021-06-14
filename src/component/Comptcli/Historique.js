@@ -18,9 +18,9 @@ function Historique(props) {
     const [open, setopen] = useState(false)
     const [selectedrow, setselectedrow] = useState({
       User : null,
-      Requete : {
-        Modirequete : {}
-      }
+      Requete : {},
+      Before : {},
+      After : {}
     })
 
     const toggle = () =>{
@@ -121,69 +121,58 @@ function Historique(props) {
           
 
           
-           <MDBModal isOpen={open} toggle={()=>toggle()} size="lg" centered   >
+            <MDBModal isOpen={open} toggle={()=>toggle()} size="lg" centered   >
            <MDBModalBody>
               <form className="row col-12 justify-content-center ml-1" >
 
                 <div className="col-6 " style={{ borderRadius:15}}>
 
-                <div className="d-flex flex-row col-12 justify-content-center mb-3">
-                  <Avatar src={selectedrow.User ? selectedrow.User.user_img : ""}/>
-                  <span className="mt-2 ml-3">
-                  {selectedrow.User ? selectedrow.User.full_name :""}
-                  </span>
-                </div><br/>
 
 
                 <div  className="d-flex flex-row text-center" style={{fontSize :12}}>
-                <span className="mr-4" > Status :  </span><p style={{color : selectedrow.Requete.Statut !== selectedrow.Requete.Modirequete.Statut ? 'green' : ""}}>{selectedrow.Requete ? selectedrow.Requete.Statut :""}</p>   
+                <span className="mr-4" > Status :  </span><p style={{color : selectedrow.Before.Statut !== selectedrow.After.Statut ? 'green' : ""}}>{selectedrow.After ? selectedrow.After.Statut :""}</p>   
                 </div><br />
 
                 <div  className="d-flex flex-row" style={{fontSize :12}}>
-                <span className="mr-4" > Origine de la requete : </span> <p style={{color : selectedrow.Requete.Origine_de_la_requete !== selectedrow.Requete.Modirequete.Origine_de_la_requete ? 'green' : ""}}>{selectedrow.Requete ? selectedrow.Requete.Origine_de_la_requete : ""}</p> 
+                <span className="mr-4" > Origine de la requete : </span> <p style={{color : selectedrow.Before.Origine_de_la_requete !== selectedrow.After.Origine_de_la_requete ? 'green' : ""}}>{selectedrow.After ? selectedrow.After.Origine_de_la_requete : ""}</p> 
                 </div><br />
 
                 <div  className="d-flex flex-row" style={{fontSize :12}}>
-                <span className="mr-4" > Famille de demande  :</span> <p style={{color : selectedrow.Requete.Famille_de_demande_RC !== selectedrow.Requete.Modirequete.Famille_de_demande_RC ? 'green' : ""}}>{selectedrow.Requete ? selectedrow.Requete.Famille_de_demande_RC : "" }</p> 
+                <span className="mr-4" > Famille de demande  :</span> <p style={{color : selectedrow.Before.Famille_de_demande_RC !== selectedrow.After.Famille_de_demande_RC ? 'green' : ""}}>{selectedrow.After ? selectedrow.After.Famille_de_demande_RC : "" }</p> 
                 </div><br />
 
                 <div  className="d-flex flex-row" style={{fontSize :12}}>
-                <span className="mr-4" > Motifs de resiliation : </span>   <p style={{color : selectedrow.Requete.Motifs_de_resiliation !== selectedrow.Requete.Modirequete.Motifs_de_resiliation ? 'green' : ""}}>{selectedrow.Requete ? selectedrow.Requete.Motifs_de_resiliation : ""}</p>
+                <span className="mr-4" > Motifs de resiliation : </span>   <p style={{color : selectedrow.Before.Motifs_de_resiliation !== selectedrow.After.Motifs_de_resiliation ? 'green' : ""}}>{selectedrow.After ? selectedrow.After.Motifs_de_resiliation : ""}</p>
                 </div><br />
 
                 <div  className="d-flex flex-row" style={{fontSize :12}}>
-                <span className="mr-2" > Type de la demande : </span> <p style={{color : selectedrow.Requete.Type_de_la_demande_RC !== selectedrow.Requete.Modirequete.Type_de_la_demande_RC ? 'green' : ""}}>{selectedrow.Requete ? selectedrow.Requete.Type_de_la_demande_RC :""}</p>   
+                <span className="mr-2" > Type de la demande : </span> <p style={{color : selectedrow.Before.Type_de_la_demande_RC !== selectedrow.After.Type_de_la_demande_RC ? 'green' : ""}}>{selectedrow.After ? selectedrow.After.Type_de_la_demande_RC :""}</p>   
 
                 </div><br />
                 </div>
 
                 <div className="col-6 border-left " style={{  borderRadius:15}}>
-                <div className="d-flex flex-row  style={{fontSize :12}}col-12 justify-content-center mb-3">
-                  <Avatar src={selectedrow.User ? selectedrow.User.user_img : ""}/>
-                  <span className="mt-2 ml-3">
-                  {selectedrow.User ? selectedrow.User.full_name :""}
-                  </span>
-                </div><br/>
+               
 
                 
                 <div  className="d-flex flex-row" style={{fontSize :12}}>
-                <span className="mr-4" > Status :</span><p style={{color : selectedrow.Requete.Statut !== selectedrow.Requete.Modirequete.Statut ? 'red' : ""}}>{selectedrow.Requete.Modirequete ? selectedrow.Requete.Modirequete.Statut :""}</p>   
+                <span className="mr-4" > Status :</span><p style={{color : selectedrow.Before.Statut !== selectedrow.After.Statut ? 'red' : ""}}>{selectedrow.Requete.Modirequete ? selectedrow.Requete.Modirequete.Statut :""}</p>   
                 </div><br />
 
                 <div  className="d-flex flex-row" style={{fontSize :12}}>
-                <span className="mr-4" > Origine de la requete :  </span> <p style={{color : selectedrow.Requete.Origine_de_la_requete !== selectedrow.Requete.Modirequete.Origine_de_la_requete ? 'red' : ""}}>{selectedrow.Requete.Modirequete ? selectedrow.Requete.Modirequete.Origine_de_la_requete : ""}</p> 
+                <span className="mr-4" > Origine de la requete :  </span> <p style={{color : selectedrow.Before.Origine_de_la_requete !== selectedrow.After.Origine_de_la_requete ? 'red' : ""}}>{selectedrow.Before ? selectedrow.Before.Origine_de_la_requete : ""}</p> 
                 </div><br />
 
                 <div  className="d-flex flex-row" style={{fontSize :12}}>
-                <span className="mr-4" > Famille de demande :  </span> <p style={{color : selectedrow.Requete.Famille_de_demande_RC !== selectedrow.Requete.Modirequete.Famille_de_demande_RC ? 'red' : ""}}>{selectedrow.Requete.Modirequete ? selectedrow.Requete.Modirequete.Famille_de_demande_RC : ""}</p> 
+                <span className="mr-4" > Famille de demande :  </span> <p style={{color : selectedrow.Before.Famille_de_demande_RC !== selectedrow.After.Famille_de_demande_RC ? 'red' : ""}}>{selectedrow.Before ? selectedrow.Before.Famille_de_demande_RC : ""}</p> 
                 </div><br />
 
                 <div  className="d-flex flex-row" style={{fontSize :12}}>
-                <span className="mr-4" > Motifs de resiliation :  </span >   <p style={{color : selectedrow.Requete.Motifs_de_resiliation !== selectedrow.Requete.Modirequete.Motifs_de_resiliation ? 'red' : ""}}>{selectedrow.Requete.Modirequete ? selectedrow.Requete.Modirequete.Motifs_de_resiliation :""}</p>
+                <span className="mr-4" > Motifs de resiliation :  </span >   <p style={{color : selectedrow.Before.Motifs_de_resiliation !== selectedrow.After.Motifs_de_resiliation ? 'red' : ""}}>{selectedrow.Before ? selectedrow.Before.Motifs_de_resiliation :""}</p>
                 </div><br />
 
                 <div  className="d-flex flex-row" style={{fontSize :12}}>
-                <span className="mr-2" > Type de la demande :  </span> <p style={{color : selectedrow.Requete.Type_de_la_demande_RC !== selectedrow.Requete.Modirequete.Type_de_la_demande_RC ? 'red' : ""}}>{selectedrow.Requete.Modirequete ?selectedrow.Requete.Modirequete.Type_de_la_demande_RC : ""}</p>   
+                <span className="mr-2" > Type de la demande :  </span> <p style={{color : selectedrow.Before.Type_de_la_demande_RC !== selectedrow.After.Type_de_la_demande_RC ? 'red' : ""}}>{selectedrow.Before ?selectedrow.Before.Type_de_la_demande_RC : ""}</p>   
 
                 </div><br />
                 </div>
@@ -193,7 +182,7 @@ function Historique(props) {
 
               </form>
               </MDBModalBody>
-              </MDBModal>
+              </MDBModal> 
 
               
         </div>
