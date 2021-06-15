@@ -130,7 +130,7 @@ function RHdemande() {
       },
         {
             key: "Primes",
-            text: "Primes",
+            text: "Prime",
             className : "table-ssmall text-center",
             cell: (demande, index) => {
               return (
@@ -256,7 +256,7 @@ function RHdemande() {
                 ) : (
                     <>
               <h4 class="no-margin-bottom">Liste des demandes de congé</h4>
-    <Alert severity="info" className="mb-3">Les demandes de congé doivent être validé par un responsable des ressources humaines pour aboutir.</Alert>
+    <Alert severity="info" className="mb-3">Les demandes de congé doivent être validées par un responsable des ressources humaines pour les aboutir.</Alert>
                 <ReactDatatable
                 config={config}
                 records={demandes}
@@ -265,7 +265,7 @@ function RHdemande() {
 <hr />
 <h4 class="no-margin-bottom mt-4">Liste des demandes de prime</h4>
  
- <Alert severity="info" className="mb-3">Les demandes de primes doivent être validé par un responsable des ressources humaines pour aboutir.</Alert>
+ <Alert severity="info" className="mb-3">Les demandes de prime doivent être validées par un responsable des ressources humaines pour les aboutir.</Alert>
 
                 <ReactDatatable
                 config={config}

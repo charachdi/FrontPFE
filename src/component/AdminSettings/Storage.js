@@ -163,7 +163,7 @@ function Storage() {
     
         <div className="row mb-2 mt-2 justify-content-center"> 
         <div id="addbtn" className="col-4 mb-2 " >  
-            <button className="btn-add cardstat text-capitalize" onClick={()=>toggle(!open)} style={{width:"100%"}}><i class="fas fa-plus mr-2"></i>Ajouter une base de donnée</button>
+            <button className="btn-add cardstat text-capitalize" onClick={()=>toggle(!open)} style={{width:"100%"}}><i class="fas fa-plus mr-2"></i>Ajouter une base de données</button>
              </div>
         </div>
         <table className="table table-bordered ">

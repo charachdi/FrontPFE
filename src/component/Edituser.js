@@ -250,20 +250,20 @@ const handelchangebanned = async()=>{
                 onChange={(e)=>{setlevel(e.target.value); if(e.target.value==="Chef Service"){setdiasbled(true)}else{setdiasbled(false)}}}
               >
                 {
-                  level === "Chef Service" ?  <MenuItem value={"Chef Service"}>Chef Service</MenuItem> : null
+                  level === "Chef Service" ?  <MenuItem value={"Chef Service"}>Chef de service</MenuItem> : null
                 }
                 {
                   level === "admin" ?  <MenuItem value={"admin"}>admin</MenuItem> : null
                 }
                 {
-                  level === "Chef equipe" ?  <MenuItem value={"Chef equipe"}>Chef équipe</MenuItem> : null
+                  level === "Chef equipe" ?  <MenuItem value={"Chef equipe"}>Chef d'équipe</MenuItem> : null
                 }
                 {
                   level === "Chef equipe" ?  <MenuItem value={"Collaborateur"}>Collaborateur</MenuItem> : null
                 }
 
                 {
-                  level === "Collaborateur" ?  <MenuItem value={"Chef equipe"}>Chef équipe</MenuItem> : null
+                  level === "Collaborateur" ?  <MenuItem value={"Chef equipe"}>Chef d'équipe</MenuItem> : null
                 }
                 {
                   level === "Collaborateur" ?  <MenuItem value={"Collaborateur"}>Collaborateur</MenuItem> : null
@@ -304,7 +304,7 @@ const handelchangebanned = async()=>{
                     select
                     size="small"
                     label="equipe"
-                    helperText="select equipe"
+                    helperText="Sélectionner l'équipe"
                     value={usereq}
                     onChange={(e)=>{setusereq(e.target.value)}}
                   >

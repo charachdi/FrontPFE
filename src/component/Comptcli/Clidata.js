@@ -402,7 +402,7 @@ function Clidata(props) {
 
 
             <div className="card col-4 mt-3 cardstat "  style={{width:"30%"}}>
-                <p className="card-title mt-3">Nombre de requête par jour</p>
+                <p className="card-title mt-3">Nombre des requêtes par jour</p>
               <Divider />
                 <div className="card-body">
                     <Bar data={bardata} width={30}  height={20}/>
@@ -410,7 +410,7 @@ function Clidata(props) {
             </div>
 
             <div className="card col-4 mt-3 cardstat "  style={{width:"30%"}}>
-                <p className="card-title mt-3">Total de requêtes par collaborateurs</p>
+                <p className="card-title mt-3">Total des requêtes par collaborateur</p>
               <Divider />
                 <div className="card-body">
                 <Pie data={piedata} options={pieoption}  width={30}  height={20} />
@@ -419,7 +419,7 @@ function Clidata(props) {
 
 
             <div className="card col-4 mt-3 cardstat "  style={{width:"30%"}}>
-                <p className="card-title mt-3">Origin des requêtes</p>
+                <p className="card-title mt-3">Origine des requêtes</p>
               <Divider />
                 <div className="card-body">
                 <Bar data={bardataorigin} width={30}  height={20}/>
@@ -429,7 +429,7 @@ function Clidata(props) {
 
           
             <div className="card col-12 mt-3 cardstat " >
-                <p className="card-title mt-3">Total de requête par jour et par collaborateur</p>
+                <p className="card-title mt-3">Total des requêtes par jour et par collaborateur</p>
               <Divider />
                 <div className="card-body">
                 <Line data={linedata} options={lineoption}  width={160}  height={50} />

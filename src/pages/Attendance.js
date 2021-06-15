@@ -278,7 +278,7 @@ function Attendance (props) {
           <>
           <header class="page-header">
           <div class="container-fluid">
-            <h2 class="no-margin-bottom">Présances</h2>
+            <h2 class="no-margin-bottom">Présence</h2>
           </div>
         </header>
        
@@ -351,7 +351,7 @@ function Attendance (props) {
                   <thead>
                   <tr>
                     <th className="text-center">Employé</th>
-                    <th className="text-center">Présance</th>
+                    <th className="text-center">Présence</th>
                     <th className="text-center">Commentaire</th>
                   </tr>
                   </thead>

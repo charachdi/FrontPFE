@@ -449,7 +449,7 @@ const Resetfilter = async ()=>{
 
              
                <div className="card col-lg-4 col-12 mt-3 cardstat"  style={{width:"30%"}}>
-                    <p className="card-title mt-3">Requête par origin</p>
+                    <p className="card-title mt-3">Requête par origine</p>
                     <Divider />
                       <div className="card-body">
                       <Bar options={baroptionorigin} data={bardataorigin}  width={50} height={45}/>

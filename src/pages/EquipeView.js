@@ -485,7 +485,7 @@ const switchtoarchive= () =>{
         <div id="Fileview" className="" style={{display:"none" , minHeight:600}} >
         <div className="row col-12 justify-content-center"  >
         
-        <button className="btn-add cardstat text-capitalize" style={{width : "45%"}} color="primary" onClick={(e)=>{toggle()}} startIcon={<CloudUploadIcon />}>
+        <button className="btn-add cardstat text-capitalize" style={{width : "100%"}} color="primary" onClick={(e)=>{toggle()}} startIcon={<CloudUploadIcon />}>
         Télécharger un fichier 
       </button>
       

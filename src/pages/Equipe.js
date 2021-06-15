@@ -138,7 +138,7 @@ function Equipe(props) {
       },
       {
         key: "",
-        text: "Member d'equipe",
+        text: "Equipe",
         className : "table-mid text-center",
         cell: (equipe, index) => {
           return (
@@ -616,7 +616,7 @@ const createPrime = async ()=>{
                               <table className="table  ">
             <thead style={{backgroundColor: "#E9ECEF" , color : "black"}} >
                 <tr className="text-center">
-                    <th>Employee</th>
+                    <th>Employé</th>
                     <th>Prime</th>
                     <th>Bonus</th>
                     <th>Commentaire</th>

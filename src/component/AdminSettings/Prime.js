@@ -80,7 +80,7 @@ function Prime() {
         
         <div className=" mt-3 ">
             <h4>Parametrage des primes</h4>
-            <p>Les primes et les bonus doivent être paramétré à l'avance</p>
+            <p>Les primes et les bonus doivent être paramétrés à l'avance</p>
             <Divider />
   <table className="table table-bordered ">
             <thead style={{backgroundColor: "#767192" , color : "white"}} >

@@ -58,7 +58,7 @@ function Archive(props) {
         <div>
            <div className="container-fluid  mt-3 mb-3">
                     <h2 class="no-margin-bottom text-capitalize">paramétrage de l'archivage</h2>
-                    <Alert severity="info" className="mb-3">L'archivage doit être paramétrer à l'avance .</Alert>
+                    <Alert severity="info" className="mb-3">L'archivage doit être paramétré à l'avance .</Alert>
            </div>
             <div className="row col-12 justify-content-start">
             <span className="mt-5 mr-3">pourcentage minimum de progression à atteindre pour pouvoir archiver</span>
@@ -85,7 +85,7 @@ function Archive(props) {
 
 
         <div className="row col-12 justify-content-start mt-3">
-            <span className="mt-5 mr-3">Nombre minimum de requêtes achevé pour pouvoir archiver</span>
+            <span className="mt-5 mr-3">Nombre minimum des requêtes achevées pour pouvoir archiver</span>
            <TextField
            size="small"
            style={{maxWidth:50}}

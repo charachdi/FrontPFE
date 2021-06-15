@@ -381,7 +381,7 @@ function UserView(props) {
     },
     {
       key: "",
-      text: "progres",
+      text: "progrès",
       className : "text-center",
       cell: (client, index) => {
         return (
@@ -689,7 +689,7 @@ function UserView(props) {
     
     
                           <div className="card col-4 mt-3 cardstat " >
-                        <p className="card-title mt-3 text-center">Origin des requêtes</p>
+                        <p className="card-title mt-3 text-center">Origine des requêtes</p>
                         <Divider />
                           <div className="card-body">
                           <Bar  data={bardata} options={baroption} width={10} height={8}/>
@@ -718,7 +718,7 @@ function UserView(props) {
     
     
                         <div className=" col-4 mt-5 justify-content-center  ">
-                        <p className="card-title text-center">Présance de l'employé</p>
+                        <p className="card-title text-center">Présence de l'employé</p>
                         <Divider style={{width:329}} className=" ml-4 "/>
                         <DateRange
                           className="cardstat ml-4"
