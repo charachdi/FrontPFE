@@ -158,7 +158,7 @@ function Equipe(props) {
 
               {
                   equipe.Primes[0] ? (
-                    <IconButton size="small" className="float-center mr-3" aria-label="eye" style={{color :"#388e3c"}} onClick={(e)=>{ setequipedemande(equipe.Primes[0]) ; setprimeopen(!primeopen)}} >
+                    <IconButton size="small" className="float-center mr-3" aria-label="eye" style={{color :"#388e3c"}} onClick={(e)=>{ setequipedemande(equipe.Primes[0]);console.log(equipe.Primes[0]) ; setprimeopen(!primeopen)}} >
                     <Visibility />
                     </IconButton> 
                   ) : (
@@ -438,7 +438,7 @@ const getequipeprime = async (id)=>{
 
 
 
-const createPrime = async ()=>{
+const createPrime = async (id)=>{
   const data = {
     Prime : {
         eqId :equipedemande.eqid,
@@ -451,7 +451,7 @@ const createPrime = async ()=>{
   const res = await axios({
     headers: {'Authorization': `Bearer ${token}`},
     method: 'post',
-    url : `${Api_url}Demande/equipe/prime`,
+    url : `${Api_url}Demande/equipe/prime/${equipedemande.eqid}`,
     data
   })
   setprimeopen(!primeopen)
@@ -654,7 +654,7 @@ const createPrime = async ()=>{
                         <div className="d-flex justify-content-center">
                         {/* <Alert severity="success" className="text-center  mr-4">votre demande sera traitée</Alert> */}
                         <div className="row col-12 justify-content-center">
-                            <button  className="btn-add cardstat text-capitalize"  onClick={()=>createPrime()} style={{width:"30%" }}>Valider</button>
+                            <button  className="btn-add cardstat text-capitalize"  onClick={()=>createPrime(equipedemande.EquipeId)} style={{width:"30%" }}>Valider</button>
                         </div> 
                        </div>
                        
@@ -683,7 +683,7 @@ const createPrime = async ()=>{
                              </IconButton>
                            
                              </div><br />
-                             <IconButton size="medium" className="ml-5" style={{color:"white" , backgroundColor :"#f2c857"}}>
+                             <IconButton size="medium" className="ml-5" style={{color:"white" , backgroundColor :"#f2c857"}} onClick={()=>{getequipeprime(equipedemande.EquipeId)}} >
                               <ReplayIcon />
                              </IconButton>
                           </>
