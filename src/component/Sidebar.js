@@ -19,7 +19,7 @@ import Editrequete from './../component/Notification/Editrequete'
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
-    right: -25,
+    right: -15,
     top: 15,
     padding: '0 4px',
   },
@@ -284,7 +284,7 @@ const [current, setcurrent] = useState("")
             current === "admin" ? (
          
           <li className={active === 7 ? "d-flex flex-row active" : "d-flex flex-row"} onClick={()=>{setactive(7)}}>
-              <a className="text-left hover" onClick={()=>{history.push("/Demandes")}}><i class="fas fa-clipboard-list mr-3"></i>RH</a>
+              <a className="text-left hover" onClick={()=>{history.push("/Demandes")}}><i class="fas fa-clipboard-list mr-3"></i>Demande</a>
               <StyledBadge  badgeContent={count} color="error" />
           </li>
             ) : (

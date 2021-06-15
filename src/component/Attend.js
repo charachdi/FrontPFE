@@ -52,6 +52,7 @@ function Attend(props) {
       }
 
       const Rendericon = ()=>{
+        
         if(attend.id !== 0){
             if(attend.Conge){
               return(
@@ -66,7 +67,7 @@ function Attend(props) {
               return (
                 <>
                 <i class="fas fa-check fa-2x mx-auto cursor" style={{color: attend.Present ? "#2dcd94" : "gray" }} onClick={()=>{send.Absent = false ;send.Retard = false ;send.Present = true ;Updatepresance(send)}}></i>
-                <i class="fas fa-ban fa-2x mx-auto cursor"style={{color: attend.Absent ? "#F40010" : "gray" }} onClick={()=>{send.Absent = true ;attend.Absent = true ;send.Retard = false ;send.Present = false ;Updatepresance(send)}} > </i>
+                <i class="fas fa-ban fa-2x mx-auto cursor"style={{color: attend.Absent ? "#F40010" : "gray" }} onClick={()=>{send.Absent = true ;send.Retard = false ;send.Present = false ;Updatepresance(send)}} > </i>
                 <i class="fas fa-exclamation-circle fa-2x  mx-auto cursor" style={{color: attend.Retard ? "#fedb1a" : "gray" }}  onClick={()=>{send.Absent = false ;send.Retard = true ;send.Present = false ;Updatepresance(send)}}> </i>
                 <i class="fas fa-mug-hot fa-2x mx-auto cursor" style={{color:attend.Conge ? "#767192" : "gray" }}> </i>
                 </>
