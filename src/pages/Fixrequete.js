@@ -239,7 +239,8 @@ function Fixrequete() {
                     Requetes.filter(item => item.id !== res.data.updatedreq.id)
                    )
           }else if (res.status === 201){
-            toast.error(`${res.data.message}`, {
+            toggle()
+            toast.success(`Requete Modifier`, {
               position: "top-right",
               autoClose: 3000,
               hideProgressBar: false,
@@ -247,6 +248,13 @@ function Fixrequete() {
               pauseOnHover: false,
               draggable: true,
               });
+            setRequetes(
+              Requetes.map(req => 
+                req.id === res.data.updatedreq.id
+                ?  res.data.updatedreq
+                :   req
+                )
+            )
 
           }
 

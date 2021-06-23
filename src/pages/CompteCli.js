@@ -41,6 +41,7 @@ function CompteCli(props) {
 
     const [exportauth , setexportauth] = useState(false)
     const [Writeauth, setWriteauth] = useState(false)
+    const [Deleteauth, setDeleteauth] = useState(false);
 
     const [profimg, setprofimg] = useState({})
     const [proftheme, setproftheme] = useState({})
@@ -126,6 +127,9 @@ function CompteCli(props) {
             if(au.Permission.Write === 'true'){
               setWriteauth(true)
          }
+           if(au.Permission.import === 'true'){
+          setDeleteauth(true)
+            }
             
           }
      });
@@ -608,7 +612,7 @@ const addrequte = (req)=>{
    </div>
 
    <div id="requetetab" style={{display: exportauth ? "none": "block"}} className="row col-12 mb-2">
-     <Requete Requetelist={requete} deletereq={deleterequete} updatereq={updaterequete} auth={Writeauth} admin={isadchef} clientID={client_id} clientname={client.Nom_compteCli} add={addrequte} />
+     <Requete Requetelist={requete} deletereq={deleterequete} updatereq={updaterequete} auth={Writeauth} deleteau={Deleteauth} admin={isadchef} clientID={client_id} clientname={client.Nom_compteCli} add={addrequte} />
    </div>
 
    <div id="historitab" style={{display: "none" , minHeight : 600}} className="row col-12 justify-content-center mb-2">
