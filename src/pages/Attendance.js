@@ -117,7 +117,7 @@ function Attendance (props) {
       M :result[1] ,
       d :result[2] ,
     }
-    console.log(date)
+    
     if(parseInt(result[1]) < 9 ){
       date.M =  result[1].substring(1)
     }

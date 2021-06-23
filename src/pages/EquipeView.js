@@ -27,6 +27,7 @@ import Import from './../images/import.json'
 import Fileempty from './../images/fileempty.json'
 import {socket} from './../Socket/Socket'
 import ReactDatatable from '@ashvin27/react-datatable';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
@@ -168,7 +169,14 @@ const updatearchive = async (prog , req)=>{
 })
 
 if(res.status === 200){
- 
+  toast.success(`Archive modifier`, {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    });
   setarchive({...archive , Prog : res.data.newar.Prog , requete: res.data.newar.requete })
   console.log(archive)
 

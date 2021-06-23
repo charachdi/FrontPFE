@@ -51,11 +51,12 @@ const ExampleCustomInput = forwardRef(
       {value}
     </button>
   ))
+ 
 
 const [reqete, setreqete] = useState({
   Statut : "",
   Origine_de_la_requete : "",
-  Heure_douverture : "",
+  Heure_douverture : new Date(),
   Type_de_la_demande_RC : "",
   Famille_de_demande_RCtut : "",
   Motifs_de_resiliation : "",
@@ -169,6 +170,7 @@ const [column, setcolumn] = useState([
     cell: (req, index) => {
       return (
         <>
+         <div className="d-flex flex-row">
         {
         props.auth ? (
             <IconButton className="float-right mr-3" size="small" aria-label="delete" color="primary" onClick={()=>{setselectedrow(req);toggle();setdis(TextareaAutosize)}}>
@@ -179,6 +181,14 @@ const [column, setcolumn] = useState([
         )
         }
 
+      {
+          props.deleteau ? (
+            <IconButton className="float-right mr-3" size="small" aria-label="delete" color="secondary" onClick={()=>{setdeleteselcted(req.id);toggledelete()}}>
+             <DeleteIcon />
+             </IconButton>
+          ) : null
+        }
+      </div>
       {
         props.admin ? (
           <div className="d-flex flex-row">
@@ -194,6 +204,8 @@ const [column, setcolumn] = useState([
             null
         )
         }
+
+       
 
         
 
@@ -262,10 +274,22 @@ const addrequete = async ()=>{
 return (
     <div id='requetetable' className="row col-12 justify-content-center">
 <div className="mt-3 mb-3 col-3">
-<button variant="contained" className="btn-add cardstat text-capitalize" startIcon={<AddIcon />} onClick={()=>setopenadd(!openadd)}>
-    <i class="fas fa-plus mr-2"></i>Ajouter une nouvelle requête
-</button>
 
+  {
+    props.auth ? (
+      <button variant="contained" className="btn-add cardstat text-capitalize" startIcon={<AddIcon />} onClick={()=>setopenadd(!openadd)}>
+    <i class="fas fa-plus mr-2"></i>Ajouter une nouvelle requête
+      </button>
+    ) : null
+  }
+
+{
+    props.admin ? (
+      <button variant="contained" className="btn-add cardstat text-capitalize" startIcon={<AddIcon />} onClick={()=>setopenadd(!openadd)}>
+    <i class="fas fa-plus mr-2"></i>Ajouter une nouvelle requête
+      </button>
+    ) : null
+  }
 </div>
      <ReactDatatable
                 config={config}
@@ -337,6 +361,7 @@ return (
                                         label=""
                                         type="datetime-local"
                                         defaultValue="2017-05-24T10:30"
+                                        onChange={(e)=>{setreqete({...reqete , Heure_douverture : e.target.value});setdis(false)}}
                                       
                                         InputLabelProps={{
                                           shrink: true,

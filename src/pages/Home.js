@@ -247,7 +247,7 @@ return (
       ) : (
         <div id="account-box" className="row col-12 justify-content-center "  >
           <AccountTabs />
-            <div id="user-list" className="col-xl-3  mr-4" style={{backgroundColor :'#E9ECEF' , borderRadius : 25 }}>
+            <div id="user-list" className="col-xl-3  mr-4" style={{ borderRadius : 25 }}>
             {users.map((user, index) => (
 
 

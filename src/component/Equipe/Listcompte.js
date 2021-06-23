@@ -43,7 +43,7 @@ props.updatear(id)
 
     }
     loading_screen()
-  }, [])
+  }, [props.archive])
 
 
 
