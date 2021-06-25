@@ -273,6 +273,9 @@ return (
                         {
                           user.user_level === "RH" ? "Responsable des ressources humaines" : null
                         }
+                        {
+                          user.user_level === "DG" ? "Directeur Général" : null
+                        }
                        </h6>
                      </div>
                  </div>
@@ -308,8 +311,6 @@ return (
                 </TextField>
               </div>
 
-
-             
               <br />
               <div className="row" >
                <TextField
@@ -323,35 +324,27 @@ return (
                 value={level}
                 onChange={(e)=>{setlevel(e.target.value); if(e.target.value==="Chef Service"){seteqdisabled(true)}else{seteqdisabled(false)}}}
               >
-
-
                 {
                   user.user_level !== "Chef Service" ? <MenuItem value={"admin"}>Administrateur</MenuItem> : null
                 }
-                
                 {
                   user.user_level !== "Chef Service" ? <MenuItem value={"Chef Service"}>Chef de service</MenuItem> : null
                 }
-
                 {
                   user.user_level !== "Chef Service" ? <MenuItem value={"Chef equipe"}>Chef d'équipe</MenuItem> : null
                 }
-
                 {
                   user.user_level !== "Chef Service" ? <MenuItem value={"Collaborateur"}>Collaborateur</MenuItem> : null
                 }
-
                 {
                   user.user_level !== "Chef Service" ? <MenuItem value={"RH"}>Responsable des ressources humaines</MenuItem> : null
                 }
-
-
-
-
+                {
+                  user.user_level !== "Chef Service" ? <MenuItem value={"DG"}>Directeur Général</MenuItem> : null
+                }
                 {
                   user.user_level === "Chef Service" ? <MenuItem value={"Chef equipe"}>Chef d'équipe</MenuItem> : null
                 }
-
                 {
                   user.user_level === "Chef Service" ? <MenuItem value={"Collaborateur"}>Collaborateur</MenuItem> : null
                 }

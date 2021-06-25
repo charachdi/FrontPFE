@@ -27,6 +27,7 @@ function Listcompte(props) {
 //    props.clients
 const [loading, setloading] = useState(true)
 const history = useHistory();
+const user =  JSON.parse(localStorage.getItem('user'))
 
 
 const update = (id)=>{
@@ -67,9 +68,11 @@ props.updatear(id)
       text: "archive",
       cell: (client, index) => {
         return (
-          <>
-             <Archive client={client} ar={props.archive} update={update}/>
-           </>
+          user.user_level !== "DG" ? (
+            <>
+           <Archive client={client} ar={props.archive} update={update}/>
+            </>
+          ) : null
         );
     }
     },

@@ -146,6 +146,15 @@ function Login() {
             $("#sidebar").show();
           }, 1500);
         }
+      }else {
+        toast.error('email ou mot de passe incorrect', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          });
       }
     });
   };
@@ -163,93 +172,6 @@ function Login() {
         draggable
         pauseOnHover
       />
-      {/* <img className="wave" />
-      
-      <div className="container " style={{ height: "80vh" }}>
-        <div className="img">
-       
-        </div>
-        <div className="login-content">
-          <form action="index.html">
-            <img src={etai} style={{width:"150px", height:"200px" }} />
-            <h2 className="title">Bienvenue</h2>
-            <div className="input-div one">
-              <div className="i">
-                <i className="fas fa-user"></i>
-              </div>
-              <div className="div">
-                <h5>Email</h5>
-                <input
-                  type="email"
-                  id="email"
-                  className="input"
-                  value={email}
-                  onChange={(e) => {
-                    changeemail(e.target.value);
-                  }}
-                  aria-describedby={emailpopopen ? "email" : undefined}
-                  onClick={(e) => {
-                    setAnchorEl(e.currentTarget);
-                  }}
-                  required
-                />
-              </div>
-            </div>
-            <Popover
-              id={email}
-              className="ml-3"
-              onClose={() => {
-                setemailpopopen(false);
-              }}
-              open={emailpopopen}
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "center",
-                horizontal: "right",
-              }}
-            >
-              {error.email.err ? (
-                <p className="mx-5" style={{ color: "red" }}>
-                  {error.email.message}
-                </p>
-              ) : null}
-            </Popover>
-
-            <div className="input-div pass">
-              <div className="i">
-                <i className="fas fa-lock"></i>
-              </div>
-              <div className="div">
-                <h5>Mot de passe</h5>
-                <input
-                  type="password"
-                  id="password"
-                  className="input"
-                  value={pwd}
-                  onChange={(e) => {
-                    changepwd(e.target.value);
-                  }}
-                  aria-describedby={pwdpopopen ? "pwd" : undefined}
-                  onClick={(e) => {
-                    setAnchorEl(e.currentTarget);
-                  }}
-                  required
-                />
-              </div>
-            </div>
-
-            <input
-              type="submit"
-              className="btn"
-              value="Login"
-              onClick={(e) => {
-                handellogin(e);
-              }}
-              disabled={disabled}
-            />
-          </form>
-        </div>
-      </div> */}
 <div class="limiter">
 		<div class="container-login100" style={{backgroundImage: `url(${wave})`  }}>
     
@@ -288,14 +210,6 @@ function Login() {
                   required/>
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
-
-					{/* <div class="contact100-form-checkbox">
-						<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me" />
-						<label class="label-checkbox100" for="ckb1">
-							Se souvenir de moi
-						</label>
-					</div> */}
-
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn"value="Login"
               onClick={(e) => {

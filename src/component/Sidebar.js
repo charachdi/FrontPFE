@@ -195,9 +195,30 @@ const [current, setcurrent] = useState("")
             )
           }
 
+          {
+            current === "DG" ? (
+              <li className={active === 1 ? 'active' : null} onClick={()=>{setactive(1)}}>
+              <a className="text-left hover" onClick={()=>{history.push("/equipe")}}><span className="fa fa-user mr-3"></span>Equipes</a>
+          </li>
+            ) : (
+              null
+            )
+          }
+
+
 
 {
             current === "admin" ? (
+              <li className={active === 2 ? 'active' : null} onClick={()=>{setactive(2)}}>
+              <a className="text-left hover" onClick={()=>{history.push("/service")}}><span className="fa fa-cogs mr-2"></span> Services</a>
+            </li>
+            ) : (
+              null
+            )
+          }
+
+{
+            current === "DG" ? (
               <li className={active === 2 ? 'active' : null} onClick={()=>{setactive(2)}}>
               <a className="text-left hover" onClick={()=>{history.push("/service")}}><span className="fa fa-cogs mr-2"></span> Services</a>
             </li>
@@ -229,6 +250,16 @@ const [current, setcurrent] = useState("")
               null
             )
           }
+
+    {
+            current === "DG" ? (
+              <li className={active === 3 ? 'active' : null} onClick={()=>{setactive(3)}}>
+              <a className="text-left hover"  onClick={()=>{history.push("/client")}}><span className="fa fa-sticky-note mr-3"></span>Clients</a>
+            </li>
+            ) : (
+              null
+            )
+          }
         
          
           
@@ -236,7 +267,7 @@ const [current, setcurrent] = useState("")
             current === "Collaborateur" ? (
            
               <li className={active === 4 ? 'active' : null} onClick={()=>{setactive(4)}}>
-              <a className="text-left hover" onClick={()=>{history.push("/Compteclient")}}><span className="fa fa-suitcase mr-3"></span>Compte</a>
+              <a className="text-left hover" onClick={()=>{history.push("/Compteclient")}}><span className="fa fa-suitcase mr-3"></span>Client</a>
             </li>
             ) : null
           }
@@ -244,7 +275,7 @@ const [current, setcurrent] = useState("")
           {
             current === "Chef equipe" ? (
               <li className={active === 4 ? 'active' : null} onClick={()=>{setactive(4)}}>
-              <a className="text-left hover" onClick={()=>{history.push("/Compteclient")}}><span className="fa fa-suitcase mr-3"></span>Compte</a>
+              <a className="text-left hover" onClick={()=>{history.push("/Compteclient")}}><span className="fa fa-suitcase mr-3"></span>Client</a>
             </li>
             ) : null
           }
@@ -271,7 +302,7 @@ const [current, setcurrent] = useState("")
           }
 
           {
-            current !== "admin" ? (
+            current !== "admin" && current !=="DG" ? (
               <li className={active === 6 ? 'active' : null} onClick={()=>{setactive(6)}}>
               <a className="text-left hover" onClick={()=>{history.push("/Demande")}}><i class="fas fa-clipboard-list mr-3"></i>Demande</a>
           </li>

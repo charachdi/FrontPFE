@@ -27,6 +27,7 @@ import Loading from './../images/loading.json'
 
 function Service(props) {
     const token = localStorage.getItem('token')
+    const user =  JSON.parse(localStorage.getItem('user'))
     const [open, setopen] = useState(false)
     const [suppopen, setsuppopen] = useState(false)
     const [editopen, seteditopen] = useState(false)
@@ -92,12 +93,19 @@ function Service(props) {
         cell: (service, index) => {
           return (
             <>
+            {
+              user.user_level !== "DG" ? (
+                <>
               <IconButton className="float-right mr-3" size="small" aria-label="delete" color="secondary" onClick={()=> {changeselected(service);toggleSupp()}}>
               <DeleteIcon />
               </IconButton>
               <IconButton className="float-right mr-3" size="small" aria-label="delete" color="primary" onClick={()=>{changeselected(service); toggleEdit()}}>
               <EditIcon />
-              </IconButton>   
+              </IconButton>
+              </>
+              ) : null
+            }
+                 
              </>
           );
       }
@@ -332,10 +340,13 @@ const Suppservice = async (e)=>{
 
        
               <div className="row col-12 mb-2 justify-content-center">
-          
-                  <div id="addbtn" className="col-3 mb-2" >  
-                    <button className="btn-add cardstat text-capitalize" onClick={()=>toggle(!open)} style={{width:"100%"}}><i class="fas fa-plus mr-2"></i>Ajouter un nouveau service </button>
-                  </div>
+          {
+            user.user_level !== "DG" ? (
+              <div id="addbtn" className="col-3 mb-2" >  
+              <button className="btn-add cardstat text-capitalize" onClick={()=>toggle(!open)} style={{width:"100%"}}><i class="fas fa-plus mr-2"></i>Ajouter un nouveau service </button>
+            </div>
+            ) : null
+          }
              </div>
           
                   <ReactDatatable

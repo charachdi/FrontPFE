@@ -245,14 +245,14 @@ const config = {
 }
 
 
-const addrequete = async ()=>{
+const addrequete = async (e)=>{
+  e.preventDefault();
   const res = await axios({
     headers: { Authorization: `Bearer ${token}` },
     method: "post",
     url: `${Api_url}clients/add/requete/`,
     data : reqete,
   });
-  console.log(res);
   if(res.status === 200){
 
     setreqete({...reqete , 
@@ -377,7 +377,7 @@ return (
                 </div><br />
 
                 <div className="row col-12 justify-content-center">
-                <button onClick={()=>{addrequete()}}   variant="outlined" className="btn-add cardstat text-capitalize" style={{width:"40%"}}>
+                <button onClick={(e)=>{addrequete(e)}}   variant="outlined" className="btn-add cardstat text-capitalize" style={{width:"40%"}}>
                 Valider
                  </button> 
                </div>

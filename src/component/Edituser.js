@@ -268,6 +268,13 @@ const handelchangebanned = async()=>{
                 {
                   level === "Collaborateur" ?  <MenuItem value={"Collaborateur"}>Collaborateur</MenuItem> : null
                 }
+                {
+                  level === "DG" ?   <MenuItem value={"DG"}>Directeur Général</MenuItem> : null
+                }
+                {
+                  level === "RH" ?  <MenuItem value={"RH"}>Responsable des ressources humaines</MenuItem> : null
+                }
+                
                 {/* {
                   level !== "Chef Service" ?  <MenuItem value={"RH"}>RH</MenuItem> : null
                 } */}
@@ -297,7 +304,7 @@ const handelchangebanned = async()=>{
               </TextField>
                   ) :(
 
-                    level !== "admin" ? (
+                    level === "Collaborateur" && level === "Chef equipe"  ? (
                       <TextField
                     className="col-5"
                     id="equipe"

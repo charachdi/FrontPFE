@@ -35,6 +35,7 @@ import { Avatar } from '@material-ui/core';
 
 function Equipe(props) {
     const token = localStorage.getItem('token')
+    const user =  JSON.parse(localStorage.getItem('user'))
     const [open, setopen] = useState(false)
     const history = useHistory();
     const [primecheck, setprimecheck] = useState(false);
@@ -45,6 +46,7 @@ function Equipe(props) {
     const [services, setservices] = useState([])
     const [servicename, setservicename] = useState(selectedrow.Service ? selectedrow.Service.Nom_service :"")
     const [primeloading, setprimeloading] = useState(true);
+    const [DGcheck, setDGcheck] = useState(true);
     const [equipedemande, setequipedemande] = useState({
       "M": "01",
       "Y": "01",
@@ -118,7 +120,65 @@ function Equipe(props) {
     loading_screen()
   }, [])
 
-
+  useEffect(() => {
+    // fonction affiche table
+     const getequipelist = async ()=>{
+       const res = await axios({
+         headers: {'Authorization': `Bearer ${token}`},
+         method: 'get',
+         url : `${Api_url}equipe/`,  
+         });
+         setequipes(res.data)
+         console.log(res)
+      
+        
+     }
+ 
+ 
+     const getservices = async () =>{
+         const res = await axios({
+           headers: {'Authorization': `Bearer ${token}`},
+           method: 'get',
+           url : `${Api_url}service/`,  
+           });
+             setservices(res.data)
+           
+     }
+ 
+ 
+     const getdata = async() =>{
+       const user =  JSON.parse(localStorage.getItem('user'))
+ //get the current user 
+       const currentuser = await axios({
+         headers: {'Authorization': `Bearer ${token}`},
+         method: 'get',
+         url : `${Api_url}user/${user.id}`,  
+         });
+ 
+      if(currentuser.data.user.user_level === "DG"){
+             setDGcheck(false)
+      }
+     if(currentuser.data.user.user_level === "Chef Service"){
+       const res = await axios({
+         headers: {'Authorization': `Bearer ${token}`},
+         method: 'get',
+         url : `${Api_url}service/dataservice/${currentuser.data.user.Chef.ServiceId}`,  
+         });
+         console.log(res)
+         setservices([res.data.service])
+         setequipes(res.data.equipes)
+       
+     }
+     else{
+       getequipelist()
+       getservices()
+     }
+ 
+   } 
+ 
+   getdata()
+    
+     }, [])
     const [column, setcolumn] = useState([
       {
         key: "Nom_equipe",
@@ -155,7 +215,7 @@ function Equipe(props) {
         cell: (equipe, index) => {
           return (
             <div className="text-center">
-
+              
               {
                   equipe.Primes[0] ? (
                     <IconButton size="small" className="float-center mr-3" aria-label="eye" style={{color :"#388e3c"}} onClick={(e)=>{ setequipedemande(equipe.Primes[0]);console.log(equipe.Primes[0]) ; setprimeopen(!primeopen)}} >
@@ -180,15 +240,23 @@ function Equipe(props) {
         cell: (equipe, index) => {
           return (
             <>
-                       
-                       
-                        <IconButton className="float-right mr-3" disabled={equipe.Users.length !== 0 ? true : false} size="small" aria-label="delete" color="secondary" onClick={()=> {changeselected(equipe);toggleSupp()}}>
-                        <DeleteIcon />
-                        </IconButton>
+            {
+              user.user_level === "DG" ? null : (
+                <IconButton className="float-right mr-3" disabled={equipe.Users.length !== 0 ? true : false} size="small" aria-label="delete" color="secondary" onClick={()=> {changeselected(equipe);toggleSupp()}}>
+                <DeleteIcon />
+                </IconButton>
+              )
+            }
 
-                        <IconButton className="float-right mr-3" size="small" aria-label="delete" color="primary" onClick={()=>{changeselected(equipe); toggleEdit()}}>
+            {
+              user.user_level === "DG" ? null : (
+                <IconButton className="float-right mr-3" size="small" aria-label="delete" color="primary" onClick={()=>{changeselected(equipe); toggleEdit()}}>
                         <EditIcon />
-                        </IconButton>
+                </IconButton>
+              )
+            } 
+                        
+                       
                         <IconButton size="small" className="float-right mr-3" aria-label="eye" onClick={()=>{history.push(`/equipe/${equipe.id}`)}} style={{color :"#388e3c"}} >
                         <Visibility />
                         </IconButton> 
@@ -224,63 +292,7 @@ function Equipe(props) {
       }
     }
 
-    useEffect(() => {
-   // fonction affiche table
-    const getequipelist = async ()=>{
-      const res = await axios({
-        headers: {'Authorization': `Bearer ${token}`},
-        method: 'get',
-        url : `${Api_url}equipe/`,  
-        });
-        setequipes(res.data)
-        console.log(res)
-     
-       
-    }
-
-
-    const getservices = async () =>{
-        const res = await axios({
-          headers: {'Authorization': `Bearer ${token}`},
-          method: 'get',
-          url : `${Api_url}service/`,  
-          });
-            setservices(res.data)
-          
-    }
-
-
-    const getdata = async() =>{
-      const user =  JSON.parse(localStorage.getItem('user'))
-//get the current user 
-      const currentuser = await axios({
-        headers: {'Authorization': `Bearer ${token}`},
-        method: 'get',
-        url : `${Api_url}user/${user.id}`,  
-        });
-
-      
-    if(currentuser.data.user.user_level === "Chef Service"){
-      const res = await axios({
-        headers: {'Authorization': `Bearer ${token}`},
-        method: 'get',
-        url : `${Api_url}service/dataservice/${currentuser.data.user.Chef.ServiceId}`,  
-        });
-        console.log(res)
-        setservices([res.data.service])
-        setequipes(res.data.equipes)
-      
-    }
-    else{
-      getequipelist()
-      getservices()
-    }
-
-  } 
-
-  getdata()
-   
-    }, [])
+    
    
     const [nomequipe, setnomequipe] = useState("")
     const [service, setservice] = useState("")
@@ -505,10 +517,14 @@ const createPrime = async (id)=>{
         
               <div className="row col-12 mb-2 justify-content-center">
              
-          
-             <div id="addbtn" className="col-3 mb-2" >  
+          {
+            user.user_level !== "DG" ? (
+            <div id="addbtn" className="col-3 mb-2" >   
             <button className="btn-add cardstat text-capitalize" onClick={()=>toggle(!open)} style={{width:"100%"}}><i class="fas fa-plus mr-2"></i>Ajouter une nouvelle équipe </button>
              </div>
+            ) : null
+          }
+             
               </div>
 
              <ReactDatatable

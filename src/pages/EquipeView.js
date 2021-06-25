@@ -28,9 +28,6 @@ import Fileempty from './../images/fileempty.json'
 import {socket} from './../Socket/Socket'
 import ReactDatatable from '@ashvin27/react-datatable';
 import { ToastContainer, toast } from 'react-toastify';
-
-
-
 import Archiveprogress from './../component/Table/Archiveprogress'
 import Colture from './../component/Table/Colture'
 import Archive from './../component/Table/Archive'
@@ -54,6 +51,7 @@ function EquipeView(props) {
     const [file, setfile] = useState({
       name :""
     })
+    const [importbtn, setimportbtn] = useState(true);
     const [loading, setloading] = useState(true)
     const [Client_archive, setClient_archive] = useState([])
     //add file listiner
@@ -217,6 +215,7 @@ const Importfile = async (e)=>{
   
   // e.preventDefault();
   const formData = new FormData();
+  
   formData.append('csv',file);
   formData.append('equipeid',equipe_id);
   formData.append('ServiceId',equipe.Service.id);
@@ -473,7 +472,11 @@ const switchtoarchive= () =>{
                 <ul className="profile-header-tab nav nav-tabs  mt-4 mb-4 cardstat" style={{backgroundColor:"#E9ECEF" , borderRadius : 15}}>
                   <li onClick={()=>{switchtodata()}} className="nav-item" ><span id="dattab" href="#" className="nav-link active show cursor" style={{borderRadius : 15}} data-toggle="tab">Data</span></li>
                   <li onClick={()=>{switchtocompte()}} className="nav-item"><span id="listcompt" href="#" className="nav-link cursor" style={{borderRadius : 15}} data-toggle="tab">Compte</span></li>
-                  <li onClick={()=>{switchtofile()}} className="nav-item"><span id="filetab" href="#" className="nav-link cursor" style={{borderRadius : 15}} data-toggle="tab">Fichier</span></li>
+                  {
+                    user.user_level !== "DG" ? (
+                      <li onClick={()=>{switchtofile()}} className="nav-item"><span id="filetab" href="#" className="nav-link cursor" style={{borderRadius : 15}} data-toggle="tab">Fichier</span></li>
+                    ): null
+                  }
                   <li onClick={()=>{switchtoarchive()}}  className="nav-item"><span id="archivetab" href="#" className="nav-link cursor" style={{borderRadius : 15}} data-toggle="tab">Archive</span></li>
                   {
                     isadmin ?  <li onClick={()=>{switchtosetting()}}className="nav-item"><span id="setting" href="#" className="nav-link cursor" style={{borderRadius : 15}} data-toggle="tab"><i className="fas fa-cog"></i></span></li> : null
@@ -489,7 +492,8 @@ const switchtoarchive= () =>{
         <div id="Equipedata" className="row col-12 mb-5" style={{minHeight:500 , backgroundColor : '#FAFAFA'}}>
         <Equipedata equipeid={equipe_id} eqname={equipe.Nom_equipe}/>
         </div>  
-        
+        {
+              user.user_level !== "DG" ? (
         <div id="Fileview" className="" style={{display:"none" , minHeight:600}} >
         <div className="row col-12 justify-content-center"  >
         
@@ -500,28 +504,29 @@ const switchtoarchive= () =>{
       
       </div>
 
-            
-          <div className="row justify-content-center d-inline-flex ">
+           
+              <div className="row justify-content-center d-inline-flex ">
 
 
-            {
-              files.length === 0 ? (
-                <DescriptionIcon  fontSize="large" style={{color:'#00000'}}/>
-              ):(
-                
-                  files.map((file,index)=>(
-                    <Fileview file={file} updatecom={updatecomplete} index={index} socket={socket}/>
-                  ))
-                
-              )
-            }
-
-                         
-                         
-          </div>
+              {
+                files.length === 0 ? (
+                  <DescriptionIcon  fontSize="large" style={{color:'#00000'}}/>
+                ):(
+                  
+                    files.map((file,index)=>(
+                      <Fileview file={file} updatecom={updatecomplete} index={index} socket={socket}/>
+                    ))
+                  
+                )
+              }
+           
+              </div>
+              
+          
                             
         </div>
-
+          ) : null
+          }
         <div id="listcompte" style={{display:"none" , width:"100%"}}>
         <Listcompte clients={comptecli} archive={archive} updatear={archiver}/>
         </div>
@@ -553,7 +558,18 @@ const switchtoarchive= () =>{
 
           <div className="drop-file">
          
-          <input onChange={() => {setfile(document.getElementById('importfile').files[0])}}  id="importfile" type="file"  style={{display:'none'}}  required/>
+          <input onChange={() => {
+            var filename = document.getElementById('importfile').files[0].name
+            var re = /(\.excel|\.xlsx|\.csv)$/i;
+            if (!re.exec(filename)) {
+              alert("Seuls les fichiers de type Excel sont supporter!");
+            }else{
+              setfile(document.getElementById('importfile').files[0])
+              setimportbtn(false)
+            }
+          
+            
+            }}  id="importfile" type="file"  style={{display:'none'}}  required/>
          
             <Lottie 
             options={importlotti}
@@ -587,7 +603,7 @@ const switchtoarchive= () =>{
                   <BackupIcon  fontSize="large" style={{color:'#2DCD94'}}/>
             </Button> */}
         
-            <button color="primary" className="btn-export cardstat text-capitalize col-7" style={{width:"100%"}} style={{color:'white'}} variant="contained" color="info"  onClick={()=>Importfile()}>
+            <button disabled={importbtn} color="primary" className="btn-export cardstat text-capitalize col-7" style={{width:"100%"}} style={{color:'white'}} variant="contained" color="info"  onClick={()=>Importfile()}>
               Importer les fichiers 
               <BackupIcon className="ml-2" fontSize="large" style={{color:'#12b1ab'}}/>
             </button>

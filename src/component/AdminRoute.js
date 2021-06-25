@@ -22,6 +22,13 @@ function AdminRoute({ component: Component, ...rest }) {
                   )} />
             )
         }
+        else if(user.user_level === "DG") {
+            return (
+                <Route {...rest} render={(props) => (
+                      <Component {...props} /> 
+                  )} />
+            )
+        }
         else {
             return (
                 <Route {...rest} render={(props) => (
