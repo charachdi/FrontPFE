@@ -46,6 +46,7 @@ function Clients() {
   const [editopen, seteditopen] = useState(false);
   const history = useHistory();
   const [loding, setloding] = useState(false);
+  const user =  JSON.parse(localStorage.getItem('user'))
 
   const defaultOptions = {
     loop: true,
@@ -286,7 +287,10 @@ function Clients() {
       cell: (client, index) => {
         return (
           <>
-            <IconButton
+          {
+            user.user_level !== "DG" ? (
+              <>
+              <IconButton
               className="mr-3"
               size="small"
               aria-label="delete"
@@ -315,6 +319,10 @@ function Clients() {
             >
               <EditIcon />
             </IconButton>
+            </>
+            ) : null
+          }
+            
             <IconButton
               size="small"
               aria-label="delete"
@@ -927,11 +935,17 @@ function Clients() {
 
         
               <div className="row col-12 mb-2 justify-content-center">
-                <div className="col-4 mb-2 ">
+
+                {
+                  user.user_level !== "DG" ? (
+                  <div className="col-4 mb-2 ">
                   <button variant="contained" className="btn-add cardstat text-capitalize" startIcon={<AddIcon />} onClick={() => toggle(!open)}>
                   <i class="fas fa-plus mr-2"></i>Ajouter un nouveau client
                   </button>
                 </div>
+                  ) : null
+                }
+                
               </div>
 
               <ReactDatatable

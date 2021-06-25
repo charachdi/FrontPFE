@@ -72,8 +72,11 @@ function CompteCli(props) {
           method: 'get',
           url : `${Api_url}user/${user.id}`,  
           });
-          if((currentuser.data.user.user_level === "admin") ||( currentuser.data.user.user_level === "Chef Service")){
-            setisadchef(true)
+          if((currentuser.data.user.user_level === "admin") ||( currentuser.data.user.user_level === "Chef Service") ||( currentuser.data.user.user_level === "DG")){
+          
+            if((currentuser.data.user.user_level === "admin") ||( currentuser.data.user.user_level === "Chef Service")){
+              setisadchef(true)
+            }
             setexportauth(true)
             getrequetesadmin()
          }else{

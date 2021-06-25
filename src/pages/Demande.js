@@ -350,6 +350,14 @@ const nameMapper = {
         })
         if(res.status===200){
             setDemande([res.data.Newdemande , ...Demande])
+            toggle()
+            setRequest([
+              {
+              startDate: new Date(),
+              endDate: new Date(),
+              key: 'selection'
+          }
+      ])
         }
        
        

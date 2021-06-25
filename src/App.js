@@ -83,7 +83,7 @@ useEffect(() => {
   return (
 
     <>
- <ToastContainer
+ {/* <ToastContainer
     position="top-right"
     autoClose={3000}
     hideProgressBar={false}
@@ -93,7 +93,7 @@ useEffect(() => {
     pauseOnFocusLoss
     draggable
     pauseOnHover
-    />
+    /> */}
     <Router>
       <div className="wrapper d-flex align-items-stretch" >
        {
